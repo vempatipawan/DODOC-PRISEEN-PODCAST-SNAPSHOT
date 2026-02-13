@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UnitPay for DoDocs AI — The AI Revenue Engine</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { 'brand-teal':'#003024','brand-lime':'#a4ea49','brand-mint':'#e1ead3','brand-black':'#0a0a0a','signal-red':'#ff3b3b','signal-amber':'#f5a623','card-dark':'#111111','card-border':'#1f1f1f' },
+    fontFamily: { 'inter':['Inter','system-ui','sans-serif'],'mono':['JetBrains Mono','monospace'] }
+  }}
+}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-snap-type:y mandatory;font-size:14px}
+@media(min-width:768px){html{font-size:15px}}
+@media(min-width:1280px){html{font-size:16px}}
+body{font-family:'Inter',system-ui,sans-serif;background:#0a0a0a;color:#fff;overflow-x:hidden}
+.slide{min-height:100vh;scroll-snap-align:start;position:relative;overflow:hidden}
+.grain::before{content:'';position:absolute;inset:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:256px;pointer-events:none;z-index:1}
+.slide>*{position:relative;z-index:2}
+.lime-glow{text-shadow:0 0 30px rgba(164,234,73,.12)}
+.red-glow{text-shadow:0 0 40px rgba(255,59,59,.3)}
+@keyframes pulseGlow{0%,100%{box-shadow:0 4px 24px rgba(164,234,73,.3)}50%{box-shadow:0 8px 40px rgba(164,234,73,.5)}}
+@keyframes livePulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes breathe{0%,100%{transform:perspective(1000px) rotateX(2deg) scale(1)}50%{transform:perspective(1000px) rotateX(2deg) scale(1.01)}}
+@keyframes countUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.anim{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.anim.v{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.15s}.d2{transition-delay:.3s}.d3{transition-delay:.45s}.d4{transition-delay:.6s}.d5{transition-delay:.75s}.d6{transition-delay:.9s}
+.progress-bar{position:fixed;bottom:0;left:0;height:2px;background:#a4ea49;z-index:100;transition:width .3s ease}
+.nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:8px}
+.nav-dot{width:8px;height:8px;border-radius:50%;border:1.5px solid #6b7280;background:transparent;cursor:pointer;transition:all .3s ease}
+.nav-dot.active{background:#a4ea49;border-color:#a4ea49;transform:scale(1.3)}
+.margin-fill{transition:width 1.5s ease-out}
+::-webkit-scrollbar{width:0}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="pBar"></div>
+<nav class="nav-dots hidden md:flex" id="navDots"></nav>
+
+<!-- S1 HOOK — THE ERA DIVIDE -->
+<section class="slide grain flex flex-col items-center justify-center px-6 md:px-20" style="background:linear-gradient(160deg,#0a0a0a 0%,#041a14 40%,#0a0a0a 100%);background-image:radial-gradient(ellipse at center,rgba(0,48,36,.08) 0%,transparent 60%)">
+<div class="anim mb-6"><svg class="h-8 w-auto" viewBox="0 0 524 133" fill="none"><path d="M23.19 .1C44.63.05 66.07.06 87.52.03c7.7.04 15.35-.05 23.03.06 6.43.4 12.34 3.68 16.79 8.28 8.39 8.53 6.41 21 6.56 31.88-.26 23-.43 46.17-.36 69.18-.59 10.88-8.52 20.78-19.32 22.93-6.76 1.22-13.78.4-20.65.64-15.78.01-31.58.03-47.38.04-7.48-.01-14.91.05-22.34 0C17.61 132.8 11.48 129.63 7.26 125.2.37 117.92-.1 110.08.29 100.52V71.65c-.02-13.93-.05-27.93-.06-41.86C-1.49 15.15 8.01 1.45 23.13.1h.06z" fill="#A4EA49"/><path d="M121 80.14c-.04-.63-.1-1.25-.19-1.84-7.66-.18-15.57.35-22.77-.18.01-11.83.02-23.56.03-35.31-.05-12.06-11.33-22.37-23.27-21.78-8.9-.48-17.59 5.87-20.78 13.94-7.72 22.05 5.8 49.78 29.56 54.02-4.27 10.48-18.83 15-29.07 10.27-12.22-5.19-14.32-18.06-13.61-30 .23-12.17-.27-24.83.1-36.87H29.34c-.52 3.09-.02 6.87-.19 10.19v27.32c-.98 16.04 2.2 30.33 16.83 38.74 17.4 9.83 40.35 1.92 48.29-16.42.36-.77.36-1.72.84-2.39 8.38-.22 17 .35 24.9-.2-.06-1.4-.04-2.85 0-4.3v-5.3zm-34.48-34.76c-.02 10.75-.04 21.49-.08 32.24-.52-.05-1.02-.11-1.54-.16-.57-.07-1.06-.22-1.6-.43-7.93-2.89-14.37-8.69-17.6-16.56-1.6-3.93-2.22-8.23-2.07-12.46 0-1.33 0-2.81-.01-4.15.02-3.12 1.32-5.89 3.44-8.16 4.54-4.14 10.36-4.11 15.29-.7 2.14 1.7 3.54 4.17 4.09 6.84.09 1.18.09 2.36.08 3.54z" fill="#003024"/><path d="M194.34 109.19c-6.25 0-11.68-1.15-16.28-3.45-4.6-2.3-8.16-5.75-10.67-10.35-2.52-4.67-3.77-10.53-3.77-17.57V32.55h12.93v44.51c0 7.12 1.51 12.36 4.53 15.74 3.02 3.3 7.44 4.96 13.26 4.96 5.89 0 10.31-1.65 13.26-4.96 3.02-3.38 4.53-8.59 4.53-15.66V32.55h12.93v45.27c0 7.04-1.26 12.9-3.77 17.57-2.52 4.6-6.07 8.05-10.67 10.35-4.6 2.3-10.02 3.45-16.28 3.45zm39.39-1.19V50.87h10.99v9.59c1.37-2.87 3.6-5.39 6.69-7.55 3.09-2.15 7.08-3.23 11.96-3.23 6.97 0 12.22 1.9 15.74 5.71 3.52 3.74 5.28 9.23 5.28 16.49V108h-11.86V74.59c0-4.81-1.01-8.44-3.02-10.89-2.01-2.44-5.32-3.66-9.92-3.66-3.3 0-6 .72-8.08 2.16-2.01 1.37-3.52 3.16-4.53 5.39-1.04 2.16-1.47 4.49-1.47 7.01V108h-11.86zm58.79 0V50.87h11.86V108h-11.86zm5.93-63.59c-2.23 0-4.06-.68-5.5-2.05-1.37-1.44-2.05-3.27-2.05-5.5 0-2.23.68-4.02 2.05-5.39 1.44-1.37 3.27-2.05 5.5-2.05 2.23 0 4.02.68 5.39 2.05 1.44 1.37 2.16 3.16 2.16 5.39 0 2.23-.72 4.06-2.16 5.5-1.37 1.37-3.16 2.05-5.39 2.05zm36.6 64.13c-4.31 0-7.83-.61-10.56-1.83-2.66-1.22-4.64-3.13-5.93-5.71-1.22-2.66-1.83-6.07-1.83-10.24V61.01h-8.08V50.87h8.08V37.94h11.86v12.93h14.55V61.01h-14.55v28.13c0 3.38.61 5.75 1.83 7.12 1.29 1.29 3.74 1.94 7.33 1.94 2.16 0 4.31-.11 6.47-.32V108c-1.37.14-2.77.25-4.21.32-1.44.14-3.09.22-4.96.22zm15.67-.54V32.55h27.48c6.76 0 12.33 1.01 16.71 3.02 4.38 1.94 7.62 4.71 9.7 8.3 2.16 3.59 3.23 7.83 3.23 12.72 0 4.89-1.08 9.13-3.23 12.72-2.08 3.59-5.32 6.4-9.7 8.4-4.38 1.94-9.95 2.91-16.71 2.91h-14.55V108h-12.93zm12.93-38.59h13.47c6.83 0 11.5-1.04 14.01-3.13 2.52-2.16 3.77-5.39 3.77-9.7 0-4.24-1.26-7.44-3.77-9.59-2.52-2.16-7.18-3.23-14.01-3.23h-13.47v25.65zm63.12 39.77c-4.1 0-7.62-.76-10.56-2.26-2.88-1.58-5.07-3.74-6.58-6.47-1.51-2.73-2.26-5.78-2.26-9.16 0-5.68 1.69-9.88 5.07-12.61 3.38-2.8 8.33-4.2 14.87-4.2h17.78v-3.13c0-4.31-.97-7.26-2.91-8.84-1.87-1.65-4.85-2.48-8.95-2.48-3.66 0-6.36.58-8.08 1.73-1.73 1.15-2.73 2.73-3.02 4.74h-11.53c.22-3.31 1.26-6.22 3.13-8.73 1.87-2.52 4.49-4.49 7.87-5.93 3.45-1.44 7.51-2.16 12.18-2.16s8.73.72 12.18 2.16c3.52 1.44 6.22 3.7 8.08 6.79 1.94 3.02 2.91 7.04 2.91 12.07v22.74c0 3.02.04 5.68.11 7.98.07 2.23.25 4.42.54 6.58h-10.78c-.22-1.65-.4-3.05-.54-4.2-.07-1.15-.11-2.59-.11-4.31-1.37 2.66-3.74 4.96-7.11 6.9-3.31 1.87-7.4 2.8-12.29 2.8zm3.23-10.35c2.73 0 5.21-.47 7.44-1.4 2.3-.93 4.13-2.34 5.5-4.2 1.44-1.87 2.16-4.13 2.16-6.79v-3.13h-15.63c-3.02 0-5.46.65-7.33 1.94-1.8 1.29-2.69 3.2-2.69 5.71 0 2.37.83 4.28 2.48 5.71 1.73 1.44 4.42 2.16 8.08 2.16zm40.77 31.9c-1.08 0-2.16-.11-3.23-.32V120.07c1.08.22 2.16.32 3.23.32 1.58 0 2.88-.4 3.88-1.19 1.01-.72 1.94-1.98 2.8-3.77.86-1.8 1.87-4.28 3.02-8.44l-24.25-57.13h12.93l17.46 44.19 15.74-44.19h12.07L493.13 108c-2.08 5.32-4.06 9.67-5.93 13.04-1.87 3.38-4 5.82-6.36 7.33-2.37 1.58-5.46 2.37-9.27 2.37z" fill="white"/></svg></div>
+
+<!-- Old World (faded) -->
+<div class="text-center max-w-4xl anim d1 mb-4">
+<p class="text-xs md:text-sm font-bold uppercase tracking-[4px] text-white/20 mb-3">The Old World</p>
+<p class="font-bold text-xl md:text-[36px] leading-tight text-white/25">$110/month. Flat subscription. One price fits all.</p>
+</div>
+
+<!-- Dividing Line -->
+<div class="w-full max-w-3xl flex items-center gap-3 anim d2 my-4">
+<div class="flex-1 h-[2px] bg-brand-lime/60"></div>
+<span class="text-[10px] md:text-xs font-bold text-brand-lime tracking-[3px] whitespace-nowrap bg-brand-lime/10 px-4 py-1.5 rounded-full border border-brand-lime/20">YOU ARE HERE</span>
+<div class="flex-1 h-[2px] bg-brand-lime/60"></div>
+</div>
+
+<!-- New World -->
+<div class="text-center max-w-4xl anim d3">
+<p class="text-xs md:text-sm font-bold uppercase tracking-[4px] text-brand-lime mb-3">The New World</p>
+<p class="font-extrabold text-2xl md:text-[48px] text-white leading-tight">$0.52/page <span class="text-white/40 font-normal">&times;</span> 4 LLMs <span class="text-white/40 font-normal">&times;</span> 5 tiers <span class="text-white/40 font-normal">&times;</span> 6 channels</p>
+</div>
+
+<p class="text-white/50 text-sm md:text-lg mt-6 text-center max-w-2xl anim d4"><span class="text-white font-semibold">DoDocs AI</span> processes 45,000+ pages/month through 4 parallel AI models. Your billing shows <span class="text-signal-red font-semibold">one line item.</span></p>
+
+<div class="absolute bottom-5 md:bottom-6 left-6 md:left-20 text-white/40 text-xs font-medium">01 / 11</div>
+</section>
+
+<!-- S2 PROBLEM — THE INVISIBLE COST FUNNEL -->
+<section class="slide grain flex flex-col items-center justify-center px-4 md:px-20" style="background:linear-gradient(160deg,#003024 0%,#001a14 50%,#002a1f 100%)">
+<div class="text-center max-w-4xl anim">
+<p class="font-bold text-2xl md:text-[48px] text-white leading-tight">6 cost layers. 1 line item.</p>
+<p class="font-extrabold text-2xl md:text-[48px] text-signal-red leading-tight mt-1 red-glow">Zero visibility.</p>
+</div>
+<p class="text-white/50 text-sm md:text-base mt-4 text-center max-w-2xl anim d1">Every page DoDocs processes runs through 4 AI models, cloud compute, and multi-channel routing. Your billing captures none of it.</p>
+
+<!-- Cost Chips -->
+<div class="mt-8 md:mt-10 w-full max-w-4xl anim d2">
+<div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+<div class="rounded-xl p-3 md:p-4 flex items-center gap-3" style="background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15)"><div class="w-8 h-8 rounded-full bg-signal-amber/15 flex items-center justify-center flex-shrink-0"><span class="text-signal-amber font-bold text-xs">L1</span></div><div><p class="text-sm font-semibold text-white">GPT-4o</p><p class="text-xs text-signal-amber font-mono">$0.0034</p></div></div>
+<div class="rounded-xl p-3 md:p-4 flex items-center gap-3" style="background:rgba(121,192,255,.06);border:1px solid rgba(121,192,255,.15)"><div class="w-8 h-8 rounded-full bg-[#79c0ff]/15 flex items-center justify-center flex-shrink-0"><span class="text-[#79c0ff] font-bold text-xs">L2</span></div><div><p class="text-sm font-semibold text-white">Claude 3.5</p><p class="text-xs text-[#79c0ff] font-mono">$0.0089</p></div></div>
+<div class="rounded-xl p-3 md:p-4 flex items-center gap-3" style="background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.15)"><div class="w-8 h-8 rounded-full bg-purple-500/15 flex items-center justify-center flex-shrink-0"><span class="text-purple-400 font-bold text-xs">L3</span></div><div><p class="text-sm font-semibold text-white">Llama 3</p><p class="text-xs text-purple-400 font-mono">$0.0012</p></div></div>
+<div class="rounded-xl p-3 md:p-4 flex items-center gap-3" style="background:rgba(164,234,73,.06);border:1px solid rgba(164,234,73,.15)"><div class="w-8 h-8 rounded-full bg-brand-lime/15 flex items-center justify-center flex-shrink-0"><span class="text-brand-lime font-bold text-xs">L4</span></div><div><p class="text-sm font-semibold text-white">Mixtral</p><p class="text-xs text-brand-lime font-mono">$0.0018</p></div></div>
+<div class="rounded-xl p-3 md:p-4 flex items-center gap-3" style="background:rgba(94,234,212,.06);border:1px solid rgba(94,234,212,.15)"><div class="w-8 h-8 rounded-full bg-teal-400/15 flex items-center justify-center flex-shrink-0"><span class="text-teal-400 font-bold text-xs">C</span></div><div><p class="text-sm font-semibold text-white">Azure Compute</p><p class="text-xs text-teal-400 font-mono">$0.0041</p></div></div>
+<div class="rounded-xl p-3 md:p-4 flex items-center gap-3" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)"><div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0"><span class="text-white/60 font-bold text-xs">O</span></div><div><p class="text-sm font-semibold text-white">Channel Overhead</p><p class="text-xs text-white/60 font-mono">$0.0006</p></div></div>
+</div>
+</div>
+
+<!-- Funnel Arrow -->
+<div class="text-center mt-6 anim d3">
+<svg class="w-6 h-6 mx-auto text-white/30 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3"/></svg>
+<div class="inline-block rounded-xl px-6 md:px-10 py-4" style="background:rgba(255,59,59,.06);border:2px solid rgba(255,59,59,.2)">
+<p class="text-xs text-white/50 mb-1">Your invoice says:</p>
+<p class="text-xl md:text-2xl font-extrabold text-white">1 page processed — <span class="text-signal-red">$0.52</span></p>
+</div>
+</div>
+<div class="absolute bottom-5 md:bottom-6 left-6 md:left-20 text-white/40 text-xs font-medium">02 / 11</div>
+</section>
+
+<!-- S3 REQUIREMENTS — WHAT AI COMPANIES NEED -->
+<section class="slide grain flex flex-col items-center justify-center px-4 md:px-20" style="background:linear-gradient(160deg,#0a0a0a 0%,#041a14 40%,#0a0a0a 100%)">
+<div class="text-center max-w-4xl anim">
+<p class="font-bold text-2xl md:text-[44px] text-white leading-tight">Your billing tools were built for <span class="text-white/40">subscriptions.</span></p>
+<p class="font-bold text-xl md:text-[32px] text-brand-lime leading-tight mt-2 lime-glow">You're running an AI document engine.</p>
+</div>
+
+<div class="mt-8 md:mt-10 w-full max-w-3xl space-y-2">
+<div class="flex items-center gap-3 md:gap-4 rounded-xl p-4 md:px-6 anim d1" style="background:rgba(164,234,73,.03);border:1px solid rgba(164,234,73,.08)">
+<div class="flex-1"><p class="text-sm md:text-base font-semibold text-white">Per-transaction cost attribution</p><p class="text-xs text-white/50 mt-0.5">Know the cost of every page processed</p></div>
+<div class="flex gap-6 md:gap-10 items-center">
+<div class="text-center w-16"><p class="text-[9px] text-white/40 uppercase tracking-wider font-bold mb-1">Legacy</p><svg class="w-5 h-5 mx-auto text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></div>
+<div class="text-center w-16"><p class="text-[9px] text-brand-lime uppercase tracking-wider font-bold mb-1">UnitPay</p><svg class="w-5 h-5 mx-auto text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></div>
+</div>
+</div>
+<div class="flex items-center gap-3 md:gap-4 rounded-xl p-4 md:px-6 anim d2" style="background:rgba(164,234,73,.03);border:1px solid rgba(164,234,73,.08)">
+<div class="flex-1"><p class="text-sm md:text-base font-semibold text-white">Multi-model metering (4 LLMs)</p><p class="text-xs text-white/50 mt-0.5">Track GPT-4o, Claude, Llama, Mixtral separately</p></div>
+<div class="flex gap-6 md:gap-10 items-center">
+<div class="text-center w-16"><svg class="w-5 h-5 mx-auto text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></div>
+<div class="text-center w-16"><svg class="w-5 h-5 mx-auto text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></div>
+</div>
+</div>
+<div class="flex items-center gap-3 md:gap-4 rounded-xl p-4 md:px-6 anim d3" style="background:rgba(164,234,73,.03);border:1px solid rgba(164,234,73,.08)">
+<div class="flex-1"><p class="text-sm md:text-base font-semibold text-white">Usage-based billing (per-page)</p><p class="text-xs text-white/50 mt-0.5">$0.52→$0.12 tiered overage, auto-invoiced</p></div>
+<div class="flex gap-6 md:gap-10 items-center">
+<div class="text-center w-16"><span class="text-xs font-bold text-signal-amber">Partial</span></div>
+<div class="text-center w-16"><svg class="w-5 h-5 mx-auto text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></div>
+</div>
+</div>
+<div class="flex items-center gap-3 md:gap-4 rounded-xl p-4 md:px-6 anim d4" style="background:rgba(164,234,73,.03);border:1px solid rgba(164,234,73,.08)">
+<div class="flex-1"><p class="text-sm md:text-base font-semibold text-white">Real-time margin alerts</p><p class="text-xs text-white/50 mt-0.5">Auto-alert when cost/page exceeds threshold</p></div>
+<div class="flex gap-6 md:gap-10 items-center">
+<div class="text-center w-16"><svg class="w-5 h-5 mx-auto text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></div>
+<div class="text-center w-16"><svg class="w-5 h-5 mx-auto text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></div>
+</div>
+</div>
+<div class="flex items-center gap-3 md:gap-4 rounded-xl p-4 md:px-6 anim d5" style="background:rgba(164,234,73,.03);border:1px solid rgba(164,234,73,.08)">
+<div class="flex-1"><p class="text-sm md:text-base font-semibold text-white">Multi-channel metering</p><p class="text-xs text-white/50 mt-0.5">API, SDK, WhatsApp, Email, Web, Telegram</p></div>
+<div class="flex gap-6 md:gap-10 items-center">
+<div class="text-center w-16"><svg class="w-5 h-5 mx-auto text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></div>
+<div class="text-center w-16"><svg class="w-5 h-5 mx-auto text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></div>
+</div>
+</div>
+<div class="flex items-center gap-3 md:gap-4 rounded-xl p-4 md:px-6 anim d6" style="background:rgba(164,234,73,.03);border:1px solid rgba(164,234,73,.08)">
+<div class="flex-1"><p class="text-sm md:text-base font-semibold text-white">Pricing simulation</p><p class="text-xs text-white/50 mt-0.5">Test tier changes before deploying to production</p></div>
+<div class="flex gap-6 md:gap-10 items-center">
+<div class="text-center w-16"><svg class="w-5 h-5 mx-auto text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></div>
+<div class="text-center w-16"><svg class="w-5 h-5 mx-auto text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-5 md:bottom-6 left-6 md:left-20 text-white/40 text-xs font-medium">03 / 11</div>
+</section>
+
+<!-- S4 TECHNICAL GAP — WHY STRIPE BREAKS FOR AI -->
+<section class="slide grain flex flex-col items-center justify-center px-4 md:px-16" style="background:linear-gradient(160deg,#003024 0%,#001a14 50%,#002a1f 100%);background-image:radial-gradient(ellipse at 70% 30%,rgba(255,59,59,.04) 0%,transparent 50%)">
+<div class="text-center max-w-4xl anim">
+<p class="text-xs md:text-sm font-bold uppercase tracking-[4px] text-signal-red mb-3">The Technical Gap</p>
+<h2 class="font-extrabold text-2xl md:text-[44px] text-white leading-tight">What Stripe sees vs.<br><span class="text-signal-red red-glow">what actually happened.</span></h2>
+</div>
+<p class="text-white/50 text-sm md:text-base mt-4 text-center max-w-2xl anim d1">45,000 pages/month across 4 LLMs = <span class="text-white font-semibold">180,000+ inference events</span>. Your billing system sees <span class="text-signal-red font-semibold">none</span> of the cost structure.</p>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 mt-8 md:mt-10 w-full max-w-5xl">
+<!-- Failure 1 -->
+<div class="rounded-2xl overflow-hidden anim d2" style="background:rgba(255,59,59,.03);border:1px solid rgba(255,59,59,.12)">
+<div class="flex items-center gap-2 px-4 py-2.5 border-b" style="border-color:rgba(255,59,59,.1)"><svg class="w-4 h-4 text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg><span class="text-xs font-bold text-signal-red">BLIND SPOT #1</span></div>
+<div class="p-4 md:p-5">
+<p class="font-bold text-base text-white mb-2">Multi-model cost invisible</p>
+<div class="rounded-lg p-3 font-mono text-[11px] leading-relaxed mb-3" style="background:rgba(0,0,0,.3)">
+<span class="text-white/30">// What Stripe records:</span><br>
+<span class="text-[#79c0ff]">amount:</span> <span class="text-signal-amber">$0.52</span><br>
+<span class="text-[#79c0ff]">description:</span> <span class="text-brand-lime">"1 page"</span><br><br>
+<span class="text-white/30">// What actually happened:</span><br>
+<span class="text-signal-amber">GPT-4o:</span> <span class="text-white/60">$0.0034</span><br>
+<span class="text-[#79c0ff]">Claude:</span> <span class="text-white/60">$0.0089</span><br>
+<span class="text-purple-400">Llama&nbsp;3:</span> <span class="text-white/60">$0.0012</span><br>
+<span class="text-brand-lime">Mixtral:</span> <span class="text-white/60">$0.0018</span><br>
+<span class="text-teal-400">Compute:</span> <span class="text-white/60">$0.0041</span><br>
+<span class="text-white/40">Overhead:</span> <span class="text-white/60">$0.0006</span>
+</div>
+<p class="text-xs text-white/50">Stripe can't attribute cost per model. You're flying blind on which LLM is eating your margin.</p>
+</div>
+</div>
+
+<!-- Failure 2 -->
+<div class="rounded-2xl overflow-hidden anim d3" style="background:rgba(255,59,59,.03);border:1px solid rgba(255,59,59,.12)">
+<div class="flex items-center gap-2 px-4 py-2.5 border-b" style="border-color:rgba(255,59,59,.1)"><svg class="w-4 h-4 text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg><span class="text-xs font-bold text-signal-red">BLIND SPOT #2</span></div>
+<div class="p-4 md:p-5">
+<p class="font-bold text-base text-white mb-2">Tier arbitrage undetected</p>
+<div class="rounded-lg p-3 font-mono text-[11px] leading-relaxed mb-3" style="background:rgba(0,0,0,.3)">
+<span class="text-white/30">// 5 tiers, different margins:</span><br>
+<span class="text-white">Free:</span> <span class="text-signal-red">-$0.02/pg</span> <span class="text-white/30">(loss)</span><br>
+<span class="text-white">Pro:</span> <span class="text-brand-lime">$0.10/pg</span> <span class="text-white/30">(80%)</span><br>
+<span class="text-white">Biz:</span> <span class="text-brand-lime">$0.24/pg</span> <span class="text-white/30">(92.3%)</span><br>
+<span class="text-white">Ent:</span> <span class="text-brand-lime">$0.33/pg</span> <span class="text-white/30">(94.3%)</span><br>
+<span class="text-white">Custom:</span> <span class="text-signal-amber">varies</span><br><br>
+<span class="text-signal-red">// Stripe sees: $0.52</span>
+</div>
+<p class="text-xs text-white/50">Free-tier users running heavy docs cost you money. Without per-tier metering, you can't see which tier leaks margin.</p>
+</div>
+</div>
+
+<!-- Failure 3 -->
+<div class="rounded-2xl overflow-hidden anim d4" style="background:rgba(255,59,59,.03);border:1px solid rgba(255,59,59,.12)">
+<div class="flex items-center gap-2 px-4 py-2.5 border-b" style="border-color:rgba(255,59,59,.1)"><svg class="w-4 h-4 text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg><span class="text-xs font-bold text-signal-red">BLIND SPOT #3</span></div>
+<div class="p-4 md:p-5">
+<p class="font-bold text-base text-white mb-2">Channel cost variance hidden</p>
+<div class="rounded-lg p-3 font-mono text-[11px] leading-relaxed mb-3" style="background:rgba(0,0,0,.3)">
+<span class="text-white/30">// Same page, different cost:</span><br>
+<span class="text-white">API:</span> <span class="text-brand-lime">$0.018</span> <span class="text-white/30">(cheapest)</span><br>
+<span class="text-white">Web:</span> <span class="text-white/60">$0.019</span><br>
+<span class="text-white">Email:</span> <span class="text-white/60">$0.021</span><br>
+<span class="text-white">WhatsApp:</span> <span class="text-signal-amber">$0.023</span><br>
+<span class="text-white">Telegram:</span> <span class="text-signal-amber">$0.022</span><br>
+<span class="text-white">SDK:</span> <span class="text-signal-red">$0.028</span> <span class="text-white/30">(priciest)</span>
+</div>
+<p class="text-xs text-white/50">SDK white-label partners get discounted rates but cost more to serve. Without channel metering, you subsidize the wrong channels.</p>
+</div>
+</div>
+</div>
+
+<div class="absolute bottom-5 md:bottom-6 left-6 md:left-16 text-white/40 text-xs font-medium">04 / 11</div>
+</section>
+
+<!-- S5 SOLUTION — TRACK / PRICE / PROTECT -->
+<section class="slide grain flex flex-col items-center justify-center px-4 md:px-20" style="background:linear-gradient(160deg,#003024 0%,#001a14 50%,#002a1f 100%)">
+<div class="text-center max-w-3xl anim"><h2 class="font-extrabold text-2xl md:text-[48px] text-white leading-tight tracking-tight">One platform.<br><span class="text-brand-lime lime-glow">Three pillars.</span></h2></div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-10 md:mt-12 w-full max-w-5xl">
+<!-- TRACK -->
+<div class="rounded-2xl p-5 md:p-7 anim d1" style="background:rgba(164,234,73,.04);border:1px solid rgba(164,234,73,.15)">
+<div class="w-12 h-12 rounded-xl bg-brand-lime/10 flex items-center justify-center mb-5 border border-brand-lime/20"><svg class="w-6 h-6 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5"/></svg></div>
+<p class="font-extrabold text-lg md:text-xl text-brand-lime mb-2">TRACK</p>
+<p class="font-bold text-base text-white mb-2">Every page. Every model. Every channel.</p>
+<p class="text-sm text-white/60 leading-relaxed">Meter 4 LLMs per document across WhatsApp, Email, API, SDK, Web &amp; Telegram. <span class="text-brand-lime font-semibold">15,000 events/second.</span></p>
+</div>
+<!-- PRICE -->
+<div class="rounded-2xl p-5 md:p-7 anim d2" style="background:rgba(121,192,255,.04);border:1px solid rgba(121,192,255,.15)">
+<div class="w-12 h-12 rounded-xl bg-[#79c0ff]/10 flex items-center justify-center mb-5 border border-[#79c0ff]/20"><svg class="w-6 h-6 text-[#79c0ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+<p class="font-extrabold text-lg md:text-xl text-[#79c0ff] mb-2">PRICE</p>
+<p class="font-bold text-base text-white mb-2">Dynamic pricing for every tier.</p>
+<p class="text-sm text-white/60 leading-relaxed">Flat, tiered, usage, hybrid, committed, outcome-based. Run <span class="text-white font-semibold">$0.52&rarr;$0.12</span> tiers + API + SDK + white-label from one engine.</p>
+</div>
+<!-- PROTECT -->
+<div class="rounded-2xl p-5 md:p-7 anim d3" style="background:rgba(245,166,35,.04);border:1px solid rgba(245,166,35,.15)">
+<div class="w-12 h-12 rounded-xl bg-signal-amber/10 flex items-center justify-center mb-5 border border-signal-amber/20"><svg class="w-6 h-6 text-signal-amber" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg></div>
+<p class="font-extrabold text-lg md:text-xl text-signal-amber mb-2">PROTECT</p>
+<p class="font-bold text-base text-white mb-2">Margins visible. Always.</p>
+<p class="text-sm text-white/60 leading-relaxed">Auto-alerts when cost-per-page exceeds thresholds. <span class="text-signal-amber font-semibold">Per-customer, per-tier, per-channel</span> margin tracking in real-time.</p>
+</div>
+</div>
+<div class="absolute bottom-5 md:bottom-6 left-6 md:left-20 text-white/40 text-xs font-medium">05 / 11</div>
+</section>
+
+<!-- S6 PRODUCT — THE DODOCS DATA LAYER -->
+<section class="slide grain flex flex-col items-center justify-center px-4 md:px-16" style="background:linear-gradient(160deg,#0a0a0a 0%,#041a14 40%,#0a0a0a 100%);background-image:radial-gradient(ellipse at center,rgba(0,48,36,.10) 0%,transparent 50%)">
+<div class="anim"><span class="inline-block bg-brand-lime text-brand-teal text-[10px] md:text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full">DoDocs AI &times; UnitPay</span></div>
+<div class="text-center max-w-3xl mt-3 anim d1"><h2 class="font-extrabold text-2xl md:text-[40px] text-white leading-tight tracking-tight">What every page processed<br>looks like <span class="text-brand-lime lime-glow">inside UnitPay.</span></h2></div>
+
+<div class="mt-6 md:mt-8 w-full max-w-5xl flex flex-col md:flex-row gap-4 md:gap-5">
+<!-- Transaction Breakdown -->
+<div class="flex-1 anim d2">
+<div class="bg-card-dark rounded-2xl border border-card-border overflow-hidden" style="box-shadow:0 16px 48px rgba(0,0,0,.5)">
+<div class="flex items-center justify-between px-4 py-2.5 border-b border-card-border"><span class="text-xs font-medium text-white">Transaction Breakdown</span><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-brand-lime" style="animation:livePulse 2s infinite"></span><span class="text-[9px] font-bold text-brand-lime">LIVE</span></div></div>
+<div class="p-4 font-mono text-xs leading-[1.9]">
+<span class="text-white/40">Document:</span> <span class="text-white">INV-2024-0847.pdf</span><br>
+<span class="text-white/40">Channel:</span> <span class="text-brand-lime">WhatsApp</span><br>
+<span class="text-white/40">Tier:</span> <span class="text-white">Business ($0.26/pg)</span><br>
+<span class="text-white/20">─────────────────────</span><br>
+<span class="text-signal-amber">GPT-4o:</span> <span class="text-white/70 ml-6">$0.0034</span><br>
+<span class="text-[#79c0ff]">Claude:</span> <span class="text-white/70 ml-6">$0.0089</span><br>
+<span class="text-purple-400">Llama 3:</span> <span class="text-white/70 ml-5">$0.0012</span><br>
+<span class="text-brand-lime">Mixtral:</span> <span class="text-white/70 ml-5">$0.0018</span><br>
+<span class="text-teal-400">Azure:</span> <span class="text-white/70 ml-7">$0.0041</span><br>
+<span class="text-white/40">Channel:</span> <span class="text-white/70 ml-5">$0.0006</span><br>
+<span class="text-white/20">─────────────────────</span><br>
+<span class="text-white/40">COGS:</span> <span class="text-white font-semibold ml-8">$0.0200</span><br>
+<span class="text-white/40">Revenue:</span> <span class="text-white font-semibold ml-5">$0.2600</span><br>
+<span class="text-brand-lime font-bold">MARGIN: <span class="ml-4">92.3%</span></span>
+</div>
+</div>
+</div>
+
+<!-- Code Block -->
+<div class="flex-1 anim d3">
+<div class="rounded-2xl overflow-hidden border border-card-border" style="background:#0d1117;box-shadow:0 16px 48px rgba(0,0,0,.5)">
+<div class="flex items-center gap-2 px-4 py-2.5 border-b border-card-border"><div class="flex gap-1.5"><div class="w-2.5 h-2.5 rounded-full bg-signal-red/40"></div><div class="w-2.5 h-2.5 rounded-full bg-signal-amber/40"></div><div class="w-2.5 h-2.5 rounded-full bg-brand-lime/40"></div></div><span class="text-[10px] text-white/30 font-mono ml-2">event-trace.json</span></div>
+<pre class="p-4 font-mono text-xs leading-relaxed overflow-x-auto"><code><span class="text-white/30 select-none mr-3"> 1</span>{
+<span class="text-white/30 select-none mr-3"> 2</span>  <span class="text-[#79c0ff]">"event"</span>: <span class="text-brand-lime">"page_processed"</span>,
+<span class="text-white/30 select-none mr-3"> 3</span>  <span class="text-[#79c0ff]">"customer"</span>: <span class="text-brand-lime">"wafeq-accounting"</span>,
+<span class="text-white/30 select-none mr-3"> 4</span>  <span class="text-[#79c0ff]">"channel"</span>: <span class="text-brand-lime">"whatsapp"</span>,
+<span class="text-white/30 select-none mr-3"> 5</span>  <span class="text-[#79c0ff]">"models"</span>: [
+<span class="text-white/30 select-none mr-3"> 6</span>    <span class="text-brand-lime">"gpt-4o"</span>, <span class="text-brand-lime">"claude-3.5"</span>,
+<span class="text-white/30 select-none mr-3"> 7</span>    <span class="text-brand-lime">"llama-3"</span>, <span class="text-brand-lime">"mixtral"</span>
+<span class="text-white/30 select-none mr-3"> 8</span>  ],
+<span class="text-white/30 select-none mr-3"> 9</span>  <span class="text-[#79c0ff]">"total_cost"</span>: <span class="text-signal-amber">0.0200</span>,
+<span class="text-white/30 select-none mr-3">10</span>  <span class="text-[#79c0ff]">"revenue"</span>: <span class="text-signal-amber">0.2600</span>,
+<span class="text-white/30 select-none mr-3">11</span>  <span class="text-[#79c0ff]">"margin"</span>: <span class="text-brand-lime">0.923</span>
+<span class="text-white/30 select-none mr-3">12</span>}</code></pre>
+</div>
+
+<!-- Margin Trend Mini -->
+<div class="mt-4 bg-card-dark rounded-xl border border-card-border p-4">
+<div class="flex items-center justify-between mb-3"><span class="text-[10px] text-white/50 font-bold uppercase tracking-wider">Margin Trend</span><span class="text-xs font-bold text-brand-lime">&#8593; 92.3%</span></div>
+<svg viewBox="0 0 280 60" class="w-full"><line x1="0" y1="55" x2="280" y2="55" stroke="#1f1f1f" stroke-width=".5"/><line x1="0" y1="30" x2="280" y2="30" stroke="#1f1f1f" stroke-width=".5"/><path d="M10,42 L56,36 L112,30 L168,22 L224,14 L270,8 L270,55 L10,55Z" fill="rgba(164,234,73,.08)"/><polyline points="10,42 56,36 112,30 168,22 224,14 270,8" fill="none" stroke="#a4ea49" stroke-width="2.5" stroke-linecap="round"/><circle cx="10" cy="42" r="2.5" fill="#a4ea49"/><circle cx="270" cy="8" r="3" fill="#a4ea49"/><text x="16" y="40" font-size="8" fill="#6b7280" font-family="Inter">78%</text><text x="248" y="6" font-size="8" fill="#a4ea49" font-family="Inter" font-weight="bold">92.3%</text></svg>
+</div>
+</div>
+</div>
+<div class="absolute bottom-5 md:bottom-6 left-6 md:left-16 text-white/40 text-xs font-medium">06 / 11</div>
+</section>
+
+<!-- S7 TOKEN ECONOMICS ENGINE — MODEL COST DASHBOARD -->
+<section class="slide grain flex flex-col items-center justify-center px-4 md:px-12" style="background:linear-gradient(160deg,#0a0a0a 0%,#0d1a14 40%,#0a0a0a 100%);background-image:radial-gradient(ellipse at 30% 40%,rgba(164,234,73,.04) 0%,transparent 50%)">
+<div class="anim"><span class="inline-block bg-brand-lime/10 border border-brand-lime/20 text-brand-lime text-[10px] md:text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full">Token Economics</span></div>
+<div class="text-center max-w-4xl mt-3 anim d1"><h2 class="font-extrabold text-2xl md:text-[40px] text-white leading-tight tracking-tight">Every LLM running inside DoDocs —<br><span class="text-brand-lime lime-glow">cost-attributed in real time.</span></h2></div>
+
+<!-- KPI Row -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-6 md:mt-8 w-full max-w-5xl">
+<div class="bg-card-dark rounded-xl border border-card-border p-3 md:p-4 text-center anim d1"><p class="text-[10px] text-white/50 font-bold uppercase tracking-wider mb-1">Total Pages</p><p class="text-2xl md:text-3xl font-extrabold text-white">47,832</p></div>
+<div class="bg-card-dark rounded-xl border border-card-border p-3 md:p-4 text-center anim d2"><p class="text-[10px] text-white/50 font-bold uppercase tracking-wider mb-1">Inference Events</p><p class="text-2xl md:text-3xl font-extrabold text-white">191K</p></div>
+<div class="bg-card-dark rounded-xl border border-card-border p-3 md:p-4 text-center anim d3"><p class="text-[10px] text-white/50 font-bold uppercase tracking-wider mb-1">Avg Margin</p><p class="text-2xl md:text-3xl font-extrabold text-brand-lime">89.4%</p></div>
+<div class="bg-card-dark rounded-xl border border-card-border p-3 md:p-4 text-center anim d4"><p class="text-[10px] text-white/50 font-bold uppercase tracking-wider mb-1">Total COGS</p><p class="text-2xl md:text-3xl font-extrabold text-signal-amber">$956</p></div>
+</div>
+
+<!-- Model Cost Table + Channel Margin Bars -->
+<div class="mt-5 md:mt-6 w-full max-w-5xl flex flex-col md:flex-row gap-4 md:gap-5">
+<!-- Model Cost Table -->
+<div class="flex-1 anim d5">
+<div class="bg-card-dark rounded-2xl border border-card-border overflow-hidden" style="box-shadow:0 12px 40px rgba(0,0,0,.4)">
+<div class="flex items-center justify-between px-4 py-2.5 border-b border-card-border"><span class="text-xs font-medium text-white">Per-Model Cost Breakdown</span><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-brand-lime" style="animation:livePulse 2s infinite"></span><span class="text-[9px] font-bold text-brand-lime">LIVE</span></div></div>
+<table class="w-full">
+<thead><tr class="border-b border-card-border"><th class="py-2 px-3 text-left text-[9px] font-bold text-white/50 uppercase tracking-wider">Model</th><th class="py-2 px-3 text-right text-[9px] font-bold text-white/50 uppercase tracking-wider">Cost/Page</th><th class="py-2 px-3 text-right text-[9px] font-bold text-white/50 uppercase tracking-wider">Monthly</th><th class="py-2 px-3 text-right text-[9px] font-bold text-white/50 uppercase tracking-wider">% COGS</th></tr></thead>
+<tbody class="font-mono text-xs">
+<tr class="border-b border-card-border/50"><td class="py-2.5 px-3"><div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-[#79c0ff]"></div><span class="text-white">Claude 3.5</span></div></td><td class="py-2.5 px-3 text-right text-white/70">$0.0089</td><td class="py-2.5 px-3 text-right text-white/70">$425.70</td><td class="py-2.5 px-3 text-right"><span class="text-signal-amber font-bold">56%</span></td></tr>
+<tr class="border-b border-card-border/50"><td class="py-2.5 px-3"><div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-signal-amber"></div><span class="text-white">GPT-4o</span></div></td><td class="py-2.5 px-3 text-right text-white/70">$0.0034</td><td class="py-2.5 px-3 text-right text-white/70">$162.63</td><td class="py-2.5 px-3 text-right text-white/70">22%</td></tr>
+<tr class="border-b border-card-border/50"><td class="py-2.5 px-3"><div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-brand-lime"></div><span class="text-white">Mixtral</span></div></td><td class="py-2.5 px-3 text-right text-white/70">$0.0018</td><td class="py-2.5 px-3 text-right text-white/70">$86.10</td><td class="py-2.5 px-3 text-right text-white/70">12%</td></tr>
+<tr><td class="py-2.5 px-3"><div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-purple-400"></div><span class="text-white">Llama 3</span></div></td><td class="py-2.5 px-3 text-right text-white/70">$0.0012</td><td class="py-2.5 px-3 text-right text-white/70">$57.40</td><td class="py-2.5 px-3 text-right text-white/70">8%</td></tr>
+</tbody>
+</table>
+</div>
+<!-- Insight Callout -->
+<div class="mt-3 rounded-xl p-3 flex items-start gap-3" style="background:rgba(245,166,35,.05);border:1px solid rgba(245,166,35,.15)">
+<svg class="w-5 h-5 text-signal-amber flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"/></svg>
+<p class="text-xs text-white/70"><span class="text-signal-amber font-bold">Insight:</span> Claude consumes 56% of total inference COGS. Routing ~40% of simple pages to Llama 3 saves <span class="text-white font-semibold">$3,200/month</span> — $38K/year.</p>
+</div>
+</div>
+
+<!-- Channel Margin Bars -->
+<div class="w-full md:w-80 anim d6">
+<div class="bg-card-dark rounded-2xl border border-card-border p-4 md:p-5" style="box-shadow:0 12px 40px rgba(0,0,0,.4)">
+<p class="text-xs font-bold text-white mb-4">Channel Margin Distribution</p>
+<div class="space-y-3">
+<div><div class="flex justify-between mb-1"><span class="text-[11px] text-white/70">API</span><span class="text-[11px] font-bold text-brand-lime">93.1%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-brand-lime rounded-full margin-fill" style="width:93.1%"></div></div></div>
+<div><div class="flex justify-between mb-1"><span class="text-[11px] text-white/70">WhatsApp</span><span class="text-[11px] font-bold text-brand-lime">91.2%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-brand-lime rounded-full margin-fill" style="width:91.2%"></div></div></div>
+<div><div class="flex justify-between mb-1"><span class="text-[11px] text-white/70">Web</span><span class="text-[11px] font-bold text-brand-lime">90.8%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-brand-lime rounded-full margin-fill" style="width:90.8%"></div></div></div>
+<div><div class="flex justify-between mb-1"><span class="text-[11px] text-white/70">Email</span><span class="text-[11px] font-bold text-brand-lime">89.7%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-brand-lime rounded-full margin-fill" style="width:89.7%"></div></div></div>
+<div><div class="flex justify-between mb-1"><span class="text-[11px] text-white/70">SDK</span><span class="text-[11px] font-bold text-signal-amber">78.4%</span></div><div class="h-2 bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-signal-amber rounded-full margin-fill" style="width:78.4%"></div></div></div>
+</div>
+<div class="mt-4 pt-3 border-t border-card-border flex items-center gap-2">
+<svg class="w-4 h-4 text-signal-amber flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+<p class="text-[10px] text-white/50">SDK margin below 80% — white-label discount impacting profitability</p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="absolute bottom-5 md:bottom-6 left-6 md:left-12 text-white/40 text-xs font-medium">07 / 11</div>
+</section>
+
+<!-- S8 AI COMPANY STORY — BEFORE & AFTER -->
+<section class="slide grain flex flex-col items-center justify-center px-4 md:px-16" style="background:linear-gradient(160deg,#003024 0%,#001a14 50%,#002a1f 100%);background-image:radial-gradient(ellipse at center,rgba(164,234,73,.03) 0%,transparent 50%)">
+<div class="text-center max-w-4xl anim"><h2 class="font-extrabold text-2xl md:text-[44px] text-white leading-tight tracking-tight">DoDocs AI: before &amp; after.</h2></div>
+
+<!-- Timeline -->
+<div class="mt-8 md:mt-10 w-full max-w-4xl flex flex-col md:flex-row gap-5 md:gap-0">
+<!-- BEFORE -->
+<div class="flex-1 anim d1">
+<div class="rounded-2xl p-5 md:p-6" style="background:rgba(255,59,59,.03);border:1px solid rgba(255,59,59,.12)">
+<div class="flex items-center gap-2 mb-4"><div class="w-3 h-3 rounded-full bg-signal-red"></div><p class="text-xs font-bold text-signal-red uppercase tracking-wider">Before UnitPay</p></div>
+<div class="space-y-3">
+<div class="flex items-start gap-3"><svg class="w-4 h-4 text-signal-red flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg><p class="text-sm text-white/70">$500K MRR. Margins? <span class="text-signal-red font-semibold">Unknown.</span></p></div>
+<div class="flex items-start gap-3"><svg class="w-4 h-4 text-signal-red flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg><p class="text-sm text-white/70">4 LLMs billed as one flat cost</p></div>
+<div class="flex items-start gap-3"><svg class="w-4 h-4 text-signal-red flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg><p class="text-sm text-white/70">6 channels — no channel-level P&amp;L</p></div>
+<div class="flex items-start gap-3"><svg class="w-4 h-4 text-signal-red flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg><p class="text-sm text-white/70">$0.52&rarr;$0.12 tiers — manual overage tracking</p></div>
+<div class="flex items-start gap-3"><svg class="w-4 h-4 text-signal-red flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg><p class="text-sm text-white/70">Pricing decisions based on guesswork</p></div>
+</div>
+</div>
+</div>
+
+<!-- Arrow -->
+<div class="hidden md:flex items-center justify-center px-4"><svg class="w-10 h-10 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg></div>
+<div class="flex md:hidden items-center justify-center py-2"><svg class="w-8 h-8 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3"/></svg></div>
+
+<!-- AFTER -->
+<div class="flex-1 anim d2">
+<div class="rounded-2xl p-5 md:p-6" style="background:rgba(164,234,73,.04);border:1px solid rgba(164,234,73,.15)">
+<div class="flex items-center gap-2 mb-4"><div class="w-3 h-3 rounded-full bg-brand-lime"></div><p class="text-xs font-bold text-brand-lime uppercase tracking-wider">After UnitPay</p></div>
+<div class="space-y-3">
+<div class="flex items-start gap-3"><svg class="w-4 h-4 text-brand-lime flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg><p class="text-sm text-white/70">$500K MRR. <span class="text-brand-lime font-semibold">89.4% average margin — verified.</span></p></div>
+<div class="flex items-start gap-3"><svg class="w-4 h-4 text-brand-lime flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg><p class="text-sm text-white/70">Per-model cost: Claude 56%, GPT-4o 22%, Mixtral 12%, Llama 8%</p></div>
+<div class="flex items-start gap-3"><svg class="w-4 h-4 text-brand-lime flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg><p class="text-sm text-white/70">Channel margins: API 93.1% → SDK 78.4% — actionable</p></div>
+<div class="flex items-start gap-3"><svg class="w-4 h-4 text-brand-lime flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg><p class="text-sm text-white/70">$0.52&rarr;$0.12 overage rates handled automatically</p></div>
+<div class="flex items-start gap-3"><svg class="w-4 h-4 text-brand-lime flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg><p class="text-sm text-white/70">Pricing simulations before any tier change goes live</p></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Quote Block -->
+<div class="mt-6 md:mt-8 w-full max-w-3xl anim d3">
+<div class="rounded-xl p-4 md:p-5 flex items-start gap-4" style="background:rgba(164,234,73,.03);border:1px solid rgba(164,234,73,.08)">
+<svg class="w-8 h-8 text-brand-lime/30 flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11H10v10H0z"/></svg>
+<div><p class="text-sm md:text-base text-white/80 italic leading-relaxed">"We didn't know Claude was eating 56% of our inference cost until we could see every model, every page, every channel broken out in real time."</p><p class="text-xs text-brand-lime font-semibold mt-2">— What DoDocs AI could say after 30 days with UnitPay</p></div>
+</div>
+</div>
+
+<!-- 3 Metric Cards -->
+<div class="mt-5 grid grid-cols-3 gap-3 md:gap-4 w-full max-w-3xl">
+<div class="bg-card-dark rounded-xl border border-card-border p-3 md:p-4 text-center anim d4"><p class="text-xl md:text-3xl font-extrabold text-brand-lime">$3.2K</p><p class="text-[10px] text-white/50 mt-1">Monthly savings<br>(model routing)</p></div>
+<div class="bg-card-dark rounded-xl border border-card-border p-3 md:p-4 text-center anim d5"><p class="text-xl md:text-3xl font-extrabold text-white">89.4%</p><p class="text-[10px] text-white/50 mt-1">Verified avg margin<br>(was unknown)</p></div>
+<div class="bg-card-dark rounded-xl border border-card-border p-3 md:p-4 text-center anim d6"><p class="text-xl md:text-3xl font-extrabold text-signal-amber">56%</p><p class="text-[10px] text-white/50 mt-1">Claude's share of<br>total COGS</p></div>
+</div>
+
+<div class="absolute bottom-5 md:bottom-6 left-6 md:left-16 text-white/40 text-xs font-medium">08 / 11</div>
+</section>
+
+<!-- S9 FULL STACK — 5-LAYER ARCHITECTURE -->
+<section class="slide grain flex flex-col items-center justify-center px-4 md:px-12" style="background:linear-gradient(160deg,#0a0a0a 0%,#041a14 40%,#0a0a0a 100%);background-image:radial-gradient(ellipse at 50% 60%,rgba(0,48,36,.08) 0%,transparent 50%)">
+<div class="text-center max-w-4xl anim"><h2 class="font-extrabold text-2xl md:text-[44px] text-white leading-tight tracking-tight">The complete AI revenue stack.<br><span class="text-brand-lime lime-glow">5 layers. One platform.</span></h2></div>
+
+<div class="mt-8 md:mt-10 w-full max-w-5xl flex flex-col md:flex-row gap-5 md:gap-6">
+<!-- WITHOUT Column -->
+<div class="flex-1 anim d1">
+<div class="rounded-2xl overflow-hidden" style="background:rgba(255,59,59,.03);border:1px solid rgba(255,59,59,.1)">
+<div class="px-4 py-3 border-b flex items-center gap-2" style="border-color:rgba(255,59,59,.1)"><div class="w-3 h-3 rounded-full bg-signal-red/50"></div><span class="text-xs font-bold text-signal-red uppercase tracking-wider">Without UnitPay</span></div>
+<div class="p-4 md:p-5 space-y-2.5">
+<div class="rounded-lg p-3 flex items-center gap-3" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05)">
+<span class="text-[10px] font-bold text-white/30 w-6">L1</span>
+<div class="flex-1"><p class="text-xs font-semibold text-white/50">Ingestion</p><p class="text-[10px] text-white/30">Manual logging, CSV imports, guesswork</p></div>
+<svg class="w-4 h-4 text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+</div>
+<div class="rounded-lg p-3 flex items-center gap-3" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05)">
+<span class="text-[10px] font-bold text-white/30 w-6">L2</span>
+<div class="flex-1"><p class="text-xs font-semibold text-white/50">Metering</p><p class="text-[10px] text-white/30">Stripe usage records, no model detail</p></div>
+<svg class="w-4 h-4 text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+</div>
+<div class="rounded-lg p-3 flex items-center gap-3" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05)">
+<span class="text-[10px] font-bold text-white/30 w-6">L3</span>
+<div class="flex-1"><p class="text-xs font-semibold text-white/50">Pricing</p><p class="text-[10px] text-white/30">Fixed tiers, manual overages</p></div>
+<span class="text-[9px] font-bold text-signal-amber">Partial</span>
+</div>
+<div class="rounded-lg p-3 flex items-center gap-3" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05)">
+<span class="text-[10px] font-bold text-white/30 w-6">L4</span>
+<div class="flex-1"><p class="text-xs font-semibold text-white/50">Billing</p><p class="text-[10px] text-white/30">Monthly invoice, no per-page detail</p></div>
+<span class="text-[9px] font-bold text-signal-amber">Partial</span>
+</div>
+<div class="rounded-lg p-3 flex items-center gap-3" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05)">
+<span class="text-[10px] font-bold text-white/30 w-6">L5</span>
+<div class="flex-1"><p class="text-xs font-semibold text-white/50">Intelligence</p><p class="text-[10px] text-white/30">No margin tracking, no alerts, no simulation</p></div>
+<svg class="w-4 h-4 text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+</div>
+</div>
+</div>
+</div>
+
+<!-- WITH Column -->
+<div class="flex-1 anim d2">
+<div class="rounded-2xl overflow-hidden" style="background:rgba(164,234,73,.03);border:1px solid rgba(164,234,73,.12)">
+<div class="px-4 py-3 border-b flex items-center gap-2" style="border-color:rgba(164,234,73,.1)"><div class="w-3 h-3 rounded-full bg-brand-lime"></div><span class="text-xs font-bold text-brand-lime uppercase tracking-wider">With UnitPay</span></div>
+<div class="p-4 md:p-5 space-y-2.5">
+<div class="rounded-lg p-3 flex items-center gap-3" style="background:rgba(164,234,73,.03);border:1px solid rgba(164,234,73,.06)">
+<span class="text-[10px] font-bold text-brand-lime/60 w-6">L1</span>
+<div class="flex-1"><p class="text-xs font-semibold text-white">Ingestion</p><p class="text-[10px] text-white/50">Ingest events from WhatsApp, API, SDK, Email, Web, Telegram</p></div>
+<svg class="w-4 h-4 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+</div>
+<div class="rounded-lg p-3 flex items-center gap-3" style="background:rgba(164,234,73,.03);border:1px solid rgba(164,234,73,.06)">
+<span class="text-[10px] font-bold text-brand-lime/60 w-6">L2</span>
+<div class="flex-1"><p class="text-xs font-semibold text-white">Metering</p><p class="text-[10px] text-white/50">Per-page, per-model, per-channel, per-customer metering</p></div>
+<svg class="w-4 h-4 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+</div>
+<div class="rounded-lg p-3 flex items-center gap-3" style="background:rgba(164,234,73,.03);border:1px solid rgba(164,234,73,.06)">
+<span class="text-[10px] font-bold text-brand-lime/60 w-6">L3</span>
+<div class="flex-1"><p class="text-xs font-semibold text-white">Pricing</p><p class="text-[10px] text-white/50">Dynamic tiers: $0.52→$0.12, committed, outcome-based</p></div>
+<svg class="w-4 h-4 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+</div>
+<div class="rounded-lg p-3 flex items-center gap-3" style="background:rgba(164,234,73,.03);border:1px solid rgba(164,234,73,.06)">
+<span class="text-[10px] font-bold text-brand-lime/60 w-6">L4</span>
+<div class="flex-1"><p class="text-xs font-semibold text-white">Billing</p><p class="text-[10px] text-white/50">Auto-invoice per tier: Free, Professional, Business, Enterprise, Custom</p></div>
+<svg class="w-4 h-4 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+</div>
+<div class="rounded-lg p-3 flex items-center gap-3" style="background:rgba(164,234,73,.03);border:1px solid rgba(164,234,73,.06)">
+<span class="text-[10px] font-bold text-brand-lime/60 w-6">L5</span>
+<div class="flex-1"><p class="text-xs font-semibold text-white">Intelligence</p><p class="text-[10px] text-white/50">Real-time margins, model routing alerts, pricing simulation</p></div>
+<svg class="w-4 h-4 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="absolute bottom-5 md:bottom-6 left-6 md:left-12 text-white/40 text-xs font-medium">09 / 11</div>
+</section>
+
+<!-- S10 TRACTION -->
+<section class="slide grain flex flex-col items-center justify-center px-4 md:px-20" style="background:linear-gradient(160deg,#0a0a0a 0%,#041a14 40%,#0a0a0a 100%)">
+<div class="text-center max-w-4xl anim"><h2 class="font-bold text-xl md:text-[44px] text-white leading-tight">Built for <span class="text-brand-lime lime-glow">AI companies</span> like DoDocs.</h2></div>
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mt-10 md:mt-12 w-full max-w-5xl text-center">
+<div class="anim d1"><p class="text-3xl md:text-[64px] font-extrabold text-brand-lime leading-none">15K</p><p class="text-sm md:text-base font-medium text-white mt-2">events/second</p><p class="text-[11px] md:text-[13px] text-white/50 mt-1">ingestion throughput</p></div>
+<div class="anim d2"><p class="text-3xl md:text-[64px] font-extrabold text-brand-lime leading-none">135</p><p class="text-sm md:text-base font-medium text-white mt-2">currencies</p><p class="text-[11px] md:text-[13px] text-white/50 mt-1">global billing</p></div>
+<div class="anim d3"><p class="text-3xl md:text-[64px] font-extrabold text-brand-lime leading-none"><span class="text-2xl md:text-[40px]">$</span>0</p><p class="text-sm md:text-base font-medium text-white mt-2">setup cost</p><p class="text-[11px] md:text-[13px] text-white/50 mt-1">free tier available</p></div>
+<div class="anim d4"><p class="text-3xl md:text-[64px] font-extrabold text-brand-lime leading-none">7d</p><p class="text-sm md:text-base font-medium text-white mt-2">time to live</p><p class="text-[11px] md:text-[13px] text-white/50 mt-1">average integration</p></div>
+</div>
+
+<!-- Comparison Table -->
+<div class="mt-10 w-full max-w-5xl anim d5">
+<div class="bg-card-dark rounded-2xl border border-card-border overflow-hidden" style="box-shadow:0 12px 40px rgba(0,0,0,.4)">
+<table class="w-full">
+<thead><tr class="bg-brand-black border-b border-card-border"><th class="py-3 px-4 text-left text-[10px] md:text-[11px] font-bold text-white/50 uppercase tracking-wider">Feature</th><th class="py-3 px-2 text-center text-[10px] md:text-[11px] font-bold text-white/50 uppercase tracking-wider">Stripe</th><th class="py-3 px-2 text-center text-[10px] md:text-[11px] font-bold text-white/50 uppercase tracking-wider">Chargebee</th><th class="py-3 px-2 text-center text-[10px] md:text-[11px] font-bold text-white/50 uppercase tracking-wider">Orb</th><th class="py-3 px-2 text-center text-[10px] md:text-[11px] font-bold text-brand-lime uppercase tracking-wider">UnitPay</th></tr></thead>
+<tbody class="text-xs md:text-sm">
+<tr class="border-b border-card-border/50"><td class="py-2.5 px-4 text-white font-medium">Per-page metering</td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 mx-auto text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 mx-auto text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td><td class="py-2.5 px-2 text-center"><span class="text-signal-amber text-xs font-bold">Basic</span></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 mx-auto text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></td></tr>
+<tr class="border-b border-card-border/50"><td class="py-2.5 px-4 text-white font-medium">Multi-model cost tracking</td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 mx-auto text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 mx-auto text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 mx-auto text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 mx-auto text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></td></tr>
+<tr class="border-b border-card-border/50"><td class="py-2.5 px-4 text-white font-medium">Pricing simulation</td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 mx-auto text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 mx-auto text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 mx-auto text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 mx-auto text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></td></tr>
+<tr class="border-b border-card-border/50"><td class="py-2.5 px-4 text-white font-medium">Multi-channel billing</td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 mx-auto text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td><td class="py-2.5 px-2 text-center"><span class="text-signal-amber text-xs font-bold">Partial</span></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 mx-auto text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 mx-auto text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></td></tr>
+<tr><td class="py-2.5 px-4 text-white font-medium">Real-time margins</td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 mx-auto text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 mx-auto text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 mx-auto text-signal-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 mx-auto text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="absolute bottom-5 md:bottom-6 left-6 md:left-20 text-white/40 text-xs font-medium">10 / 11</div>
+</section>
+
+<!-- S11 CTA -->
+<section class="slide grain flex flex-col items-center justify-center px-4 md:px-20" style="background:linear-gradient(160deg,#0a0a0a 0%,#041a14 40%,#0a0a0a 100%);background-image:radial-gradient(ellipse at center,rgba(164,234,73,.05) 0%,transparent 60%)">
+<div class="text-center max-w-3xl anim"><h2 class="font-extrabold text-2xl md:text-[52px] text-white leading-tight tracking-tight">DoDocs AI is in the new era.<br><span class="text-brand-lime lime-glow">Your billing should be too.</span></h2></div>
+
+<div class="mt-6 space-y-3 anim d1">
+<div class="flex items-center gap-3"><div class="w-5 h-5 rounded-full bg-brand-lime/15 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></div><span class="text-base md:text-lg text-white">Your 5 pricing tiers — auto-metered</span></div>
+<div class="flex items-center gap-3"><div class="w-5 h-5 rounded-full bg-brand-lime/15 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></div><span class="text-base md:text-lg text-white">Your 4 LLMs — cost-attributed per page</span></div>
+<div class="flex items-center gap-3"><div class="w-5 h-5 rounded-full bg-brand-lime/15 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></div><span class="text-base md:text-lg text-white">Your 6 channels — margins visible per channel</span></div>
+<div class="flex items-center gap-3"><div class="w-5 h-5 rounded-full bg-brand-lime/15 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></div><span class="text-base md:text-lg font-medium text-brand-lime">See the real margin behind every page you process</span></div>
+</div>
+
+<div class="mt-8 anim d2"><a href="mailto:vijay@useunitpay.com?subject=DoDocs%20AI%20—%20Pilot%20Request" class="inline-block bg-brand-lime text-brand-teal font-bold text-base md:text-lg px-8 md:px-10 py-3.5 md:py-4 rounded-full" style="animation:pulseGlow 3s ease-in-out infinite;box-shadow:0 4px 24px rgba(164,234,73,.3)">Book a Pilot with DoDocs AI's Data &rarr;</a></div>
+<p class="text-sm text-white/50 mt-3 anim d2">Dan, let's show you the real margins behind every page DoDocs processes.</p>
+
+<div class="mt-8 flex flex-col md:flex-row items-center gap-6 anim d3">
+<div class="w-24 h-24 bg-white rounded-lg flex items-center justify-center"><div class="text-xs font-mono text-brand-black font-bold">QR</div></div>
+<div class="text-center md:text-left">
+<p class="text-sm md:text-base font-medium text-white">vijay@useunitpay.com</p>
+<p class="text-sm text-white/50 mt-1">useunitpay.com</p>
+</div>
+</div>
+<p class="text-[13px] font-medium text-brand-lime mt-3 anim d4">Your AI revenue engine is live. Scan to walk through it.</p>
+
+<div class="mt-6 anim d5"><svg class="h-8 w-auto" viewBox="0 0 524 133" fill="none"><path d="M23.19 .1C44.63.05 66.07.06 87.52.03c7.7.04 15.35-.05 23.03.06 6.43.4 12.34 3.68 16.79 8.28 8.39 8.53 6.41 21 6.56 31.88-.26 23-.43 46.17-.36 69.18-.59 10.88-8.52 20.78-19.32 22.93-6.76 1.22-13.78.4-20.65.64-15.78.01-31.58.03-47.38.04-7.48-.01-14.91.05-22.34 0C17.61 132.8 11.48 129.63 7.26 125.2.37 117.92-.1 110.08.29 100.52V71.65c-.02-13.93-.05-27.93-.06-41.86C-1.49 15.15 8.01 1.45 23.13.1h.06z" fill="#A4EA49"/><path d="M121 80.14c-.04-.63-.1-1.25-.19-1.84-7.66-.18-15.57.35-22.77-.18.01-11.83.02-23.56.03-35.31-.05-12.06-11.33-22.37-23.27-21.78-8.9-.48-17.59 5.87-20.78 13.94-7.72 22.05 5.8 49.78 29.56 54.02-4.27 10.48-18.83 15-29.07 10.27-12.22-5.19-14.32-18.06-13.61-30 .23-12.17-.27-24.83.1-36.87H29.34c-.52 3.09-.02 6.87-.19 10.19v27.32c-.98 16.04 2.2 30.33 16.83 38.74 17.4 9.83 40.35 1.92 48.29-16.42.36-.77.36-1.72.84-2.39 8.38-.22 17 .35 24.9-.2-.06-1.4-.04-2.85 0-4.3v-5.3zm-34.48-34.76c-.02 10.75-.04 21.49-.08 32.24-.52-.05-1.02-.11-1.54-.16-.57-.07-1.06-.22-1.6-.43-7.93-2.89-14.37-8.69-17.6-16.56-1.6-3.93-2.22-8.23-2.07-12.46 0-1.33 0-2.81-.01-4.15.02-3.12 1.32-5.89 3.44-8.16 4.54-4.14 10.36-4.11 15.29-.7 2.14 1.7 3.54 4.17 4.09 6.84.09 1.18.09 2.36.08 3.54z" fill="#003024"/><path d="M194.34 109.19c-6.25 0-11.68-1.15-16.28-3.45-4.6-2.3-8.16-5.75-10.67-10.35-2.52-4.67-3.77-10.53-3.77-17.57V32.55h12.93v44.51c0 7.12 1.51 12.36 4.53 15.74 3.02 3.3 7.44 4.96 13.26 4.96 5.89 0 10.31-1.65 13.26-4.96 3.02-3.38 4.53-8.59 4.53-15.66V32.55h12.93v45.27c0 7.04-1.26 12.9-3.77 17.57-2.52 4.6-6.07 8.05-10.67 10.35-4.6 2.3-10.02 3.45-16.28 3.45zm39.39-1.19V50.87h10.99v9.59c1.37-2.87 3.6-5.39 6.69-7.55 3.09-2.15 7.08-3.23 11.96-3.23 6.97 0 12.22 1.9 15.74 5.71 3.52 3.74 5.28 9.23 5.28 16.49V108h-11.86V74.59c0-4.81-1.01-8.44-3.02-10.89-2.01-2.44-5.32-3.66-9.92-3.66-3.3 0-6 .72-8.08 2.16-2.01 1.37-3.52 3.16-4.53 5.39-1.04 2.16-1.47 4.49-1.47 7.01V108h-11.86zm58.79 0V50.87h11.86V108h-11.86zm5.93-63.59c-2.23 0-4.06-.68-5.5-2.05-1.37-1.44-2.05-3.27-2.05-5.5 0-2.23.68-4.02 2.05-5.39 1.44-1.37 3.27-2.05 5.5-2.05 2.23 0 4.02.68 5.39 2.05 1.44 1.37 2.16 3.16 2.16 5.39 0 2.23-.72 4.06-2.16 5.5-1.37 1.37-3.16 2.05-5.39 2.05zm36.6 64.13c-4.31 0-7.83-.61-10.56-1.83-2.66-1.22-4.64-3.13-5.93-5.71-1.22-2.66-1.83-6.07-1.83-10.24V61.01h-8.08V50.87h8.08V37.94h11.86v12.93h14.55V61.01h-14.55v28.13c0 3.38.61 5.75 1.83 7.12 1.29 1.29 3.74 1.94 7.33 1.94 2.16 0 4.31-.11 6.47-.32V108c-1.37.14-2.77.25-4.21.32-1.44.14-3.09.22-4.96.22zm15.67-.54V32.55h27.48c6.76 0 12.33 1.01 16.71 3.02 4.38 1.94 7.62 4.71 9.7 8.3 2.16 3.59 3.23 7.83 3.23 12.72 0 4.89-1.08 9.13-3.23 12.72-2.08 3.59-5.32 6.4-9.7 8.4-4.38 1.94-9.95 2.91-16.71 2.91h-14.55V108h-12.93zm12.93-38.59h13.47c6.83 0 11.5-1.04 14.01-3.13 2.52-2.16 3.77-5.39 3.77-9.7 0-4.24-1.26-7.44-3.77-9.59-2.52-2.16-7.18-3.23-14.01-3.23h-13.47v25.65zm63.12 39.77c-4.1 0-7.62-.76-10.56-2.26-2.88-1.58-5.07-3.74-6.58-6.47-1.51-2.73-2.26-5.78-2.26-9.16 0-5.68 1.69-9.88 5.07-12.61 3.38-2.8 8.33-4.2 14.87-4.2h17.78v-3.13c0-4.31-.97-7.26-2.91-8.84-1.87-1.65-4.85-2.48-8.95-2.48-3.66 0-6.36.58-8.08 1.73-1.73 1.15-2.73 2.73-3.02 4.74h-11.53c.22-3.31 1.26-6.22 3.13-8.73 1.87-2.52 4.49-4.49 7.87-5.93 3.45-1.44 7.51-2.16 12.18-2.16s8.73.72 12.18 2.16c3.52 1.44 6.22 3.7 8.08 6.79 1.94 3.02 2.91 7.04 2.91 12.07v22.74c0 3.02.04 5.68.11 7.98.07 2.23.25 4.42.54 6.58h-10.78c-.22-1.65-.4-3.05-.54-4.2-.07-1.15-.11-2.59-.11-4.31-1.37 2.66-3.74 4.96-7.11 6.9-3.31 1.87-7.4 2.8-12.29 2.8zm3.23-10.35c2.73 0 5.21-.47 7.44-1.4 2.3-.93 4.13-2.34 5.5-4.2 1.44-1.87 2.16-4.13 2.16-6.79v-3.13h-15.63c-3.02 0-5.46.65-7.33 1.94-1.8 1.29-2.69 3.2-2.69 5.71 0 2.37.83 4.28 2.48 5.71 1.73 1.44 4.42 2.16 8.08 2.16zm40.77 31.9c-1.08 0-2.16-.11-3.23-.32V120.07c1.08.22 2.16.32 3.23.32 1.58 0 2.88-.4 3.88-1.19 1.01-.72 1.94-1.98 2.8-3.77.86-1.8 1.87-4.28 3.02-8.44l-24.25-57.13h12.93l17.46 44.19 15.74-44.19h12.07L493.13 108c-2.08 5.32-4.06 9.67-5.93 13.04-1.87 3.38-4 5.82-6.36 7.33-2.37 1.58-5.46 2.37-9.27 2.37z" fill="white"/></svg></div>
+<p class="text-[11px] font-bold uppercase tracking-[4px] text-brand-lime/60 mt-3 anim d6">The AI Revenue Engine</p>
+
+<div class="absolute bottom-5 md:bottom-6 left-6 md:left-20 text-white/40 text-xs font-medium">11 / 11</div>
+</section>
+
+<script>
+// Nav dots
+const slides=document.querySelectorAll('.slide');const navDots=document.getElementById('navDots');const pBar=document.getElementById('pBar');const total=slides.length;
+slides.forEach((_,i)=>{const d=document.createElement('div');d.className='nav-dot';d.addEventListener('click',()=>slides[i].scrollIntoView({behavior:'smooth'}));navDots.appendChild(d)});
+const dots=document.querySelectorAll('.nav-dot');
+// Scroll observer
+function updateNav(){const st=window.scrollY;const dh=document.body.scrollHeight-window.innerHeight;pBar.style.width=(st/dh*100)+'%';const mid=st+window.innerHeight/2;slides.forEach((s,i)=>{const active=mid>=s.offsetTop&&mid<s.offsetTop+s.offsetHeight;dots[i]&&dots[i].classList.toggle('active',active)});}
+window.addEventListener('scroll',updateNav);updateNav();
+// Intersection observer for animations
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v')}})},{threshold:0.15});
+document.querySelectorAll('.anim').forEach(el=>obs.observe(el));
+// Keyboard nav
+document.addEventListener('keydown',e=>{const c=Math.round(window.scrollY/window.innerHeight);if(e.key==='ArrowDown'||e.key===' '){e.preventDefault();const n=Math.min(c+1,total-1);slides[n].scrollIntoView({behavior:'smooth'})}if(e.key==='ArrowUp'){e.preventDefault();const p=Math.max(c-1,0);slides[p].scrollIntoView({behavior:'smooth'})}});
+</script>
+</body>
+</html>

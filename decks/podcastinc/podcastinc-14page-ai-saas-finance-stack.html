@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UnitPay for PodcastInc.ai — The AI Revenue Engine (14-Page)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--white:#ffffff;--accent:#a4ea49;--teal:#003024;--mint:#e1ead3;--code:#79c0ff;--red:#ff3b3b;--amber:#f59e0b;--card:#111111;--card-border:rgba(255,255,255,0.1);--text-secondary:rgba(255,255,255,0.6)}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden}
+section{min-height:100vh;scroll-snap-align:start;display:flex;align-items:center;justify-content:center;position:relative;padding:40px 24px}
+.slide-inner{max-width:1080px;width:100%;margin:0 auto}
+.slide-counter{position:fixed;bottom:24px;right:32px;font-size:13px;color:var(--text-secondary);font-weight:500;z-index:100;background:rgba(10,10,10,0.8);padding:6px 14px;border-radius:20px;border:1px solid var(--card-border);backdrop-filter:blur(8px)}
+.logo{position:fixed;top:24px;left:32px;font-size:14px;font-weight:700;color:var(--accent);z-index:100;letter-spacing:1px}
+.badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.badge-blue{background:rgba(121,192,255,0.15);color:var(--code)}
+.badge-purple{background:rgba(168,85,247,0.15);color:#a855f7}
+.badge-green{background:rgba(164,234,73,0.15);color:var(--accent)}
+.badge-amber{background:rgba(245,158,11,0.15);color:var(--amber)}
+.badge-red{background:rgba(255,59,59,0.15);color:var(--red)}
+.badge-teal{background:rgba(0,48,36,0.4);color:#5eead4}
+.badge-gray{background:rgba(255,255,255,0.08);color:var(--text-secondary)}
+h1{font-size:clamp(28px,5vw,48px);font-weight:700;line-height:1.15;margin-bottom:16px}
+h2{font-size:clamp(22px,3.5vw,36px);font-weight:700;line-height:1.2;margin-bottom:12px}
+h3{font-size:clamp(16px,2.5vw,22px);font-weight:600;line-height:1.3}
+p,.desc{font-size:clamp(14px,1.8vw,18px);color:var(--text-secondary);line-height:1.6}
+.accent{color:var(--accent)}
+.red{color:var(--red)}
+.card{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:28px;position:relative;overflow:hidden}
+.card-sm{padding:20px}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.grid-4{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+code,.code{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--code)}
+pre{font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7;background:#0d0d0d;border:1px solid var(--card-border);border-radius:8px;padding:20px;overflow-x:auto}
+.check{color:var(--accent);font-weight:700}
+.cross{color:var(--red);font-weight:700}
+.stat-number{font-size:clamp(36px,6vw,56px);font-weight:700;line-height:1;color:var(--white)}
+.stat-label{font-size:14px;color:var(--text-secondary);margin-top:6px}
+.cta-btn{display:inline-block;background:var(--accent);color:var(--bg);font-size:18px;font-weight:700;padding:16px 36px;border-radius:8px;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;cursor:pointer;border:none}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(164,234,73,0.3)}
+.qr-box{width:120px;height:120px;border:2px dashed var(--card-border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--text-secondary)}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;padding:12px 16px;border-bottom:1px solid var(--card-border);color:var(--text-secondary);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.5px}
+td{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05)}
+tr:hover td{background:rgba(255,255,255,0.02)}
+.faded{opacity:0.4}
+.pillar{text-align:center}
+.pillar-icon{width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 16px;border:1px solid var(--card-border)}
+.margin-bar{height:8px;border-radius:4px;background:rgba(255,255,255,0.06)}
+.margin-fill{height:100%;border-radius:4px}
+.fail-card{border-left:4px solid var(--red);padding:24px;background:var(--card);border-radius:0 12px 12px 0;margin-bottom:16px}
+.story-metric{text-align:center;padding:24px;background:var(--card);border:1px solid var(--card-border);border-radius:12px}
+.stack-layer{padding:20px 28px;border:1px solid var(--card-border);border-radius:8px;margin-bottom:4px;display:flex;align-items:center;gap:16px}
+.quote-block{border-left:3px solid var(--accent);padding:16px 24px;background:rgba(164,234,73,0.04);border-radius:0 8px 8px 0;font-style:italic}
+.vision-era{padding:32px;border-radius:12px;text-align:center;margin-bottom:8px}
+.sdk-card{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:24px;text-align:center}
+@media(max-width:768px){.grid-2,.grid-3{grid-template-columns:1fr}.slide-inner{padding:0}section{padding:24px 16px}}
+</style>
+</head>
+<body>
+
+<div class="logo">UNITPAY</div>
+<div class="slide-counter" id="counter">1 / 14</div>
+
+<!-- ===================== SLIDE 1: HOOK ===================== -->
+<section id="slide-1">
+<div class="slide-inner">
+  <div style="display:flex;flex-direction:column;min-height:70vh;justify-content:center">
+    <div class="faded" style="text-align:center;padding:32px 0">
+      <p style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px">The Old World</p>
+      <h2 style="color:rgba(255,255,255,0.35);font-size:clamp(24px,4vw,42px)">$120/month. Flat. 4 episodes.<br>Same price for 15 minutes or 3 hours.</h2>
+    </div>
+    <div style="width:100%;position:relative;margin:24px 0">
+      <div style="height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent)"></div>
+      <div style="position:absolute;left:50%;top:-12px;transform:translateX(-50%);background:var(--bg);padding:0 16px;font-size:12px;letter-spacing:2px;font-weight:600;white-space:nowrap">
+        <span style="color:rgba(255,255,255,0.3)">SaaS ERA</span> <span style="color:var(--text-secondary)">&nbsp;&#x2502;&nbsp;</span> <span style="color:var(--accent)">AI ERA</span>
+      </div>
+    </div>
+    <div style="text-align:center;padding:32px 0">
+      <p style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:12px">The New World</p>
+      <h1>$0.006<span style="font-weight:400;font-size:clamp(16px,2.5vw,24px);color:var(--text-secondary)">/sec</span> &times; $0.03<span style="font-weight:400;font-size:clamp(16px,2.5vw,24px);color:var(--text-secondary)">/1K tok</span> &times; $0.05<span style="font-weight:400;font-size:clamp(16px,2.5vw,24px);color:var(--text-secondary)">/min</span> &times; $0.02<span style="font-weight:400;font-size:clamp(16px,2.5vw,24px);color:var(--text-secondary)">/clip</span></h1>
+      <p style="max-width:720px;margin:16px auto 0"><strong style="color:var(--white)">PodcastInc.ai</strong> processes <strong style="color:var(--white)">1M+ episodes</strong> through <strong style="color:var(--white)">5 AI models</strong> per episode.<br>The pricing says flat. The costs say otherwise.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== SLIDE 2: PROBLEM ===================== -->
+<section id="slide-2">
+<div class="slide-inner">
+  <div style="text-align:center;margin-bottom:40px">
+    <h1>5 AI models per episode. 1 flat price.<br><span class="red">Zero visibility.</span></h1>
+    <p style="max-width:700px;margin:0 auto">Every episode triggers transcription, content generation, video processing, clip extraction, and captioning. Your billing captures none of this.</p>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:32px">
+    <div class="card card-sm" style="display:flex;align-items:center;gap:10px"><span class="badge badge-blue">Transcription</span> Whisper <span style="color:var(--text-secondary)">$0.006/sec</span></div>
+    <div class="card card-sm" style="display:flex;align-items:center;gap:10px"><span class="badge badge-purple">Content Gen</span> GPT-4o <span style="color:var(--text-secondary)">$0.03/1K tok</span></div>
+    <div class="card card-sm" style="display:flex;align-items:center;gap:10px"><span class="badge badge-red">Video</span> Processing <span style="color:var(--text-secondary)">$0.05/min</span></div>
+    <div class="card card-sm" style="display:flex;align-items:center;gap:10px"><span class="badge badge-amber">Clips</span> Extraction <span style="color:var(--text-secondary)">$0.02/clip</span></div>
+    <div class="card card-sm" style="display:flex;align-items:center;gap:10px"><span class="badge badge-teal">Captions</span> Engine <span style="color:var(--text-secondary)">$0.01/min</span></div>
+    <div class="card card-sm" style="display:flex;align-items:center;gap:10px"><span class="badge badge-gray">Audio</span> Enhancement <span style="color:var(--text-secondary)">$0.008/min</span></div>
+  </div>
+  <div style="text-align:center;margin-bottom:24px">
+    <div style="font-size:32px;color:var(--text-secondary);margin-bottom:16px">&darr;</div>
+    <div class="card" style="display:inline-block;padding:16px 40px;border-color:var(--red);border-width:2px">
+      <span style="font-size:14px;color:var(--text-secondary)">Your invoice says:</span><br>
+      <span style="font-size:24px;font-weight:700">$120.00 &mdash; Pro Plan &mdash; 4 episodes/month</span>
+    </div>
+  </div>
+  <p style="text-align:center;font-size:15px;margin-top:16px"><span class="red" style="font-weight:600">At 50K+ creators, even a 5% margin miscalculation = $360K/year in hidden losses.</span></p>
+</div>
+</section>
+
+<!-- ===================== SLIDE 3: REQUIREMENTS ===================== -->
+<section id="slide-3">
+<div class="slide-inner">
+  <div style="text-align:center;margin-bottom:40px">
+    <h1>Your billing tools were built for subscriptions.</h1>
+    <p>You're running an <span class="accent">AI podcast engine</span> with 5 variable-cost models.</p>
+  </div>
+  <div class="card table-wrap">
+    <table>
+      <thead><tr><th style="width:55%">Requirement</th><th style="text-align:center">Legacy Tools</th><th style="text-align:center">UnitPay</th></tr></thead>
+      <tbody>
+        <tr><td>Per-episode cost attribution</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
+        <tr><td>Multi-model AI metering (5 models)</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
+        <tr><td>Variable-length usage tracking</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
+        <tr><td>Real-time margin per creator</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
+        <tr><td>Hybrid pricing simulation</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
+        <tr><td>Token-level cost breakdown</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="text-align:center;margin-top:24px;font-size:15px;color:var(--text-secondary)">PodcastInc runs on AI. Your finance stack should too.</p>
+</div>
+</section>
+
+<!-- ===================== SLIDE 4: SOLUTION ===================== -->
+<section id="slide-4">
+<div class="slide-inner">
+  <div style="text-align:center;margin-bottom:48px"><h1>One platform. Three pillars.</h1></div>
+  <div class="grid-3">
+    <div class="card pillar">
+      <div class="pillar-icon" style="background:rgba(164,234,73,0.08);border-color:rgba(164,234,73,0.2)"><span style="font-size:28px">&#9678;</span></div>
+      <h3 class="accent" style="margin-bottom:8px">TRACK</h3>
+      <p style="font-size:15px;font-weight:600;color:var(--white);margin-bottom:8px">Every second. Every token.<br>Every clip. Every creator.</p>
+      <p style="font-size:14px">Meter Whisper, GPT-4o, video processing, clip extraction &amp; captioning. Per-episode, per-creator, per-model. 15,000 events/sec.</p>
+    </div>
+    <div class="card pillar">
+      <div class="pillar-icon" style="background:rgba(121,192,255,0.08);border-color:rgba(121,192,255,0.2)"><span style="font-size:28px">&#9733;</span></div>
+      <h3 style="color:var(--code);margin-bottom:8px">PRICE</h3>
+      <p style="font-size:15px;font-weight:600;color:var(--white);margin-bottom:8px">Simulate before you ship.</p>
+      <p style="font-size:14px">What if Pro = $99/mo + $0.50/min over 60min? Run it in Price Lab. See the ARR impact before touching a single invoice.</p>
+    </div>
+    <div class="card pillar">
+      <div class="pillar-icon" style="background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.2)"><span style="font-size:28px">&#9872;</span></div>
+      <h3 style="color:var(--amber);margin-bottom:8px">PROTECT</h3>
+      <p style="font-size:15px;font-weight:600;color:var(--white);margin-bottom:8px">Margins visible. Always.</p>
+      <p style="font-size:14px">Auto-alerts when a creator's episode costs exceed revenue. Flag underwater accounts before they compound into six-figure losses.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== SLIDE 5: PRODUCT ===================== -->
+<section id="slide-5">
+<div class="slide-inner">
+  <div style="text-align:center;margin-bottom:36px">
+    <h2>The PodcastInc.ai data layer</h2>
+    <p>What every episode processed looks like inside UnitPay.</p>
+  </div>
+  <div class="grid-3">
+    <div class="card" style="padding:0;overflow:hidden">
+      <div style="padding:16px 20px;border-bottom:1px solid var(--card-border);display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:13px;font-weight:600">Transaction Breakdown</span>
+        <span class="badge badge-red" style="font-size:10px">ALERT</span>
+      </div>
+      <pre style="border:none;border-radius:0;margin:0;font-size:12px;line-height:1.8;padding:16px 20px">
+<span style="color:var(--text-secondary)">Episode:</span>  AI Weekly #247 (2h 14m)
+<span style="color:var(--text-secondary)">Creator:</span>  TechPulse Media (Pro)
+<span style="color:var(--text-secondary)">Revenue:</span>  $30.00/episode
+<span style="color:var(--text-secondary)">&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;</span>
+<span style="color:var(--code)">Whisper:</span>      8,040 sec   <span style="color:var(--red)">$48.24</span>
+<span style="color:#a855f7">GPT-4o:</span>       12.4K tok   $0.37
+<span style="color:var(--red)">Video:</span>        134 min     $6.70
+<span style="color:var(--amber)">Clips:</span>        8 clips     $0.16
+<span style="color:#5eead4">Captions:</span>     134 min     $1.34
+<span style="color:var(--text-secondary)">&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;</span>
+<span style="color:var(--text-secondary)">Total COGS:</span>               $56.81
+<span style="color:var(--white)">Revenue:</span>                  $30.00
+<span style="color:var(--red);font-weight:700">MARGIN:       -$26.81  &#x26A0;</span></pre>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <div style="padding:16px 20px;border-bottom:1px solid var(--card-border);display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:13px;font-weight:600">Event Trace</span>
+        <span class="badge badge-blue" style="font-size:10px">JSON</span>
+      </div>
+      <pre style="border:none;border-radius:0;margin:0;font-size:11px;line-height:1.7;padding:16px 20px">{
+  <span style="color:var(--code)">"event"</span>: <span style="color:var(--accent)">"episode_processed"</span>,
+  <span style="color:var(--code)">"creator"</span>: <span style="color:var(--accent)">"techpulse-media"</span>,
+  <span style="color:var(--code)">"plan"</span>: <span style="color:var(--accent)">"pro"</span>,
+  <span style="color:var(--code)">"duration_sec"</span>: <span style="color:var(--amber)">8040</span>,
+  <span style="color:var(--code)">"models"</span>: [
+    <span style="color:var(--accent)">"whisper-large-v3"</span>,
+    <span style="color:var(--accent)">"gpt-4o"</span>,
+    <span style="color:var(--accent)">"video-proc-v2"</span>,
+    <span style="color:var(--accent)">"clip-ai"</span>,
+    <span style="color:var(--accent)">"caption-engine"</span>
+  ],
+  <span style="color:var(--code)">"total_cost"</span>: <span style="color:var(--red)">56.81</span>,
+  <span style="color:var(--code)">"revenue"</span>: <span style="color:var(--amber)">30.00</span>,
+  <span style="color:var(--code)">"margin"</span>: <span style="color:var(--red)">-0.894</span>
+}</pre>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <div style="padding:16px 20px;border-bottom:1px solid var(--card-border);display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:13px;font-weight:600">Margin Trend (Pro Tier)</span>
+        <span style="color:var(--red);font-size:13px;font-weight:600">&darr; -89%</span>
+      </div>
+      <div style="padding:24px 20px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;gap:12px"><span style="font-size:12px;color:var(--text-secondary);width:32px">Sep</span><div class="margin-bar" style="flex:1"><div class="margin-fill" style="width:42%;background:var(--amber)"></div></div><span style="font-size:12px;width:40px;text-align:right">+12%</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="font-size:12px;color:var(--text-secondary);width:32px">Oct</span><div class="margin-bar" style="flex:1"><div class="margin-fill" style="width:35%;background:var(--amber)"></div></div><span style="font-size:12px;width:40px;text-align:right">+5%</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="font-size:12px;color:var(--text-secondary);width:32px">Nov</span><div class="margin-bar" style="flex:1"><div class="margin-fill" style="width:28%;background:var(--red)"></div></div><span style="font-size:12px;width:40px;text-align:right;color:var(--red)">-3%</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="font-size:12px;color:var(--text-secondary);width:32px">Dec</span><div class="margin-bar" style="flex:1"><div class="margin-fill" style="width:18%;background:var(--red)"></div></div><span style="font-size:12px;width:40px;text-align:right;color:var(--red)">-22%</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="font-size:12px;color:var(--text-secondary);width:32px">Jan</span><div class="margin-bar" style="flex:1"><div class="margin-fill" style="width:10%;background:var(--red)"></div></div><span style="font-size:12px;width:40px;text-align:right;color:var(--red)">-58%</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="font-size:12px;color:var(--text-secondary);width:32px">Feb</span><div class="margin-bar" style="flex:1"><div class="margin-fill" style="width:6%;background:var(--red)"></div></div><span style="font-size:12px;width:40px;text-align:right;color:var(--red);font-weight:700">-89%</span></div>
+      </div>
+      <div style="padding:0 20px 20px;font-size:13px;color:var(--red)">As average episode length grows, margins collapse.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== SLIDE 6: TRACTION ===================== -->
+<section id="slide-6">
+<div class="slide-inner">
+  <div style="text-align:center;margin-bottom:40px"><h2>Built for this moment</h2></div>
+  <div class="grid-4" style="max-width:600px;margin:0 auto 48px">
+    <div class="card" style="text-align:center;padding:24px"><div class="stat-number">15K</div><div class="stat-label">Events / second</div></div>
+    <div class="card" style="text-align:center;padding:24px"><div class="stat-number">135</div><div class="stat-label">Currencies</div></div>
+    <div class="card" style="text-align:center;padding:24px"><div class="stat-number">$0</div><div class="stat-label">Setup cost</div></div>
+    <div class="card" style="text-align:center;padding:24px"><div class="stat-number">7d</div><div class="stat-label">Time to live</div></div>
+  </div>
+  <div class="card table-wrap">
+    <table>
+      <thead><tr><th>Feature</th><th style="text-align:center">Stripe Billing</th><th style="text-align:center">Chargebee</th><th style="text-align:center">Orb</th><th style="text-align:center;color:var(--accent)">UnitPay</th></tr></thead>
+      <tbody>
+        <tr><td>Per-episode AI metering</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span style="color:var(--amber)">Basic</span></td><td style="text-align:center"><span class="check">Full &check;</span></td></tr>
+        <tr><td>Multi-model cost tracking</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
+        <tr><td>Pricing simulation</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
+        <tr><td>Per-creator margin tracking</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
+        <tr><td>Real-time cost attribution</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span style="color:var(--amber)">Partial</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</section>
+
+<!-- ===================== SLIDE 7: TECHNICAL GAP ===================== -->
+<section id="slide-7">
+<div class="slide-inner">
+  <div style="text-align:center;margin-bottom:40px">
+    <h1>Where legacy billing <span class="red">breaks</span></h1>
+    <p>Three failure modes PodcastInc will hit at scale.</p>
+  </div>
+  <div class="fail-card">
+    <h3 style="margin-bottom:12px"><span class="red">01</span> &mdash; Variable Cost Per Transaction</h3>
+    <pre style="margin:12px 0;font-size:12px;padding:16px">
+<span style="color:var(--text-secondary)">// What PodcastInc needs:</span>
+<span style="color:var(--code)">cost</span> = <span style="color:var(--accent)">f</span>(<span style="color:var(--amber)">whisper_seconds</span>, <span style="color:var(--amber)">gpt4_tokens</span>, <span style="color:var(--amber)">video_minutes</span>, <span style="color:var(--amber)">clips</span>, <span style="color:var(--amber)">captions</span>)
+
+<span style="color:var(--text-secondary)">// What Stripe gives you:</span>
+<span style="color:var(--code)">cost</span> = <span style="color:var(--red)">$120/mo</span>  <span style="color:var(--text-secondary)">// That's it. No per-episode breakdown.</span></pre>
+    <p style="font-size:14px">A 15-min recap costs ~$8 in compute. A 3-hour deep dive costs ~$57. Both count as "1 episode" at $30 revenue.</p>
+  </div>
+  <div class="fail-card">
+    <h3 style="margin-bottom:12px"><span class="red">02</span> &mdash; Multi-Dimensional Metering</h3>
+    <p style="font-size:15px;color:var(--white);margin-bottom:8px;font-weight:600">duration &times; model &times; quality &times; output_count &times; language = cost</p>
+    <p style="font-size:14px">Each episode generates 5+ cost dimensions across 5 AI models. Legacy tools see: <strong style="color:var(--red)">1 subscription payment.</strong></p>
+  </div>
+  <div class="fail-card">
+    <h3 style="margin-bottom:12px"><span class="red">03</span> &mdash; Real-Time Cost Attribution</h3>
+    <p style="font-size:14px">When a creator uploads a 3-hour episode, you need to know the cost <strong style="color:var(--white)">NOW</strong> &mdash; not in next month's reconciliation spreadsheet. <span class="accent">UnitPay: real-time. Per-model. Per-creator. Per-episode.</span></p>
+  </div>
+</div>
+</section>
+
+<!-- ===================== SLIDE 8: TOKEN ECONOMICS ===================== -->
+<section id="slide-8">
+<div class="slide-inner">
+  <div style="text-align:center;margin-bottom:36px">
+    <h1>Token Economics Engine</h1>
+    <p>PodcastInc's real cost structure &mdash; per episode, per model.</p>
+  </div>
+  <div class="card table-wrap" style="margin-bottom:24px">
+    <table>
+      <thead><tr><th>AI Model</th><th style="text-align:right">Cost/Unit</th><th style="text-align:right">Avg Units/Ep</th><th style="text-align:right">Cost/Episode</th><th style="text-align:right">% of Total</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge badge-blue" style="font-size:10px">TRANSCRIPTION</span> Whisper Large v3</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">$0.006/sec</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">5,400 sec</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--red);font-weight:700">$32.40</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--red)">68%</td></tr>
+        <tr><td><span class="badge badge-purple" style="font-size:10px">CONTENT GEN</span> GPT-4o</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">$0.03/1K tok</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">8,200 tok</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">$0.25</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">1%</td></tr>
+        <tr><td><span class="badge badge-red" style="font-size:10px">VIDEO</span> Video Proc v2</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">$0.05/min</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">90 min</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">$4.50</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">9%</td></tr>
+        <tr><td><span class="badge badge-amber" style="font-size:10px">CLIPS</span> Clip AI</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">$0.02/clip</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">6 clips</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">$0.12</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">&lt;1%</td></tr>
+        <tr><td><span class="badge badge-teal" style="font-size:10px">CAPTIONS</span> Caption Engine</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">$0.01/min</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">90 min</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">$0.90</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">2%</td></tr>
+        <tr style="background:rgba(255,255,255,0.03)"><td style="font-weight:700">TOTAL per episode (90 min avg)</td><td></td><td></td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--white)">$38.17</td><td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px">100%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card" style="padding:20px">
+    <h3 style="margin-bottom:16px">Margin by Creator Tier</h3>
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+      <span style="font-size:13px;width:60px;color:var(--text-secondary)">Free</span>
+      <div style="flex:1"><div style="height:28px;background:var(--red);border-radius:4px;width:100%;display:flex;align-items:center;padding:0 12px;font-size:12px;font-weight:600">-$19/ep</div></div>
+      <span style="font-size:13px;width:80px;text-align:right;color:var(--red);font-weight:600">Rev: $0</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+      <span style="font-size:13px;width:60px;color:var(--text-secondary)">Basic</span>
+      <div style="flex:1"><div style="height:28px;background:var(--amber);border-radius:4px;width:70%;display:flex;align-items:center;padding:0 12px;font-size:12px;font-weight:600;color:var(--bg)">-$8/ep</div></div>
+      <span style="font-size:13px;width:80px;text-align:right;color:var(--amber);font-weight:600">Rev: $30</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <span style="font-size:13px;width:60px;color:var(--text-secondary)">Pro</span>
+      <div style="flex:1"><div style="height:28px;background:var(--red);border-radius:4px;width:85%;display:flex;align-items:center;padding:0 12px;font-size:12px;font-weight:600">-$8/ep (long episodes)</div></div>
+      <span style="font-size:13px;width:80px;text-align:right;color:var(--red);font-weight:600">Rev: $30</span>
+    </div>
+  </div>
+  <p style="text-align:center;font-size:15px;margin-top:16px"><span class="red" style="font-weight:700">Every tier is margin-negative on long episodes.</span> Transcription alone is 68% of cost.</p>
+</div>
+</section>
+
+<!-- ===================== SLIDE 9: AI COMPANY STORY ===================== -->
+<section id="slide-9">
+<div class="slide-inner">
+  <div style="text-align:center;margin-bottom:40px">
+    <span class="badge badge-green" style="margin-bottom:16px">CASE STUDY</span>
+    <h1>The invisible bleed</h1>
+  </div>
+  <div class="card" style="margin-bottom:20px;border-color:rgba(255,59,59,0.3)">
+    <h3 style="margin-bottom:12px"><span class="red">The Bleed</span></h3>
+    <p style="font-size:16px;color:var(--white);line-height:1.7">An AI podcast platform charged <strong>$120/mo flat</strong>. Average episode cost: <strong>$38 in AI compute</strong>. At 4 episodes/month, that's <strong style="color:var(--red)">$152 in costs for $120 in revenue</strong>.</p>
+    <p style="font-size:20px;font-weight:700;margin-top:16px;color:var(--red)">50K creators &times; -$32/mo = $1.6M/month in invisible losses.</p>
+  </div>
+  <div class="card" style="margin-bottom:20px;border-color:rgba(164,234,73,0.3)">
+    <h3 style="margin-bottom:12px"><span class="accent">The Switch</span></h3>
+    <p style="font-size:15px;margin-bottom:12px">They connected UnitPay. In 10 minutes, they saw:</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <span class="badge badge-green">23% profitable (short episodes)</span>
+      <span class="badge badge-amber">41% marginal (break-even)</span>
+      <span class="badge badge-red">36% underwater (long episodes)</span>
+    </div>
+  </div>
+  <div class="grid-3" style="margin-bottom:24px">
+    <div class="story-metric"><div class="stat-number" style="font-size:32px;color:var(--accent)">$840K</div><div class="stat-label">Monthly leakage identified</div></div>
+    <div class="story-metric"><div class="stat-number" style="font-size:32px;color:var(--accent)">+42%</div><div class="stat-label">Net margin after hybrid pricing</div></div>
+    <div class="story-metric"><div class="stat-number" style="font-size:32px;color:var(--accent)">90 days</div><div class="stat-label">From -8% to +34% margin</div></div>
+  </div>
+  <div class="quote-block">
+    <p style="font-size:16px;color:var(--white)">"We were flying blind. 50K creators and we couldn't tell you which ones were profitable."</p>
+    <p style="font-size:13px;color:var(--text-secondary);margin-top:8px;font-style:normal">&mdash; AI Platform CEO</p>
+  </div>
+</div>
+</section>
+
+<!-- ===================== SLIDE 10: FULL STACK ===================== -->
+<section id="slide-10">
+<div class="slide-inner">
+  <div style="text-align:center;margin-bottom:40px">
+    <h1>The AI Finance Operating System</h1>
+    <p>Five layers. One platform. Zero spreadsheets.</p>
+  </div>
+  <div class="grid-2" style="gap:32px;align-items:start">
+    <div>
+      <div class="stack-layer" style="background:rgba(164,234,73,0.06);border-color:rgba(164,234,73,0.2)">
+        <span style="font-size:11px;font-weight:700;color:var(--accent);width:20px">05</span>
+        <div><h3 style="font-size:15px;color:var(--accent)">Executive Intelligence</h3><p style="font-size:13px">Investor reports. Forecasting. Cohort analysis.</p></div>
+      </div>
+      <div class="stack-layer" style="background:rgba(245,158,11,0.06);border-color:rgba(245,158,11,0.2)">
+        <span style="font-size:11px;font-weight:700;color:var(--amber);width:20px">04</span>
+        <div><h3 style="font-size:15px;color:var(--amber)">Margin Protection</h3><p style="font-size:13px">Alerts. Thresholds. Churn prediction.</p></div>
+      </div>
+      <div class="stack-layer" style="background:rgba(121,192,255,0.06);border-color:rgba(121,192,255,0.2)">
+        <span style="font-size:11px;font-weight:700;color:var(--code);width:20px">03</span>
+        <div><h3 style="font-size:15px;color:var(--code)">Cost Attribution</h3><p style="font-size:13px">Per-creator. Per-episode. Per-model. Real-time.</p></div>
+      </div>
+      <div class="stack-layer" style="background:rgba(168,85,247,0.06);border-color:rgba(168,85,247,0.2)">
+        <span style="font-size:11px;font-weight:700;color:#a855f7;width:20px">02</span>
+        <div><h3 style="font-size:15px;color:#a855f7">Billing Engine</h3><p style="font-size:13px">Dynamic pricing. Hybrid models. Multi-currency.</p></div>
+      </div>
+      <div class="stack-layer" style="background:rgba(255,255,255,0.03);border-color:var(--card-border)">
+        <span style="font-size:11px;font-weight:700;color:var(--text-secondary);width:20px">01</span>
+        <div><h3 style="font-size:15px">Data Ingestion</h3><p style="font-size:13px">Connect your AI models. Track every event.</p></div>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:16px;border-color:rgba(255,59,59,0.2)">
+        <h3 style="margin-bottom:12px"><span class="red">WITHOUT</span> UnitPay</h3>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:14px">
+          <span style="color:var(--text-secondary)">&#x2717; Stripe for payments</span>
+          <span style="color:var(--text-secondary)">&#x2717; Spreadsheets for margins</span>
+          <span style="color:var(--text-secondary)">&#x2717; Manual reconciliation</span>
+          <span style="color:var(--text-secondary)">&#x2717; Guessing at per-creator costs</span>
+          <span style="color:var(--text-secondary)">&#x2717; Monthly reports (stale data)</span>
+        </div>
+      </div>
+      <div class="card" style="border-color:rgba(164,234,73,0.2)">
+        <h3 style="margin-bottom:12px"><span class="accent">WITH</span> UnitPay</h3>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:14px">
+          <span style="color:var(--accent)">&#x2713; One platform</span>
+          <span style="color:var(--accent)">&#x2713; Real-time margins</span>
+          <span style="color:var(--accent)">&#x2713; Automated attribution</span>
+          <span style="color:var(--accent)">&#x2713; Per-creator, per-model visibility</span>
+          <span style="color:var(--accent)">&#x2713; Intelligent alerts &amp; forecasting</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== SLIDE 11: AI COST EXPLOSION ===================== -->
+<section id="slide-11">
+<div class="slide-inner">
+  <div style="text-align:center;margin-bottom:40px">
+    <h1>The AI cost curve is <span class="red">exponential</span>.<br>Your revenue curve is <span style="color:var(--text-secondary)">flat</span>.</h1>
+  </div>
+
+  <!-- CSS Chart -->
+  <div class="card" style="padding:32px;margin-bottom:24px">
+    <div style="display:flex;align-items:flex-end;gap:4px;height:200px;margin-bottom:16px;position:relative">
+      <!-- Y axis labels -->
+      <div style="position:absolute;left:-4px;top:0;font-size:11px;color:var(--text-secondary)">500%</div>
+      <div style="position:absolute;left:-4px;top:50%;font-size:11px;color:var(--text-secondary)">250%</div>
+      <div style="position:absolute;left:-4px;bottom:0;font-size:11px;color:var(--text-secondary)">0%</div>
+      <!-- Bars - Revenue (green, flat) vs Cost (red, growing) -->
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:2px;margin-left:40px">
+        <div style="width:100%;display:flex;gap:4px;align-items:flex-end;height:100%">
+          <div style="flex:1;background:var(--accent);height:20%;border-radius:4px 4px 0 0;opacity:0.7"></div>
+          <div style="flex:1;background:var(--red);height:15%;border-radius:4px 4px 0 0;opacity:0.7"></div>
+        </div>
+        <span style="font-size:10px;color:var(--text-secondary)">Q1</span>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:2px">
+        <div style="width:100%;display:flex;gap:4px;align-items:flex-end;height:100%">
+          <div style="flex:1;background:var(--accent);height:22%;border-radius:4px 4px 0 0;opacity:0.7"></div>
+          <div style="flex:1;background:var(--red);height:30%;border-radius:4px 4px 0 0;opacity:0.7"></div>
+        </div>
+        <span style="font-size:10px;color:var(--text-secondary)">Q2</span>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:2px">
+        <div style="width:100%;display:flex;gap:4px;align-items:flex-end;height:100%">
+          <div style="flex:1;background:var(--accent);height:25%;border-radius:4px 4px 0 0;opacity:0.7"></div>
+          <div style="flex:1;background:var(--red);height:50%;border-radius:4px 4px 0 0;opacity:0.8"></div>
+        </div>
+        <span style="font-size:10px;color:var(--text-secondary)">Q3</span>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:2px">
+        <div style="width:100%;display:flex;gap:4px;align-items:flex-end;height:100%">
+          <div style="flex:1;background:var(--accent);height:28%;border-radius:4px 4px 0 0;opacity:0.7"></div>
+          <div style="flex:1;background:var(--red);height:75%;border-radius:4px 4px 0 0;opacity:0.9"></div>
+        </div>
+        <span style="font-size:10px;color:var(--text-secondary)">Q4</span>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:2px">
+        <div style="width:100%;display:flex;gap:4px;align-items:flex-end;height:100%">
+          <div style="flex:1;background:var(--accent);height:30%;border-radius:4px 4px 0 0;opacity:0.7"></div>
+          <div style="flex:1;background:var(--red);height:100%;border-radius:4px 4px 0 0"></div>
+        </div>
+        <span style="font-size:10px;color:var(--text-secondary)">Q5</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:24px;justify-content:center;font-size:13px">
+      <span><span style="display:inline-block;width:12px;height:12px;background:var(--accent);border-radius:2px;margin-right:6px;vertical-align:middle"></span>Revenue growth (~100%)</span>
+      <span><span style="display:inline-block;width:12px;height:12px;background:var(--red);border-radius:2px;margin-right:6px;vertical-align:middle"></span>AI cost growth (~500%)</span>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card" style="text-align:center;border-color:rgba(255,59,59,0.2)">
+      <div style="font-size:36px;font-weight:700;color:var(--red)">73%</div>
+      <p style="font-size:13px;margin-top:8px">of AI companies don't track per-unit costs</p>
+    </div>
+    <div class="card" style="text-align:center;border-color:rgba(255,59,59,0.2)">
+      <div style="font-size:36px;font-weight:700;color:var(--red)">$0</div>
+      <p style="font-size:13px;margin-top:8px">spent on cost visibility tools (seed-stage average)</p>
+    </div>
+    <div class="card" style="text-align:center;border-color:rgba(255,59,59,0.2)">
+      <div style="font-size:36px;font-weight:700;color:var(--red)">-12%</div>
+      <p style="font-size:13px;margin-top:8px">average margin decline per year without cost attribution</p>
+    </div>
+  </div>
+
+  <p style="text-align:center;margin-top:24px;font-size:15px">PodcastInc processes <strong style="color:var(--white)">1M+ episodes</strong>. Each triggers <strong style="color:var(--white)">5 AI models</strong>. <span class="red" style="font-weight:600">The gap isn't a problem yet. It will be.</span></p>
+</div>
+</section>
+
+<!-- ===================== SLIDE 12: DEVELOPER SDK ===================== -->
+<section id="slide-12">
+<div class="slide-inner">
+  <div style="text-align:center;margin-bottom:36px">
+    <h1>10 lines of code to <span class="accent">full visibility</span></h1>
+    <p>Your engineering team ships this in a day. Your finance team sees margins forever.</p>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden;margin-bottom:32px">
+    <div style="padding:16px 20px;border-bottom:1px solid var(--card-border);display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:13px;font-weight:600">podcast-processor.ts</span>
+      <span class="badge badge-green" style="font-size:10px">TYPESCRIPT</span>
+    </div>
+    <pre style="border:none;border-radius:0;margin:0;font-size:13px;line-height:1.8;padding:24px">
+<span style="color:var(--code)">import</span> { <span style="color:var(--accent)">UnitPay</span> } <span style="color:var(--code)">from</span> <span style="color:var(--accent)">'@unitpay/sdk'</span>;
+
+<span style="color:var(--code)">const</span> <span style="color:var(--white)">unitpay</span> = <span style="color:var(--code)">new</span> <span style="color:var(--accent)">UnitPay</span>({ <span style="color:var(--code)">apiKey</span>: <span style="color:var(--accent)">process.env.UNITPAY_KEY</span> });
+
+<span style="color:var(--text-secondary)">// Track an episode processing event</span>
+<span style="color:var(--code)">await</span> <span style="color:var(--white)">unitpay</span>.<span style="color:var(--accent)">track</span>({
+  <span style="color:var(--code)">customerId</span>: <span style="color:var(--accent)">'creator_techpulse'</span>,
+  <span style="color:var(--code)">event</span>: <span style="color:var(--accent)">'episode_processed'</span>,
+  <span style="color:var(--code)">dimensions</span>: {
+    <span style="color:var(--code)">model</span>: <span style="color:var(--accent)">'whisper-large-v3'</span>,
+    <span style="color:var(--code)">duration_sec</span>: <span style="color:var(--amber)">8040</span>,
+    <span style="color:var(--code)">episode_id</span>: <span style="color:var(--accent)">'ep_247'</span>
+  }
+});</pre>
+  </div>
+
+  <div class="grid-3">
+    <div class="sdk-card">
+      <div style="font-size:28px;margin-bottom:12px">&#x2630;</div>
+      <h3 style="margin-bottom:8px">SDK</h3>
+      <p style="font-size:14px;margin-bottom:12px">Node, Python, Go, Ruby</p>
+      <code style="font-size:12px;color:var(--accent)">npm install @unitpay/sdk</code>
+    </div>
+    <div class="sdk-card">
+      <div style="font-size:28px;margin-bottom:12px">&#x27A4;</div>
+      <h3 style="margin-bottom:8px">REST API</h3>
+      <p style="font-size:14px;margin-bottom:12px">Full OpenAPI specification</p>
+      <code style="font-size:12px;color:var(--accent)">POST /v1/events</code>
+    </div>
+    <div class="sdk-card">
+      <div style="font-size:28px;margin-bottom:12px">&#x21C4;</div>
+      <h3 style="margin-bottom:8px">Webhooks</h3>
+      <p style="font-size:14px;margin-bottom:12px">Real-time event notifications</p>
+      <code style="font-size:12px;color:var(--amber)">margin_alert</code> <code style="font-size:12px;color:var(--red)">churn_risk</code>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== SLIDE 13: CATEGORY VISION ===================== -->
+<section id="slide-13">
+<div class="slide-inner">
+  <div style="text-align:center;margin-bottom:40px">
+    <h1>We're building the <span class="accent">AI Revenue Engine</span></h1>
+  </div>
+
+  <!-- Past -->
+  <div class="vision-era" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05)">
+    <p style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:8px">Past</p>
+    <h3 style="color:rgba(255,255,255,0.3);margin-bottom:4px">Track &middot; Price &middot; Protect</h3>
+    <p style="font-size:14px;color:rgba(255,255,255,0.2)">Manual metering. Flat pricing. Monthly spreadsheets.</p>
+  </div>
+
+  <!-- Dividing line -->
+  <div style="height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);position:relative;margin:4px 0">
+    <div style="position:absolute;right:20px;top:-10px;font-size:11px;font-weight:700;color:var(--accent);background:var(--bg);padding:0 8px;letter-spacing:1px">YOU ARE HERE</div>
+  </div>
+
+  <!-- Present -->
+  <div class="vision-era" style="background:rgba(164,234,73,0.04);border:1px solid rgba(164,234,73,0.15)">
+    <p style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px">Present</p>
+    <h3 style="color:var(--accent);margin-bottom:4px">Track &middot; Price &middot; Protect</h3>
+    <p style="font-size:14px;color:var(--white)">Real-time metering. Dynamic pricing. Automated margin alerts.</p>
+  </div>
+
+  <!-- Dividing line -->
+  <div style="height:2px;background:linear-gradient(90deg,transparent,rgba(164,234,73,0.3),transparent);margin:4px 0"></div>
+
+  <!-- Future -->
+  <div class="vision-era" style="background:rgba(164,234,73,0.02);border:1px solid rgba(164,234,73,0.08)">
+    <p style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);opacity:0.7;margin-bottom:8px">Q3 2026</p>
+    <h3 style="color:var(--white);opacity:0.8;margin-bottom:4px">Predict &middot; Suggest &middot; Optimize</h3>
+    <p style="font-size:14px;color:var(--text-secondary)">AI-powered pricing recommendations. Predictive margin modeling. Self-optimizing billing.</p>
+  </div>
+
+  <!-- Dividing line -->
+  <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(164,234,73,0.15),transparent);margin:4px 0"></div>
+
+  <!-- Far Future -->
+  <div class="vision-era" style="background:rgba(164,234,73,0.01);border:1px dashed rgba(164,234,73,0.06)">
+    <p style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);opacity:0.5;margin-bottom:8px">2027</p>
+    <h3 style="color:var(--white);opacity:0.5;margin-bottom:4px">Automate &middot; Self-heal &middot; Self-price</h3>
+    <p style="font-size:14px;color:var(--text-secondary);opacity:0.5">Autonomous pricing. Self-correcting margins. Zero-touch finance operations.</p>
+  </div>
+
+  <p style="text-align:center;margin-top:24px;font-size:15px;color:var(--text-secondary)">UnitPay isn't just a billing tool. <strong style="color:var(--white)">It's the operating system for AI-era finance.</strong></p>
+</div>
+</section>
+
+<!-- ===================== SLIDE 14: CTA ===================== -->
+<section id="slide-14">
+<div class="slide-inner" style="text-align:center">
+  <div style="width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin-bottom:48px"></div>
+
+  <p style="font-size:16px;color:var(--text-secondary);text-decoration:line-through;margin-bottom:8px">$120/mo flat. Same price for every creator. Every episode.</p>
+
+  <h1 style="margin-bottom:16px">Per-creator. Per-model. Per-second.<br><span class="accent">Real margins.</span></h1>
+  <p style="margin-bottom:40px;max-width:600px;margin-left:auto;margin-right:auto">Stop processing 1M+ episodes through 5 AI models without knowing your real cost per creator. See everything in real-time.</p>
+
+  <div style="margin-bottom:24px">
+    <a class="cta-btn" href="mailto:vijay@useunitpay.com?subject=PodcastInc.ai%20%E2%80%94%20Pilot%20Request">Book a Pilot with PodcastInc's Data &rarr;</a>
+  </div>
+  <p style="font-size:16px;color:var(--text-secondary);margin-bottom:48px">Manish, we'll have PodcastInc's margin dashboard ready before the call.</p>
+
+  <div style="display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap;margin-bottom:40px">
+    <div class="qr-box">SCAN</div>
+    <div style="text-align:left">
+      <p style="font-size:14px;color:var(--text-secondary);margin-bottom:8px">Your AI revenue engine is live.<br>Scan to walk through it.</p>
+      <p style="font-size:14px;color:var(--white);font-weight:500">vijay@useunitpay.com</p>
+      <p style="font-size:14px;color:var(--accent);font-weight:500">useunitpay.com</p>
+    </div>
+  </div>
+
+  <p style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:600">The AI Revenue Engine</p>
+</div>
+</section>
+
+<script>
+const sections=document.querySelectorAll('section');
+const counter=document.getElementById('counter');
+const total=sections.length;
+function updateCounter(){
+  const scrollPos=window.scrollY+window.innerHeight/2;
+  let current=1;
+  sections.forEach((s,i)=>{if(scrollPos>s.offsetTop)current=i+1});
+  counter.textContent=current+' / '+total;
+}
+window.addEventListener('scroll',updateCounter);
+document.addEventListener('keydown',e=>{
+  const current=Math.round(window.scrollY/window.innerHeight);
+  if(e.key==='ArrowDown'||e.key===' '){e.preventDefault();const next=Math.min(current+1,total-1);sections[next].scrollIntoView({behavior:'smooth'})}
+  if(e.key==='ArrowUp'){e.preventDefault();const prev=Math.max(current-1,0);sections[prev].scrollIntoView({behavior:'smooth'})}
+});
+updateCounter();
+</script>
+</body>
+</html>

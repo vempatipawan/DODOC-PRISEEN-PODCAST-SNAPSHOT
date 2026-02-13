@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pitch Deck Gallery — DoDocs | Priseen | PodcastInc | Snapshot</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:#0a0a0a;color:#fff;min-height:100vh}
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  .header{text-align:center;padding:3rem 1.5rem 1.5rem;border-bottom:1px solid #1a1a1a}
+  .header h1{font-size:2rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:0.5rem}
+  .header p{color:#888;font-size:0.95rem;max-width:600px;margin:0 auto}
+
+  .filter-bar{display:flex;justify-content:center;gap:0.5rem;padding:1.5rem;flex-wrap:wrap}
+  .filter-btn{background:#161616;border:1px solid #252525;color:#999;padding:0.5rem 1.25rem;border-radius:99px;cursor:pointer;font-size:0.85rem;font-weight:500;transition:all 0.2s}
+  .filter-btn:hover{border-color:#444;color:#ccc}
+  .filter-btn.active{background:#a4ea49;color:#0a0a0a;border-color:#a4ea49;font-weight:600}
+
+  .grid{max-width:1200px;margin:0 auto;padding:1.5rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.25rem}
+
+  .card{background:#111;border:1px solid #1f1f1f;border-radius:12px;overflow:hidden;transition:all 0.25s ease;cursor:pointer;text-decoration:none;color:inherit;display:flex;flex-direction:column}
+  .card:hover{border-color:#333;transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,0.4)}
+
+  .card-brand{padding:1rem 1.25rem 0;display:flex;align-items:center;gap:0.5rem}
+  .brand-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .brand-name{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em}
+
+  .card-body{padding:1rem 1.25rem 1.25rem;flex:1;display:flex;flex-direction:column}
+  .card-title{font-size:1.1rem;font-weight:700;margin-bottom:0.4rem;line-height:1.3}
+  .card-desc{color:#777;font-size:0.82rem;line-height:1.5;margin-bottom:1rem;flex:1}
+
+  .card-meta{display:flex;gap:0.5rem;flex-wrap:wrap}
+  .tag{background:#1a1a1a;color:#999;padding:0.25rem 0.6rem;border-radius:6px;font-size:0.72rem;font-weight:500}
+  .tag.html-tag{color:#a4ea49}
+  .tag.md-tag{color:#60a5fa}
+  .tag.pages-7{color:#f5a623}
+  .tag.pages-11{color:#c084fc}
+  .tag.pages-14{color:#fb7185}
+
+  /* brand colors */
+  .brand-dodocs .brand-dot{background:#a4ea49}
+  .brand-dodocs .brand-name{color:#a4ea49}
+  .brand-priseen .brand-dot{background:#60a5fa}
+  .brand-priseen .brand-name{color:#60a5fa}
+  .brand-podcastinc .brand-dot{background:#c084fc}
+  .brand-podcastinc .brand-name{color:#c084fc}
+  .brand-snapshot .brand-dot{background:#fb7185}
+  .brand-snapshot .brand-name{color:#fb7185}
+
+  .footer{text-align:center;padding:3rem 1.5rem;color:#444;font-size:0.8rem;border-top:1px solid #1a1a1a;margin-top:2rem}
+
+  @media(max-width:500px){
+    .grid{grid-template-columns:1fr;padding:1rem}
+    .header h1{font-size:1.5rem}
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Pitch Deck Gallery</h1>
+  <p>Click any card to view the full pitch deck. Each brand has 7-page, 11-page, and 14-page versions plus personalization reference docs.</p>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all">All Decks</button>
+  <button class="filter-btn" data-filter="dodocs">DoDocs AI</button>
+  <button class="filter-btn" data-filter="priseen">Priseen</button>
+  <button class="filter-btn" data-filter="podcastinc">PodcastInc</button>
+  <button class="filter-btn" data-filter="snapshot">Snapshot AI</button>
+</div>
+
+<div class="grid" id="deck-grid">
+
+  <!-- ==================== DODOCS AI ==================== -->
+  <a href="decks/dodocs/dodocs-ai-7page-ai-saas-finance-stack.html" class="card" data-brand="dodocs">
+    <div class="card-brand brand-dodocs"><span class="brand-dot"></span><span class="brand-name">DoDocs AI</span></div>
+    <div class="card-body">
+      <div class="card-title">7-Page Pitch Deck</div>
+      <div class="card-desc">Concise investor deck covering AI revenue engine, market opportunity, and financial projections for DoDocs AI.</div>
+      <div class="card-meta">
+        <span class="tag html-tag">HTML</span>
+        <span class="tag pages-7">7 Pages</span>
+      </div>
+    </div>
+  </a>
+
+  <a href="decks/dodocs/dodocs-ai-11page-ai-saas-finance-stack.html" class="card" data-brand="dodocs">
+    <div class="card-brand brand-dodocs"><span class="brand-dot"></span><span class="brand-name">DoDocs AI</span></div>
+    <div class="card-body">
+      <div class="card-title">11-Page Pitch Deck</div>
+      <div class="card-desc">Extended deck with deeper financial modeling, competitive analysis, and go-to-market strategy for DoDocs AI.</div>
+      <div class="card-meta">
+        <span class="tag html-tag">HTML</span>
+        <span class="tag pages-11">11 Pages</span>
+      </div>
+    </div>
+  </a>
+
+  <a href="decks/dodocs/dodocs-ai-14page-ai-saas-finance-stack.html" class="card" data-brand="dodocs">
+    <div class="card-brand brand-dodocs"><span class="brand-dot"></span><span class="brand-name">DoDocs AI</span></div>
+    <div class="card-body">
+      <div class="card-title">14-Page Pitch Deck</div>
+      <div class="card-desc">Full comprehensive deck with complete financials, team, roadmap, and detailed market analysis for DoDocs AI.</div>
+      <div class="card-meta">
+        <span class="tag html-tag">HTML</span>
+        <span class="tag pages-14">14 Pages</span>
+      </div>
+    </div>
+  </a>
+
+  <a href="decks/dodocs/dodocs-ai-personalisation-reference.md" class="card" data-brand="dodocs">
+    <div class="card-brand brand-dodocs"><span class="brand-dot"></span><span class="brand-name">DoDocs AI</span></div>
+    <div class="card-body">
+      <div class="card-title">Personalization Reference</div>
+      <div class="card-desc">Reference document with personalization data, investor-specific customization notes, and audit findings.</div>
+      <div class="card-meta">
+        <span class="tag md-tag">Markdown</span>
+        <span class="tag">Reference</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- ==================== PRISEEN ==================== -->
+  <a href="decks/priseen/priseen-7page-ai-saas-finance-stack.html" class="card" data-brand="priseen">
+    <div class="card-brand brand-priseen"><span class="brand-dot"></span><span class="brand-name">Priseen</span></div>
+    <div class="card-body">
+      <div class="card-title">7-Page Pitch Deck</div>
+      <div class="card-desc">Concise investor deck covering AI-powered SaaS platform, market opportunity, and financial projections for Priseen.</div>
+      <div class="card-meta">
+        <span class="tag html-tag">HTML</span>
+        <span class="tag pages-7">7 Pages</span>
+      </div>
+    </div>
+  </a>
+
+  <a href="decks/priseen/priseen-11page-ai-saas-finance-stack.html" class="card" data-brand="priseen">
+    <div class="card-brand brand-priseen"><span class="brand-dot"></span><span class="brand-name">Priseen</span></div>
+    <div class="card-body">
+      <div class="card-title">11-Page Pitch Deck</div>
+      <div class="card-desc">Extended deck with deeper financial modeling, competitive analysis, and go-to-market strategy for Priseen.</div>
+      <div class="card-meta">
+        <span class="tag html-tag">HTML</span>
+        <span class="tag pages-11">11 Pages</span>
+      </div>
+    </div>
+  </a>
+
+  <a href="decks/priseen/priseen-14page-ai-saas-finance-stack.html" class="card" data-brand="priseen">
+    <div class="card-brand brand-priseen"><span class="brand-dot"></span><span class="brand-name">Priseen</span></div>
+    <div class="card-body">
+      <div class="card-title">14-Page Pitch Deck</div>
+      <div class="card-desc">Full comprehensive deck with complete financials, team, roadmap, and detailed market analysis for Priseen.</div>
+      <div class="card-meta">
+        <span class="tag html-tag">HTML</span>
+        <span class="tag pages-14">14 Pages</span>
+      </div>
+    </div>
+  </a>
+
+  <a href="decks/priseen/PRISEEN-PERSONALIZATION-AUDIT.md" class="card" data-brand="priseen">
+    <div class="card-brand brand-priseen"><span class="brand-dot"></span><span class="brand-name">Priseen</span></div>
+    <div class="card-body">
+      <div class="card-title">Personalization Audit</div>
+      <div class="card-desc">Detailed personalization audit document with investor customization data and strategic notes.</div>
+      <div class="card-meta">
+        <span class="tag md-tag">Markdown</span>
+        <span class="tag">Audit</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- ==================== PODCASTINC ==================== -->
+  <a href="decks/podcastinc/podcastinc-7page-ai-saas-finance-stack.html" class="card" data-brand="podcastinc">
+    <div class="card-brand brand-podcastinc"><span class="brand-dot"></span><span class="brand-name">PodcastInc</span></div>
+    <div class="card-body">
+      <div class="card-title">7-Page Pitch Deck</div>
+      <div class="card-desc">Concise investor deck covering AI podcast platform, market opportunity, and financial projections for PodcastInc.</div>
+      <div class="card-meta">
+        <span class="tag html-tag">HTML</span>
+        <span class="tag pages-7">7 Pages</span>
+      </div>
+    </div>
+  </a>
+
+  <a href="decks/podcastinc/podcastinc-11page-ai-saas-finance-stack.html" class="card" data-brand="podcastinc">
+    <div class="card-brand brand-podcastinc"><span class="brand-dot"></span><span class="brand-name">PodcastInc</span></div>
+    <div class="card-body">
+      <div class="card-title">11-Page Pitch Deck</div>
+      <div class="card-desc">Extended deck with deeper financial modeling, competitive analysis, and go-to-market strategy for PodcastInc.</div>
+      <div class="card-meta">
+        <span class="tag html-tag">HTML</span>
+        <span class="tag pages-11">11 Pages</span>
+      </div>
+    </div>
+  </a>
+
+  <a href="decks/podcastinc/podcastinc-14page-ai-saas-finance-stack.html" class="card" data-brand="podcastinc">
+    <div class="card-brand brand-podcastinc"><span class="brand-dot"></span><span class="brand-name">PodcastInc</span></div>
+    <div class="card-body">
+      <div class="card-title">14-Page Pitch Deck</div>
+      <div class="card-desc">Full comprehensive deck with complete financials, team, roadmap, and detailed market analysis for PodcastInc.</div>
+      <div class="card-meta">
+        <span class="tag html-tag">HTML</span>
+        <span class="tag pages-14">14 Pages</span>
+      </div>
+    </div>
+  </a>
+
+  <a href="decks/podcastinc/podcastinc-personalization-data.md" class="card" data-brand="podcastinc">
+    <div class="card-brand brand-podcastinc"><span class="brand-dot"></span><span class="brand-name">PodcastInc</span></div>
+    <div class="card-body">
+      <div class="card-title">Personalization Data</div>
+      <div class="card-desc">Personalization data and investor-specific customization reference for PodcastInc deck variants.</div>
+      <div class="card-meta">
+        <span class="tag md-tag">Markdown</span>
+        <span class="tag">Reference</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- ==================== SNAPSHOT AI ==================== -->
+  <a href="decks/snapshot/snapshot-ai-7page-missing-dashboard.html" class="card" data-brand="snapshot">
+    <div class="card-brand brand-snapshot"><span class="brand-dot"></span><span class="brand-name">Snapshot AI</span></div>
+    <div class="card-body">
+      <div class="card-title">7-Page Pitch Deck</div>
+      <div class="card-desc">Concise investor deck covering AI dashboard platform, market opportunity, and financial projections for Snapshot AI.</div>
+      <div class="card-meta">
+        <span class="tag html-tag">HTML</span>
+        <span class="tag pages-7">7 Pages</span>
+      </div>
+    </div>
+  </a>
+
+  <a href="decks/snapshot/snapshot-ai-11page-missing-dashboard.html" class="card" data-brand="snapshot">
+    <div class="card-brand brand-snapshot"><span class="brand-dot"></span><span class="brand-name">Snapshot AI</span></div>
+    <div class="card-body">
+      <div class="card-title">11-Page Pitch Deck</div>
+      <div class="card-desc">Extended deck with deeper financial modeling, competitive analysis, and go-to-market strategy for Snapshot AI.</div>
+      <div class="card-meta">
+        <span class="tag html-tag">HTML</span>
+        <span class="tag pages-11">11 Pages</span>
+      </div>
+    </div>
+  </a>
+
+  <a href="decks/snapshot/snapshot-ai-14page-missing-dashboard.html" class="card" data-brand="snapshot">
+    <div class="card-brand brand-snapshot"><span class="brand-dot"></span><span class="brand-name">Snapshot AI</span></div>
+    <div class="card-body">
+      <div class="card-title">14-Page Pitch Deck</div>
+      <div class="card-desc">Full comprehensive deck with complete financials, team, roadmap, and detailed market analysis for Snapshot AI.</div>
+      <div class="card-meta">
+        <span class="tag html-tag">HTML</span>
+        <span class="tag pages-14">14 Pages</span>
+      </div>
+    </div>
+  </a>
+
+  <a href="decks/snapshot/snapshot-ai-personalization-data.md" class="card" data-brand="snapshot">
+    <div class="card-brand brand-snapshot"><span class="brand-dot"></span><span class="brand-name">Snapshot AI</span></div>
+    <div class="card-body">
+      <div class="card-title">Personalization Data</div>
+      <div class="card-desc">Personalization data and investor-specific customization reference for Snapshot AI deck variants.</div>
+      <div class="card-meta">
+        <span class="tag md-tag">Markdown</span>
+        <span class="tag">Reference</span>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<div class="footer">
+  4 Brands &middot; 16 Decks &middot; Built for Investors
+</div>
+
+<script>
+  // Filter functionality
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.card').forEach(card => {
+        if (filter === 'all' || card.dataset.brand === filter) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

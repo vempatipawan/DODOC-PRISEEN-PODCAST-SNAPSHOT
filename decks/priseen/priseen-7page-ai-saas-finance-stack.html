@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UnitPay — The AI Revenue Engine for Priseen Media</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { 'brand-teal':'#003024','brand-lime':'#a4ea49','brand-mint':'#e1ead3','brand-black':'#0a0a0a','signal-red':'#ff3b3b','signal-amber':'#f5a623','card-dark':'#111111','card-border':'#1f1f1f' },
+    fontFamily: { 'inter':['Inter','system-ui','sans-serif'],'mono':['JetBrains Mono','monospace'] }
+  }}
+}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-snap-type:y mandatory;font-size:14px}
+@media(min-width:768px){html{font-size:15px}}
+@media(min-width:1280px){html{font-size:16px}}
+body{font-family:'Inter',system-ui,sans-serif;background:#0a0a0a;color:#fff;overflow-x:hidden}
+.slide{min-height:100vh;scroll-snap-align:start;position:relative;overflow:hidden}
+.grain::before{content:'';position:absolute;inset:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:256px;pointer-events:none;z-index:1}
+.slide>*{position:relative;z-index:2}
+.lime-glow{text-shadow:0 0 30px rgba(164,234,73,.12)}
+.red-glow{text-shadow:0 0 40px rgba(255,59,59,.3)}
+@keyframes pulseGlow{0%,100%{box-shadow:0 4px 24px rgba(164,234,73,.3)}50%{box-shadow:0 8px 40px rgba(164,234,73,.5)}}
+@keyframes livePulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes breathe{0%,100%{transform:perspective(1000px) rotateX(3deg) scale(1)}50%{transform:perspective(1000px) rotateX(3deg) scale(1.01)}}
+.anim{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.anim.v{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.15s}.d2{transition-delay:.3s}.d3{transition-delay:.45s}.d4{transition-delay:.6s}.d5{transition-delay:.75s}.d6{transition-delay:.9s}
+.progress-bar{position:fixed;bottom:0;left:0;height:2px;background:#a4ea49;z-index:100;transition:width .3s ease}
+.nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:8px}
+.nav-dot{width:8px;height:8px;border-radius:50%;border:1.5px solid #6b7280;background:transparent;cursor:pointer;transition:all .3s ease}
+.nav-dot.active{background:#a4ea49;border-color:#a4ea49;transform:scale(1.3)}
+.era-glow{box-shadow:0 0 20px rgba(164,234,73,.3)}
+.margin-fill{transition:width 1.5s ease-out}
+::-webkit-scrollbar{width:0}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="pBar"></div>
+<nav class="nav-dots hidden md:flex" id="navDots"></nav>
+
+<!-- S1 HOOK — ERA DIVIDING LINE -->
+<section class="slide grain flex flex-col items-center justify-center px-6 md:px-20" style="background:linear-gradient(160deg,#0a0a0a 0%,#041a14 40%,#0a0a0a 100%);background-image:radial-gradient(ellipse at center,rgba(0,48,36,.08) 0%,transparent 60%)">
+<div class="anim mb-6"><div class="flex items-center gap-2"><svg viewBox="0 0 134 133" class="w-8 h-8 flex-shrink-0"><path d="M23.19.1C44.63.05 66.07.06 87.52.03c7.7.04 15.35-.05 23.03.09 6.43.4 12.34 3.68 16.79 8.28 8.39 8.53 6.41 21 6.56 31.88-.26 22.98.42 46.18-.37 69.15-.59 10.88-8.52 20.78-19.32 22.93-6.76 1.22-13.78.4-20.65.64-15.78.01-31.58.03-47.38.04-7.48-.01-14.91.05-22.34 0-6.24-.18-12.38-3.35-16.6-7.78C.37 117.92-.1 110.08.29 100.52.27 90.9.26 81.27.26 71.65.23 57.72.2 43.73.19 29.79c-1.68-14.64 7.82-28.35 22.93-29.69h.07z" fill="#A4EA49"/><path d="M121 80.14c-.04-.63-.1-1.25-.19-1.84-7.66-.18-15.57.35-22.77-.18.01-11.83.02-23.56.03-35.31-.05-12.05-11.33-22.37-23.27-21.78h-.04c-8.9-.48-17.59 5.87-20.78 13.94-7.72 22.05 5.8 49.78 29.56 54.02-4.27 10.48-18.83 14.99-29.07 10.27-12.22-5.19-14.32-18.06-13.63-30-.23-12.17.27-24.83-.3-36.77h-11.23c-.52 3.09-.01 6.87-.18 10.19 0 9.11-.01 18.2-.01 27.32-1 16.04 3.19 30.33 17.83 38.74 17.4 9.83 40.35 1.92 48.29-16.42.36-.77.36-1.72.84-2.39 8.38-.22 17 .35 24.91-.2-.06-1.4-.04-2.85 0-4.29v-5.3zM86.52 45.38c-.02 10.75-.04 21.49-.08 32.24-.52-.05-1.02-.11-1.54-.16-.57-.07-1.07-.22-1.6-.43-7.93-2.89-14.37-8.69-17.6-16.56-1.6-3.93-2.22-8.23-2.07-12.46 0-1.33 0-2.81-.01-4.15.02-3.12 1.32-5.89 3.43-8.16 4.54-4.14 10.36-4.11 15.29-.7 2.14 1.7 3.54 4.17 4.09 6.84.09 1.18.09 2.36.08 3.54z" fill="#003024"/></svg><span class="text-white font-bold text-xl tracking-tight">UnitPay</span><span class="text-white/30 mx-2">&times;</span><span class="text-white/70 font-medium text-lg">Priseen Media</span></div></div>
+
+<!-- Old Era -->
+<div class="anim d1 mb-4 opacity-40" style="filter:grayscale(.5)">
+<p class="text-xs md:text-sm uppercase tracking-[3px] text-white/30 text-center mb-3">The Old Era</p>
+<div class="flex items-center justify-center gap-6 md:gap-10 flex-wrap">
+<div class="text-center"><span class="text-2xl md:text-4xl font-extrabold text-white/30">$2,500</span><p class="text-xs text-white/25 mt-1">/event flat fee</p></div>
+<div class="text-center"><span class="text-xl md:text-3xl font-extrabold text-white/30">Same content</span><p class="text-xs text-white/25 mt-1">for every attendee</p></div>
+</div>
+</div>
+
+<!-- Era Line -->
+<div class="anim d2 w-full max-w-2xl my-4 md:my-6"><div class="h-[2px] w-full relative" style="background:linear-gradient(90deg,transparent,#a4ea49,transparent)"><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-brand-lime era-glow"></div></div></div>
+
+<!-- New Era -->
+<div class="anim d3 mb-8">
+<p class="text-xs md:text-sm uppercase tracking-[3px] text-brand-lime text-center mb-3">The New Era</p>
+<div class="flex items-center justify-center gap-6 md:gap-10 flex-wrap">
+<div class="text-center"><span class="text-3xl md:text-5xl font-extrabold text-brand-lime lime-glow">$0.07</span><p class="text-xs text-brand-lime/60 mt-1">/personalized tap</p></div>
+<div class="text-center"><span class="text-xl md:text-2xl font-bold text-brand-lime">AI + NFC + Render</span><p class="text-xs text-brand-lime/60 mt-1">per interaction cost stack</p></div>
+</div>
+</div>
+
+<div class="text-center max-w-4xl anim d4">
+<p class="font-extrabold text-2xl md:text-[48px] text-white leading-tight">Your billing was built for the <span class="text-white/30 line-through">old era</span>.</p>
+<p class="text-lg md:text-2xl text-white/70 mt-3"><span class="text-brand-lime font-bold lime-glow">Priseen Media</span> operates in the new one.</p>
+</div>
+<div class="absolute bottom-5 md:bottom-6 left-6 md:left-20 text-white/40 text-xs font-medium">01 / 07</div>
+</section>
+
+<!-- S2 PROBLEM — 6 COSTS, 1 FLAT INVOICE -->
+<section class="slide grain flex flex-col items-center justify-center px-4 md:px-20" style="background:linear-gradient(160deg,#0a0a0a 0%,#041a14 40%,#0a0a0a 100%)">
+<div class="text-center max-w-4xl anim">
+<p class="text-xs md:text-sm uppercase tracking-[3px] text-brand-lime mb-3">The Problem</p>
+<h2 class="font-bold text-2xl md:text-[44px] text-white leading-tight">6 Costs. 1 Flat Invoice.</h2>
+<p class="text-sm md:text-lg text-white/60 mt-3 max-w-2xl mx-auto">Every Priseen Media tap triggers a chain of costs. Your invoice shows none of them.</p>
+</div>
+
+<div class="grid grid-cols-2 md:grid-cols-3 gap-3 mt-8 w-full max-w-3xl anim d1">
+<div class="rounded-xl px-4 py-3 flex items-center gap-2" style="background:rgba(8,180,150,.08);border:1px solid rgba(8,180,150,.2)"><svg class="w-4 h-4 text-[#08b496] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.288 15.038a5.25 5.25 0 017.424 0M5.106 11.856c3.807-3.808 9.98-3.808 13.788 0M1.924 8.674c5.565-5.565 14.587-5.565 20.152 0"/></svg><div><span class="text-sm font-medium text-[#08b496]">NFC Processing</span><p class="text-xs font-mono text-white/60">$0.003</p></div></div>
+<div class="rounded-xl px-4 py-3 flex items-center gap-2" style="background:rgba(164,234,73,.08);border:1px solid rgba(164,234,73,.2)"><svg class="w-4 h-4 text-brand-lime flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg><div><span class="text-sm font-medium text-brand-lime">AI Inference</span><p class="text-xs font-mono text-white/60">$0.020</p></div></div>
+<div class="rounded-xl px-4 py-3 flex items-center gap-2" style="background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.2)"><svg class="w-4 h-4 text-[#818cf8] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12"/></svg><div><span class="text-sm font-medium text-[#818cf8]">Screen Render</span><p class="text-xs font-mono text-white/60">$0.008</p></div></div>
+<div class="rounded-xl px-4 py-3 flex items-center gap-2" style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2)"><svg class="w-4 h-4 text-signal-amber flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375"/></svg><div><span class="text-sm font-medium text-signal-amber">Data Storage</span><p class="text-xs font-mono text-white/60">$0.001</p></div></div>
+<div class="rounded-xl px-4 py-3 flex items-center gap-2" style="background:rgba(236,72,153,.08);border:1px solid rgba(236,72,153,.2)"><svg class="w-4 h-4 text-[#ec4899] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582"/></svg><div><span class="text-sm font-medium text-[#ec4899]">Content Delivery</span><p class="text-xs font-mono text-white/60">$0.005</p></div></div>
+<div class="rounded-xl px-4 py-3 flex items-center gap-2" style="background:rgba(14,165,233,.08);border:1px solid rgba(14,165,233,.2)"><svg class="w-4 h-4 text-[#0ea5e9] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg><div><span class="text-sm font-medium text-[#0ea5e9]">Analytics</span><p class="text-xs font-mono text-white/60">$0.004</p></div></div>
+</div>
+
+<!-- Funnel Arrow -->
+<div class="anim d2 text-center my-4"><svg class="w-6 h-10 mx-auto text-white/20" fill="none" viewBox="0 0 24 40" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v32M6 30l6 6 6-6"/></svg></div>
+
+<!-- Flat Invoice -->
+<div class="anim d3 rounded-2xl p-6 md:p-8 text-center max-w-md w-full" style="background:rgba(255,59,59,.06);border:1px solid rgba(255,59,59,.2)">
+<p class="text-[10px] md:text-xs text-signal-red/60 uppercase tracking-[3px] mb-2">Your Monthly Invoice</p>
+<span class="text-4xl md:text-5xl font-extrabold text-signal-red">$100<span class="text-lg font-normal">/mo</span></span>
+<p class="text-sm text-white/40 mt-2">Business Tier &mdash; 5 units, 5 terminals</p>
+</div>
+
+<p class="text-sm md:text-base font-medium text-white/70 mt-6 text-center max-w-2xl anim d4">Priseen Media runs <span class="text-brand-lime font-bold">6 cost layers</span> per interaction. Your invoice shows <span class="text-signal-red font-bold">one number</span>.</p>
+<div class="absolute bottom-5 md:bottom-6 left-6 md:left-20 text-white/40 text-xs font-medium">02 / 07</div>
+</section>
+
+<!-- S3 REQUIREMENTS — NEW ERA NEEDS NEW INFRASTRUCTURE -->
+<section class="slide grain flex flex-col items-center justify-center px-4 md:px-20" style="background:linear-gradient(160deg,#0a0a0a 0%,#041a14 40%,#0a0a0a 100%)">
+<div class="text-center max-w-4xl anim">
+<p class="text-xs md:text-sm uppercase tracking-[3px] text-brand-lime mb-3">Requirements</p>
+<h2 class="font-bold text-2xl md:text-[44px] text-white leading-tight">The New Era Needs<br><span class="text-brand-lime lime-glow">New Infrastructure</span></h2>
+</div>
+
+<div class="mt-8 w-full max-w-3xl anim d1">
+<div class="bg-card-dark rounded-2xl border border-card-border overflow-hidden" style="box-shadow:0 16px 48px rgba(0,0,0,.4)">
+<div class="grid grid-cols-[1fr_60px_60px] md:grid-cols-[1fr_80px_80px] items-center px-4 md:px-6 py-3 border-b-2 border-card-border bg-brand-black">
+<span class="text-[10px] md:text-xs font-bold text-white/50 uppercase tracking-wider">Capability</span>
+<span class="text-[10px] md:text-xs font-bold text-white/50 uppercase tracking-wider text-center">Legacy</span>
+<span class="text-[10px] md:text-xs font-bold text-white/50 uppercase tracking-wider text-center">UnitPay</span>
+</div>
+<div class="divide-y divide-card-border">
+<div class="grid grid-cols-[1fr_60px_60px] md:grid-cols-[1fr_80px_80px] items-center px-4 md:px-6 py-3"><span class="text-sm text-white font-medium">Per-tap cost attribution</span><span class="text-center"><svg class="w-4 h-4 text-signal-red mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></span><span class="text-center"><svg class="w-4 h-4 text-brand-lime mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span></div>
+<div class="grid grid-cols-[1fr_60px_60px] md:grid-cols-[1fr_80px_80px] items-center px-4 md:px-6 py-3"><div><span class="text-sm text-white font-medium">Multi-dimensional metering</span><p class="text-[10px] text-white/40 mt-0.5">taps &times; terminals &times; AI calls</p></div><span class="text-center"><svg class="w-4 h-4 text-signal-red mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></span><span class="text-center"><svg class="w-4 h-4 text-brand-lime mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span></div>
+<div class="grid grid-cols-[1fr_60px_60px] md:grid-cols-[1fr_80px_80px] items-center px-4 md:px-6 py-3"><div><span class="text-sm text-white font-medium">Bursty event billing</span><p class="text-[10px] text-white/40 mt-0.5">500 screens, 3 days, then zero</p></div><span class="text-center"><svg class="w-4 h-4 text-signal-red mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></span><span class="text-center"><svg class="w-4 h-4 text-brand-lime mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span></div>
+<div class="grid grid-cols-[1fr_60px_60px] md:grid-cols-[1fr_80px_80px] items-center px-4 md:px-6 py-3"><span class="text-sm text-white font-medium">Usage-based + tiered hybrid pricing</span><span class="text-center"><svg class="w-4 h-4 text-signal-red mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></span><span class="text-center"><svg class="w-4 h-4 text-brand-lime mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span></div>
+<div class="grid grid-cols-[1fr_60px_60px] md:grid-cols-[1fr_80px_80px] items-center px-4 md:px-6 py-3"><span class="text-sm text-white font-medium">Real-time margin alerts per event client</span><span class="text-center"><svg class="w-4 h-4 text-signal-red mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></span><span class="text-center"><svg class="w-4 h-4 text-brand-lime mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span></div>
+<div class="grid grid-cols-[1fr_60px_60px] md:grid-cols-[1fr_80px_80px] items-center px-4 md:px-6 py-3"><span class="text-sm text-white font-medium">API call metering for developer tiers</span><span class="text-center"><svg class="w-4 h-4 text-signal-red mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></span><span class="text-center"><svg class="w-4 h-4 text-brand-lime mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span></div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-5 md:bottom-6 left-6 md:left-20 text-white/40 text-xs font-medium">03 / 07</div>
+</section>
+
+<!-- S4 SOLUTION — THREE PILLARS -->
+<section class="slide grain flex flex-col items-center justify-center px-4 md:px-20" style="background:linear-gradient(160deg,#0a0a0a 0%,#041a14 40%,#0a0a0a 100%);background-image:radial-gradient(ellipse at center,rgba(0,48,36,.08) 0%,transparent 50%)">
+<div class="text-center max-w-4xl anim">
+<p class="text-xs md:text-sm uppercase tracking-[3px] text-brand-lime mb-3">The Solution</p>
+<h2 class="font-extrabold text-2xl md:text-[48px] text-white leading-tight tracking-tight">Three Pillars. One Platform.</h2>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-10 w-full max-w-5xl">
+<div class="rounded-2xl p-5 md:p-7 text-center anim d1" style="background:rgba(164,234,73,.04);border:1px solid rgba(164,234,73,.12)">
+<div class="w-12 h-12 rounded-full bg-brand-lime/10 flex items-center justify-center mx-auto mb-4"><svg class="w-6 h-6 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5"/></svg></div>
+<p class="text-lg font-bold text-brand-lime mb-2">TRACK</p>
+<p class="text-sm text-white/60">Every NFC tap, every AI inference, every screen render &mdash; metered in real-time.</p>
+<p class="text-2xl md:text-3xl font-extrabold text-brand-lime mt-4">15K TPS</p>
+</div>
+
+<div class="rounded-2xl p-5 md:p-7 text-center anim d2" style="background:rgba(164,234,73,.04);border:1px solid rgba(164,234,73,.12)">
+<div class="w-12 h-12 rounded-full bg-brand-lime/10 flex items-center justify-center mx-auto mb-4"><svg class="w-6 h-6 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+<p class="text-lg font-bold text-brand-lime mb-2">PRICE</p>
+<p class="text-sm text-white/60">Usage-based, tiered, hybrid &mdash; any model. <span class="text-white font-medium">Simulate pricing changes</span> before deploying.</p>
+</div>
+
+<div class="rounded-2xl p-5 md:p-7 text-center anim d3" style="background:rgba(164,234,73,.04);border:1px solid rgba(164,234,73,.12)">
+<div class="w-12 h-12 rounded-full bg-brand-lime/10 flex items-center justify-center mx-auto mb-4"><svg class="w-6 h-6 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg></div>
+<p class="text-lg font-bold text-brand-lime mb-2">PROTECT</p>
+<p class="text-sm text-white/60">Margin alerts when event costs spike. Know which clients are profitable <span class="text-white font-medium">before the event ends</span>.</p>
+</div>
+</div>
+
+<p class="text-sm md:text-base text-white/50 mt-8 text-center anim d4">Built for companies like <span class="text-brand-lime font-bold">Priseen Media</span> that meter AI interactions at event scale.</p>
+<div class="absolute bottom-5 md:bottom-6 left-6 md:left-20 text-white/40 text-xs font-medium">04 / 07</div>
+</section>
+
+<!-- S5 PRODUCT — SEE EVERY TAP'S ECONOMICS -->
+<section class="slide grain flex flex-col items-center justify-center px-4 md:px-16 py-12" style="background:linear-gradient(160deg,#003024 0%,#001a14 50%,#002a1f 100%)">
+<div class="text-center max-w-4xl anim">
+<p class="text-xs md:text-sm uppercase tracking-[3px] text-brand-lime mb-3">Product</p>
+<h2 class="font-extrabold text-2xl md:text-[44px] text-white leading-tight tracking-tight">See Every Tap's Economics</h2>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 w-full max-w-5xl">
+<!-- Transaction Breakdown -->
+<div class="bg-card-dark rounded-xl border border-card-border p-5 anim d1">
+<span class="text-[9px] md:text-[11px] text-white/60 font-medium uppercase tracking-wider">Transaction Breakdown</span>
+<div class="mt-4 space-y-2.5">
+<div class="flex justify-between"><span class="text-sm text-[#08b496]">NFC Processing</span><span class="font-mono text-sm text-white/70">$0.003</span></div>
+<div class="flex justify-between"><span class="text-sm text-brand-lime">AI Inference</span><span class="font-mono text-sm text-white/70">$0.020</span></div>
+<div class="flex justify-between"><span class="text-sm text-[#818cf8]">Screen Render</span><span class="font-mono text-sm text-white/70">$0.008</span></div>
+<div class="border-t border-card-border pt-2.5 flex justify-between"><span class="text-sm font-bold text-white">Total Cost</span><span class="font-mono text-sm font-bold text-white">$0.031</span></div>
+<div class="flex justify-between"><span class="text-sm font-bold text-white">Revenue</span><span class="font-mono text-sm font-bold text-brand-lime">$0.070</span></div>
+<div class="border-t-2 border-brand-lime/30 pt-2.5 flex justify-between"><span class="text-base font-extrabold text-brand-lime">Margin</span><span class="font-mono text-lg font-extrabold text-brand-lime">55.7%</span></div>
+</div>
+</div>
+
+<!-- JSON Event Trace -->
+<div class="bg-card-dark rounded-xl border border-card-border overflow-hidden anim d2">
+<div class="px-4 py-2.5 border-b border-card-border bg-brand-black"><span class="text-[9px] md:text-[11px] text-white/40 uppercase tracking-wider">Event Trace &mdash; JSON</span></div>
+<div class="rounded-b-xl overflow-hidden" style="background:#0d1117">
+<div class="flex items-center gap-2 px-4 py-2 border-b border-card-border"><div class="flex gap-1.5"><div class="w-2 h-2 rounded-full bg-signal-red/40"></div><div class="w-2 h-2 rounded-full bg-signal-amber/40"></div><div class="w-2 h-2 rounded-full bg-brand-lime/40"></div></div></div>
+<pre class="p-4 font-mono text-[11px] md:text-xs leading-relaxed"><code>{
+  <span class="text-[#79c0ff]">"event"</span>: <span class="text-brand-lime">"nfc_tap"</span>,
+  <span class="text-[#79c0ff]">"terminal_id"</span>: <span class="text-brand-lime">"T-042"</span>,
+  <span class="text-[#79c0ff]">"attendee"</span>: <span class="text-brand-lime">"att_8291"</span>,
+  <span class="text-[#79c0ff]">"ai_model"</span>: <span class="text-brand-lime">"rec-v3"</span>,
+  <span class="text-[#79c0ff]">"inference_ms"</span>: <span class="text-[#ffa657]">47</span>,
+  <span class="text-[#79c0ff]">"cost"</span>: <span class="text-[#ffa657]">0.031</span>,
+  <span class="text-[#79c0ff]">"revenue"</span>: <span class="text-[#ffa657]">0.070</span>,
+  <span class="text-[#79c0ff]">"margin"</span>: <span class="text-brand-lime">"55.7%"</span>
+}</code></pre>
+</div>
+</div>
+
+<!-- Margin Trend -->
+<div class="bg-card-dark rounded-xl border border-card-border p-5 anim d3">
+<span class="text-[9px] md:text-[11px] text-white/60 font-medium uppercase tracking-wider">Margin Trend &mdash; 5 Events</span>
+<div class="mt-4 space-y-3">
+<div><div class="flex justify-between mb-1"><span class="text-xs text-white/70">GITEX Conf</span><span class="text-xs font-mono text-brand-lime font-bold">52%</span></div><div class="h-1.5 bg-[#1a1a1a] rounded-full overflow-hidden"><div class="h-full bg-brand-lime rounded-full margin-fill" data-width="52" style="width:0%"></div></div></div>
+<div><div class="flex justify-between mb-1"><span class="text-xs text-white/70">Step Dubai</span><span class="text-xs font-mono text-brand-lime font-bold">58%</span></div><div class="h-1.5 bg-[#1a1a1a] rounded-full overflow-hidden"><div class="h-full bg-brand-lime rounded-full margin-fill" data-width="58" style="width:0%"></div></div></div>
+<div><div class="flex justify-between mb-1"><span class="text-xs text-white/70">Corp Retreat</span><span class="text-xs font-mono text-brand-lime font-bold">61%</span></div><div class="h-1.5 bg-[#1a1a1a] rounded-full overflow-hidden"><div class="h-full bg-brand-lime rounded-full margin-fill" data-width="61" style="width:0%"></div></div></div>
+<div><div class="flex justify-between mb-1"><span class="text-xs text-white/70">Trade Show X</span><span class="text-xs font-mono text-signal-red font-bold">49%</span></div><div class="h-1.5 bg-[#1a1a1a] rounded-full overflow-hidden"><div class="h-full bg-signal-red rounded-full margin-fill" data-width="49" style="width:0%"></div></div></div>
+<div><div class="flex justify-between mb-1"><span class="text-xs text-white/70">Dubai Summit</span><span class="text-xs font-mono text-brand-lime font-bold">63%</span></div><div class="h-1.5 bg-[#1a1a1a] rounded-full overflow-hidden"><div class="h-full bg-brand-lime rounded-full margin-fill" data-width="63" style="width:0%"></div></div></div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-5 md:bottom-6 left-6 md:left-16 text-white/40 text-xs font-medium">05 / 07</div>
+</section>
+
+<!-- S6 TRACTION — WHY UNITPAY -->
+<section class="slide grain flex flex-col items-center justify-center px-4 md:px-20" style="background:linear-gradient(160deg,#0a0a0a 0%,#041a14 40%,#0a0a0a 100%)">
+<div class="text-center max-w-4xl anim">
+<p class="text-xs md:text-sm uppercase tracking-[3px] text-brand-lime mb-3">Why UnitPay</p>
+<h2 class="font-bold text-2xl md:text-[44px] text-white leading-tight">Early = White-Glove Onboarding</h2>
+<p class="text-sm md:text-base text-white/50 mt-3">Your billing infrastructure shaped around <span class="text-brand-lime font-bold">Priseen's</span> exact models.</p>
+</div>
+
+<div class="grid grid-cols-2 md:grid-cols-3 gap-6 mt-8 w-full max-w-4xl text-center">
+<div class="anim d1"><p class="text-3xl md:text-[56px] font-extrabold text-brand-lime leading-none">3</p><p class="text-sm font-medium text-white mt-2">customers onboarded</p></div>
+<div class="anim d2"><p class="text-3xl md:text-[56px] font-extrabold text-brand-lime leading-none">$200K</p><p class="text-sm font-medium text-white mt-2">raised</p></div>
+<div class="anim d3"><p class="text-3xl md:text-[56px] font-extrabold text-brand-lime leading-none">10</p><p class="text-sm font-medium text-white mt-2">on waitlist</p></div>
+</div>
+
+<!-- Comparison table (4 columns for compact view) -->
+<div class="mt-8 w-full max-w-4xl anim d4">
+<div class="bg-card-dark rounded-2xl border border-card-border overflow-hidden" style="box-shadow:0 12px 40px rgba(0,0,0,.4)">
+<div class="overflow-x-auto"><table class="w-full">
+<thead><tr class="bg-brand-black border-b border-card-border"><th class="py-2.5 px-3 text-left text-[9px] md:text-[11px] font-bold text-white/60 uppercase tracking-wider">Platform</th><th class="py-2.5 px-2 text-center text-[9px] md:text-[11px] font-bold text-white/60 uppercase tracking-wider">Metering</th><th class="py-2.5 px-2 text-center text-[9px] md:text-[11px] font-bold text-white/60 uppercase tracking-wider">Cost Attr.</th><th class="py-2.5 px-2 text-center text-[9px] md:text-[11px] font-bold text-white/60 uppercase tracking-wider">Margin Alerts</th></tr></thead>
+<tbody class="text-[11px] md:text-[13px]">
+<tr class="border-b border-card-border/50"><td class="py-2.5 px-3 font-medium text-white">Stripe Billing</td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 text-signal-red mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 text-signal-red mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 text-signal-red mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td></tr>
+<tr class="border-b border-card-border/50"><td class="py-2.5 px-3 font-medium text-white">Chargebee</td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 text-signal-red mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 text-signal-red mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 text-signal-red mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td></tr>
+<tr class="border-b border-card-border/50"><td class="py-2.5 px-3 font-medium text-white">Orb</td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 text-brand-lime mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 text-signal-red mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 text-signal-red mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></td></tr>
+<tr style="background:rgba(164,234,73,.04)"><td class="py-2.5 px-3 font-extrabold text-brand-lime">UnitPay</td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 text-brand-lime mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 text-brand-lime mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></td><td class="py-2.5 px-2 text-center"><svg class="w-4 h-4 text-brand-lime mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></td></tr>
+</tbody></table></div>
+</div>
+</div>
+<div class="absolute bottom-5 md:bottom-6 left-6 md:left-20 text-white/40 text-xs font-medium">06 / 07</div>
+</section>
+
+<!-- S7 CTA -->
+<section class="slide grain flex flex-col items-center justify-center px-4 md:px-20" style="background:linear-gradient(160deg,#0a0a0a 0%,#041a14 40%,#0a0a0a 100%);background-image:radial-gradient(ellipse at center,rgba(164,234,73,.05) 0%,transparent 60%)">
+
+<!-- Era Line -->
+<div class="w-full max-w-2xl mb-8 anim"><div class="h-[2px] w-full relative" style="background:linear-gradient(90deg,transparent,#a4ea49,transparent)"><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-brand-lime era-glow"></div></div></div>
+
+<div class="text-center max-w-3xl anim d1">
+<p class="text-xs md:text-sm uppercase tracking-[4px] text-brand-lime mb-3">Introducing</p>
+<h2 class="font-extrabold text-3xl md:text-[56px] text-white leading-tight tracking-tight">The AI Revenue Engine</h2>
+<p class="text-base md:text-lg text-white/50 mt-2">for Priseen Media</p>
+</div>
+
+<div class="mt-6 space-y-3 anim d2">
+<div class="flex items-center gap-3"><div class="w-5 h-5 rounded-full bg-brand-lime/15 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></div><span class="text-sm md:text-base text-white">Your pricing model pre-configured</span></div>
+<div class="flex items-center gap-3"><div class="w-5 h-5 rounded-full bg-brand-lime/15 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></div><span class="text-sm md:text-base text-white">NFC tap metering ready to connect</span></div>
+<div class="flex items-center gap-3"><div class="w-5 h-5 rounded-full bg-brand-lime/15 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></div><span class="text-sm md:text-base text-white">Per-tap billing visibility in one integration</span></div>
+<div class="flex items-center gap-3"><div class="w-5 h-5 rounded-full bg-brand-lime/15 flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3 text-brand-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></div><span class="text-sm md:text-base font-medium text-brand-lime">See what every tap earns and costs &mdash; before your next event</span></div>
+</div>
+
+<div class="mt-8 anim d3"><a href="mailto:vijay@useunitpay.com?subject=Priseen%20Media%20%E2%80%94%20Pilot%20Request" class="inline-block bg-brand-lime text-brand-teal font-bold text-base md:text-lg px-8 md:px-10 py-3.5 md:py-4 rounded-full" style="animation:pulseGlow 3s ease-in-out infinite;box-shadow:0 4px 24px rgba(164,234,73,.3)">Book a Pilot with Priseen Media's Data &rarr;</a></div>
+<p class="text-sm text-white/50 mt-3 anim d3">Salman, your per-tap billing visibility is one integration away.</p>
+
+<div class="mt-6 flex flex-col md:flex-row items-center gap-6 anim d4">
+<div class="w-24 h-24 bg-white rounded-lg flex items-center justify-center"><svg viewBox="0 0 100 100" class="w-20 h-20"><rect width="100" height="100" fill="white"/><g fill="#0a0a0a"><rect x="10" y="10" width="8" height="8"/><rect x="18" y="10" width="8" height="8"/><rect x="26" y="10" width="8" height="8"/><rect x="34" y="10" width="8" height="8"/><rect x="10" y="18" width="8" height="8"/><rect x="34" y="18" width="8" height="8"/><rect x="10" y="26" width="8" height="8"/><rect x="34" y="26" width="8" height="8"/><rect x="10" y="34" width="8" height="8"/><rect x="18" y="34" width="8" height="8"/><rect x="26" y="34" width="8" height="8"/><rect x="34" y="34" width="8" height="8"/><rect x="50" y="10" width="8" height="8"/><rect x="58" y="18" width="8" height="8"/><rect x="50" y="26" width="8" height="8"/><rect x="58" y="34" width="8" height="8"/><rect x="66" y="10" width="8" height="8"/><rect x="74" y="10" width="8" height="8"/><rect x="82" y="10" width="8" height="8"/><rect x="66" y="18" width="8" height="8"/><rect x="82" y="18" width="8" height="8"/><rect x="66" y="26" width="8" height="8"/><rect x="82" y="26" width="8" height="8"/><rect x="66" y="34" width="8" height="8"/><rect x="74" y="34" width="8" height="8"/><rect x="82" y="34" width="8" height="8"/><rect x="10" y="50" width="8" height="8"/><rect x="18" y="58" width="8" height="8"/><rect x="26" y="50" width="8" height="8"/><rect x="10" y="66" width="8" height="8"/><rect x="34" y="66" width="8" height="8"/><rect x="10" y="74" width="8" height="8"/><rect x="26" y="74" width="8" height="8"/><rect x="34" y="74" width="8" height="8"/><rect x="10" y="82" width="8" height="8"/><rect x="18" y="82" width="8" height="8"/><rect x="26" y="82" width="8" height="8"/><rect x="34" y="82" width="8" height="8"/><rect x="50" y="50" width="8" height="8"/><rect x="58" y="58" width="8" height="8"/><rect x="66" y="50" width="8" height="8"/><rect x="50" y="66" width="8" height="8"/><rect x="74" y="66" width="8" height="8"/><rect x="82" y="74" width="8" height="8"/><rect x="58" y="82" width="8" height="8"/><rect x="74" y="82" width="8" height="8"/><rect x="82" y="82" width="8" height="8"/></g></svg></div>
+<div class="text-center md:text-left"><p class="text-sm md:text-base font-medium text-white">vijay@useunitpay.com</p><p class="text-sm text-white/50 mt-1">useunitpay.com</p><p class="text-xs text-white/30 mt-2 italic">"Your AI revenue engine is live. Scan to walk through it."</p></div>
+</div>
+
+<!-- Era Line -->
+<div class="w-full max-w-2xl mt-6 anim d5"><div class="h-[2px] w-full relative" style="background:linear-gradient(90deg,transparent,#a4ea49,transparent)"><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-brand-lime era-glow"></div></div></div>
+
+<div class="mt-4 anim d6"><div class="flex items-center gap-2"><svg viewBox="0 0 134 133" class="w-8 h-8 flex-shrink-0"><path d="M23.19.1C44.63.05 66.07.06 87.52.03c7.7.04 15.35-.05 23.03.09 6.43.4 12.34 3.68 16.79 8.28 8.39 8.53 6.41 21 6.56 31.88-.26 22.98.42 46.18-.37 69.15-.59 10.88-8.52 20.78-19.32 22.93-6.76 1.22-13.78.4-20.65.64-15.78.01-31.58.03-47.38.04-7.48-.01-14.91.05-22.34 0-6.24-.18-12.38-3.35-16.6-7.78C.37 117.92-.1 110.08.29 100.52.27 90.9.26 81.27.26 71.65.23 57.72.2 43.73.19 29.79c-1.68-14.64 7.82-28.35 22.93-29.69h.07z" fill="#A4EA49"/><path d="M121 80.14c-.04-.63-.1-1.25-.19-1.84-7.66-.18-15.57.35-22.77-.18.01-11.83.02-23.56.03-35.31-.05-12.05-11.33-22.37-23.27-21.78h-.04c-8.9-.48-17.59 5.87-20.78 13.94-7.72 22.05 5.8 49.78 29.56 54.02-4.27 10.48-18.83 14.99-29.07 10.27-12.22-5.19-14.32-18.06-13.63-30-.23-12.17.27-24.83-.3-36.77h-11.23c-.52 3.09-.01 6.87-.18 10.19 0 9.11-.01 18.2-.01 27.32-1 16.04 3.19 30.33 17.83 38.74 17.4 9.83 40.35 1.92 48.29-16.42.36-.77.36-1.72.84-2.39 8.38-.22 17 .35 24.91-.2-.06-1.4-.04-2.85 0-4.29v-5.3zM86.52 45.38c-.02 10.75-.04 21.49-.08 32.24-.52-.05-1.02-.11-1.54-.16-.57-.07-1.07-.22-1.6-.43-7.93-2.89-14.37-8.69-17.6-16.56-1.6-3.93-2.22-8.23-2.07-12.46 0-1.33 0-2.81-.01-4.15.02-3.12 1.32-5.89 3.43-8.16 4.54-4.14 10.36-4.11 15.29-.7 2.14 1.7 3.54 4.17 4.09 6.84.09 1.18.09 2.36.08 3.54z" fill="#003024"/></svg><span class="text-white font-bold text-xl tracking-tight">UnitPay</span></div></div>
+<div class="absolute bottom-5 md:bottom-6 left-6 md:left-20 text-white/40 text-xs font-medium">07 / 07</div>
+</section>
+
+<script>
+(function(){
+const slides=document.querySelectorAll('.slide');
+const bar=document.getElementById('pBar');
+const nav=document.getElementById('navDots');
+const total=slides.length;
+for(let i=0;i<total;i++){const b=document.createElement('button');b.className='nav-dot';b.setAttribute('aria-label','Go to slide '+(i+1));b.addEventListener('click',()=>slides[i].scrollIntoView({behavior:'smooth'}));nav.appendChild(b);}
+const dots=nav.querySelectorAll('.nav-dot');
+const animObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v');});},{threshold:.15});
+document.querySelectorAll('.anim').forEach(el=>animObs.observe(el));
+const fillObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.width=e.target.dataset.width+'%';}});},{threshold:.3});
+document.querySelectorAll('.margin-fill').forEach(el=>fillObs.observe(el));
+let ticking=false;
+function onScroll(){
+const h=document.documentElement;
+const scrollTop=h.scrollTop||document.body.scrollTop;
+const scrollHeight=h.scrollHeight-h.clientHeight;
+const pct=scrollHeight>0?(scrollTop/scrollHeight)*100:0;
+bar.style.width=pct+'%';
+let active=0;
+slides.forEach((s,i)=>{const rect=s.getBoundingClientRect();if(rect.top<window.innerHeight*.5)active=i;});
+dots.forEach((d,i)=>{d.classList.toggle('active',i===active);});
+ticking=false;
+}
+window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(onScroll);ticking=true;}},false);
+document.addEventListener('keydown',e=>{let c=0;slides.forEach((s,i)=>{if(s.getBoundingClientRect().top<window.innerHeight*.5)c=i});if(e.key==='ArrowDown'||e.key==='ArrowRight'){e.preventDefault();if(c<total-1)slides[c+1].scrollIntoView({behavior:'smooth'})}if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();if(c>0)slides[c-1].scrollIntoView({behavior:'smooth'})}});
+onScroll();
+})();
+</script>
+</body>
+</html>
