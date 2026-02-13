@@ -1,367 +1,369 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" style="scroll-snap-type: y mandatory;">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UnitPay for PodcastInc.ai — The AI Revenue Engine</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0a0a0a;--white:#ffffff;--accent:#a4ea49;--teal:#003024;--mint:#e1ead3;--code:#79c0ff;--red:#ff3b3b;--amber:#f59e0b;--card:#111111;--card-border:rgba(255,255,255,0.1);--text-secondary:rgba(255,255,255,0.6)}
-html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden}
-section{min-height:100vh;scroll-snap-align:start;display:flex;align-items:center;justify-content:center;position:relative;padding:40px 24px}
-.slide-inner{max-width:1080px;width:100%;margin:0 auto}
-.slide-counter{position:fixed;bottom:24px;right:32px;font-size:13px;color:var(--text-secondary);font-weight:500;z-index:100;background:rgba(10,10,10,0.8);padding:6px 14px;border-radius:20px;border:1px solid var(--card-border);backdrop-filter:blur(8px)}
-.logo{position:fixed;top:24px;left:32px;font-size:14px;font-weight:700;color:var(--accent);z-index:100;letter-spacing:1px}
-.badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
-.badge-blue{background:rgba(121,192,255,0.15);color:var(--code)}
-.badge-purple{background:rgba(168,85,247,0.15);color:#a855f7}
-.badge-green{background:rgba(164,234,73,0.15);color:var(--accent)}
-.badge-amber{background:rgba(245,158,11,0.15);color:var(--amber)}
-.badge-red{background:rgba(255,59,59,0.15);color:var(--red)}
-.badge-teal{background:rgba(0,48,36,0.4);color:#5eead4}
-.badge-gray{background:rgba(255,255,255,0.08);color:var(--text-secondary)}
-h1{font-size:clamp(28px,5vw,48px);font-weight:700;line-height:1.15;margin-bottom:16px}
-h2{font-size:clamp(22px,3.5vw,36px);font-weight:700;line-height:1.2;margin-bottom:12px}
-h3{font-size:clamp(16px,2.5vw,22px);font-weight:600;line-height:1.3}
-p,.desc{font-size:clamp(14px,1.8vw,18px);color:var(--text-secondary);line-height:1.6}
-.accent{color:var(--accent)}
-.red{color:var(--red)}
-.card{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:28px;position:relative;overflow:hidden}
-.card-sm{padding:20px}
-.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.grid-4{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-code,.code{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--code)}
-pre{font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7;background:#0d0d0d;border:1px solid var(--card-border);border-radius:8px;padding:20px;overflow-x:auto}
-.divider{width:100%;height:2px;background:var(--accent);position:relative;margin:24px 0}
-.divider::after{content:'YOU ARE HERE';position:absolute;right:0;top:-10px;font-size:11px;font-weight:700;color:var(--accent);letter-spacing:1px;background:var(--bg);padding:0 8px}
-.check{color:var(--accent);font-weight:700}
-.cross{color:var(--red);font-weight:700}
-.stat-number{font-size:clamp(36px,6vw,56px);font-weight:700;line-height:1;color:var(--white)}
-.stat-label{font-size:14px;color:var(--text-secondary);margin-top:6px}
-.cta-btn{display:inline-block;background:var(--accent);color:var(--bg);font-size:18px;font-weight:700;padding:16px 36px;border-radius:8px;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;cursor:pointer;border:none}
-.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(164,234,73,0.3)}
-.qr-box{width:120px;height:120px;border:2px dashed var(--card-border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--text-secondary)}
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:14px}
-th{text-align:left;padding:12px 16px;border-bottom:1px solid var(--card-border);color:var(--text-secondary);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.5px}
-td{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05)}
-tr:hover td{background:rgba(255,255,255,0.02)}
-.faded{opacity:0.4}
-.pillar{text-align:center}
-.pillar-icon{width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 16px;border:1px solid var(--card-border)}
-.margin-bar{height:8px;border-radius:4px;background:rgba(255,255,255,0.06)}
-.margin-fill{height:100%;border-radius:4px}
-.alert-card{border-left:4px solid;padding:16px 20px;background:var(--card);border-radius:0 8px 8px 0;margin-bottom:12px}
-@media(max-width:768px){.grid-2,.grid-3{grid-template-columns:1fr}.slide-inner{padding:0}section{padding:24px 16px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UnitPay for PodcastInc.ai — The AI Revenue Engine </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { 'inter': ['Inter','sans-serif'], 'mono': ['JetBrains Mono','monospace'] },
+          colors: {
+            'brand-teal':'#003024','brand-lime':'#a4ea49','brand-black':'#0a0a0a','brand-mint':'#e1ead3',
+            'brand-red':'#ff3b3b','brand-amber':'#f59e0b','brand-slate':'#6b7280',
+            'card-bg':'#111111','card-border':'#1f1f1f','card-hover':'#1a1a1a',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html{font-size:14px;scroll-behavior:smooth;scroll-snap-type:y mandatory;overflow-y:scroll;scrollbar-width:none;-ms-overflow-style:none}
+    @media(min-width:768px){html{font-size:15px}}
+    @media(min-width:1280px){html{font-size:16px}}
+    body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff;-webkit-font-smoothing:antialiased}
+    ::-webkit-scrollbar{width:0;height:0}
+    .slide{min-height:100vh;scroll-snap-align:start;position:relative;overflow:hidden}
+    .grain::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");background-size:256px 256px}
+    .fade-in-up{opacity:0;transform:translateY(24px);transition:opacity 0.8s ease,transform 0.8s ease}
+    .fade-in-up.visible{opacity:1;transform:translateY(0)}
+    @keyframes pulseGlow{0%,100%{box-shadow:0 0 20px rgba(164,234,73,0.3)}50%{box-shadow:0 0 40px rgba(164,234,73,0.5)}}
+    .pulse-glow{animation:pulseGlow 2s ease-in-out infinite}
+    @keyframes livePulse{0%,100%{opacity:1}50%{opacity:0.4}}
+    .live-pulse{animation:livePulse 2s ease-in-out infinite}
+    #progress-bar{position:fixed;bottom:0;left:0;height:2px;background:#a4ea49;z-index:100;transition:width 0.3s ease}
+    #nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:12px}
+    .nav-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.3s ease}
+    .nav-dot.active{background:#a4ea49;box-shadow:0 0 8px rgba(164,234,73,0.4)}
+    @media(max-width:1023px){#nav-dots{display:none}}
+    .gradient-dark{background:linear-gradient(160deg,#0a0a0a 0%,#041a14 40%,#0a0a0a 100%)}
+    .gradient-teal{background:linear-gradient(160deg,#003024 0%,#001a14 50%,#002a1f 100%)}
+    .text-sub{color:rgba(255,255,255,0.6)}
+    .text-sub-bright{color:rgba(255,255,255,0.7)}
+    .strike{text-decoration:line-through;text-decoration-color:#ff3b3b;text-decoration-thickness:2px}
+  </style>
 </head>
-<body>
+<body class="font-inter">
+<div id="progress-bar" style="width:0%"></div>
+<div id="nav-dots"></div>
 
-<div class="logo">UNITPAY</div>
-<div class="slide-counter" id="counter">1 / 7</div>
-
-<!-- ===================== SLIDE 1: HOOK — THE ERA DIVIDE ===================== -->
-<section id="slide-1">
-<div class="slide-inner">
-  <div style="display:flex;flex-direction:column;min-height:70vh;justify-content:center">
+<!-- ==================== SLIDE 01: HOOK ==================== -->
+<section class="slide grain gradient-dark flex flex-col items-center justify-center px-6 md:px-12" id="slide-01">
+  <div class="absolute inset-0" style="background:radial-gradient(ellipse at center bottom,rgba(0,48,36,0.15),transparent 70%)"></div>
+  <div class="relative z-10 max-w-5xl mx-auto w-full">
+    <!-- Logo -->
+    <div class="fade-in-up absolute top-6 left-0" style="transition-delay:0s">
+      <svg width="140" height="36" viewBox="0 0 524 133" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.1903 0.100433C44.6251 0.0545497 66.0706 0.0580749 87.516 0.0298388C95.2211 0.0651339 102.87 -0.0760479 110.546 0.0616031C116.981 0.460438 122.886 3.74289 127.336 8.34185C135.728 16.8762 133.746 29.3354 133.899 40.2239C133.644 63.2081 134.327 86.4005 133.538 109.371C132.947 120.249 125.019 130.149 114.222 132.302C107.461 133.52 100.439 132.697 93.5761 132.937C77.7945 132.944 61.9916 132.965 46.1959 132.98C38.7172 132.972 31.2845 133.029 23.8554 132.98C17.6114 132.803 11.477 129.634 7.25658 125.204C0.365174 117.916 -0.101801 110.08 0.290882 100.515C0.269655 90.9007 0.259029 81.2686 0.255492 71.6542C0.234266 57.7197 0.202429 43.7252 0.191816 29.7907C-1.48858 15.1503 8.01364 1.44518 23.1266 0.100433H23.1938H23.1903Z" fill="#A4EA49"/><path d="M121 80.1442C120.965 79.5113 120.901 78.896 120.813 78.3019C113.155 78.1215 105.246 78.6484 98.0392 78.118C98.0498 66.2892 98.0604 54.5595 98.0674 42.805C98.0145 30.7535 86.7405 20.4383 74.7962 21.0253H74.7609C65.8574 20.5479 57.1726 26.8919 53.9837 34.9652C46.2619 57.0137 59.7795 84.7449 83.5445 88.9849C79.2727 99.4698 64.711 103.982 54.474 99.2541C42.2511 94.0665 40.1557 81.1945 40.8648 69.2597C40.639 57.0915 41.1399 44.4282 40.5684 32.4933H29.3403C28.8253 35.5805 29.3226 39.3607 29.1533 42.6812C29.1498 51.7942 29.1427 60.8858 29.1357 70.0023C28.155 86.0392 32.3281 100.333 46.9674 108.745C64.3653 118.573 87.3119 110.666 95.256 92.3266C95.6123 91.5592 95.6158 90.6045 96.092 89.9397C104.477 89.7169 113.091 90.2897 121 89.7381C120.937 88.3377 120.965 86.8879 121 85.4451V80.1478V80.1442ZM86.5218 45.3829C86.5006 56.1296 86.4759 66.8727 86.4442 77.6194C85.9256 77.5663 85.4212 77.5133 84.9062 77.4567C84.3347 77.3824 83.8408 77.241 83.3082 77.0253C75.3747 74.1326 68.937 68.3403 65.7093 60.465C64.1078 56.5327 63.4869 52.2327 63.6386 48.0068C63.6351 46.6737 63.6315 45.1955 63.621 43.8553C63.6421 40.7399 64.9438 37.9639 67.0568 35.6972C71.5932 31.5527 77.4172 31.5845 82.3487 34.997C84.4899 36.6979 85.8868 39.1662 86.4406 41.8326C86.5324 43.0137 86.5253 44.1912 86.5182 45.3759L86.5218 45.3829Z" fill="#003024"/><path d="M194.341 109.186C188.09 109.186 182.664 108.036 178.066 105.737C173.467 103.437 169.91 99.9881 167.395 95.3893C164.88 90.7187 163.623 84.8625 163.623 77.8206V32.5516H176.557V77.0662C176.557 84.1799 178.066 89.4253 181.084 92.8025C184.102 96.1079 188.521 97.7606 194.341 97.7606C200.233 97.7606 204.652 96.1079 207.598 92.8025C210.616 89.4253 212.125 84.2158 212.125 77.1739V32.5516H225.059V77.8206C225.059 84.8625 223.802 90.7187 221.287 95.3893C218.772 99.9881 215.215 103.437 210.616 105.737C206.017 108.036 200.592 109.186 194.341 109.186ZM233.732 108V50.8748H244.726V60.4675C246.092 57.5933 248.319 55.0783 251.409 52.9227C254.499 50.767 258.487 49.6892 263.373 49.6892C270.343 49.6892 275.588 51.5933 279.109 55.4017C282.63 59.1382 284.391 64.6351 284.391 71.8926V108H272.534V74.5871C272.534 69.7728 271.528 66.1441 269.517 63.701C267.505 61.2579 264.199 60.0364 259.6 60.0364C256.295 60.0364 253.6 60.7549 251.517 62.192C249.505 63.5573 247.996 65.3537 246.99 67.5812C246.056 69.7369 245.589 72.0722 245.589 74.5871V108H233.732ZM292.525 108V50.8748H304.381V108H292.525ZM298.453 44.4078C296.225 44.4078 294.393 43.7252 292.956 42.3599C291.591 40.9228 290.908 39.0905 290.908 36.8629C290.908 34.6354 291.591 32.839 292.956 31.4738C294.393 30.0367 296.225 29.3181 298.453 29.3181C300.681 29.3181 302.477 30.0367 303.842 31.4738C305.279 32.839 305.998 34.6354 305.998 36.8629C305.998 39.0905 305.279 40.9228 303.842 42.3599C302.477 43.7252 300.681 44.4078 298.453 44.4078ZM335.049 108.539C330.737 108.539 327.217 107.928 324.486 106.707C321.827 105.485 319.851 103.581 318.558 100.994C317.336 98.3354 316.726 94.9223 316.726 90.7547V61.0064H308.642V50.8748H316.726V37.9408H328.582V50.8748H343.133V61.0064H328.582V89.1379C328.582 92.5151 329.193 94.8864 330.414 96.2516C331.708 97.545 334.151 98.1917 337.743 98.1917C339.899 98.1917 342.055 98.0839 344.21 97.8684V108C342.845 108.144 341.444 108.251 340.007 108.323C338.57 108.467 336.917 108.539 335.049 108.539ZM350.72 108V32.5516H378.204C384.959 32.5516 390.528 33.5576 394.911 35.5695C399.294 37.5096 402.527 40.2761 404.611 43.8689C406.767 47.4616 407.845 51.7011 407.845 56.5873C407.845 61.4735 406.767 65.713 404.611 69.3058C402.527 72.8985 399.294 75.7009 394.911 77.7129C390.528 79.653 384.959 80.623 378.204 80.623H363.654V108H350.72ZM363.654 69.4135H377.126C383.953 69.4135 388.623 68.3716 391.138 66.2878C393.653 64.1321 394.911 60.8986 394.911 56.5873C394.911 52.3478 393.653 49.1503 391.138 46.9946C388.623 44.8389 383.953 43.7611 377.126 43.7611H363.654V69.4135ZM426.774 109.186C422.678 109.186 419.158 108.431 416.211 106.922C413.337 105.341 411.146 103.186 409.637 100.455C408.128 97.7246 407.373 94.6708 407.373 91.2936C407.373 85.617 409.062 81.4134 412.439 78.6829C415.816 75.8805 420.774 74.4794 427.313 74.4794H445.097V71.3536C445.097 67.0423 444.127 64.0962 442.187 62.5154C440.319 60.8627 437.337 60.0364 433.241 60.0364C429.577 60.0364 426.882 60.6112 425.157 61.7609C423.433 62.9106 422.427 64.4914 422.14 66.5034H410.607C410.822 63.198 411.864 60.2879 413.732 57.7729C415.601 55.258 418.223 53.2819 421.601 51.8448C425.05 50.4077 429.11 49.6892 433.78 49.6892C438.451 49.6892 442.511 50.4077 445.96 51.8448C449.481 53.2819 452.175 55.5454 454.043 58.6352C455.984 61.6531 456.954 65.677 456.954 70.7069V93.4492C456.954 96.4672 456.989 99.1258 457.061 101.425C457.133 103.653 457.313 105.844 457.6 108H446.822C446.606 106.347 446.427 104.946 446.283 103.796C446.211 102.647 446.175 101.21 446.175 99.4851C444.81 102.144 442.439 104.443 439.062 106.383C435.756 108.251 431.66 109.186 426.774 109.186ZM430.008 98.8384C432.738 98.8384 435.217 98.3713 437.445 97.4372C439.744 96.5031 441.576 95.1019 442.942 93.2337C444.379 91.3654 445.097 89.102 445.097 86.4433V83.3176H429.469C426.451 83.3176 424.008 83.9643 422.14 85.2577C420.343 86.5511 419.445 88.4553 419.445 90.9702C419.445 93.3415 420.271 95.2456 421.924 96.6827C423.648 98.1199 426.343 98.8384 430.008 98.8384ZM471.576 130.742C470.498 130.742 469.42 130.635 468.342 130.419V120.072C469.42 120.287 470.498 120.395 471.576 120.395C473.157 120.395 474.45 120 475.456 119.209C476.462 118.491 477.396 117.233 478.258 115.437C479.121 113.641 480.127 111.162 481.276 108L457.025 50.8748H469.959L487.42 95.066L503.156 50.8748H515.228L493.133 108C491.049 113.317 489.073 117.665 487.204 121.042C485.336 124.419 483.216 126.862 480.845 128.371C478.474 129.952 475.384 130.742 471.576 130.742Z" fill="white"/></svg>
+    </div>
     <!-- Old World -->
-    <div class="faded" style="text-align:center;padding:32px 0">
-      <p style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px">The Old World</p>
-      <h2 style="color:rgba(255,255,255,0.35);font-size:clamp(24px,4vw,42px)">$120/month. Flat. 4 episodes.<br>Same price for 15 minutes or 3 hours.</h2>
+    <div class="fade-in-up text-center pt-16" style="transition-delay:0.15s;opacity:0.4">
+      <p class="text-[10px] md:text-xs tracking-[3px] uppercase text-white/30 mb-3">The Old World</p>
+      <h2 class="text-xl md:text-2xl lg:text-[42px] font-bold leading-tight text-white/35">$120/month. Flat. 4 episodes.<br>Same price for 15 minutes or 3 hours.</h2>
     </div>
-
     <!-- Dividing Line -->
-    <div style="width:100%;position:relative;margin:24px 0">
-      <div style="height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent)"></div>
-      <div style="position:absolute;left:50%;top:-12px;transform:translateX(-50);background:var(--bg);padding:0 16px;font-size:12px;letter-spacing:2px;font-weight:600;white-space:nowrap">
-        <span style="color:rgba(255,255,255,0.3)">SaaS ERA</span> <span style="color:var(--text-secondary)">&nbsp;&#x2502;&nbsp;</span> <span style="color:var(--accent)">AI ERA</span>
+    <div class="fade-in-up relative my-8" style="transition-delay:0.3s">
+      <div class="h-[2px] w-full" style="background:linear-gradient(90deg,transparent,#a4ea49,transparent)"></div>
+      <div class="absolute left-1/2 -translate-x-1/2 -top-3 px-4 text-xs tracking-[2px] font-semibold whitespace-nowrap" style="background:#0a0a0a">
+        <span class="text-white/30">SaaS ERA</span> <span class="text-white/40 mx-1">│</span> <span class="text-brand-lime">AI ERA</span>
       </div>
     </div>
-
     <!-- New World -->
-    <div style="text-align:center;padding:32px 0">
-      <p style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:12px">The New World</p>
-      <h1>$0.006<span style="font-weight:400;font-size:clamp(16px,2.5vw,24px);color:var(--text-secondary)">/sec</span> &times; $0.03<span style="font-weight:400;font-size:clamp(16px,2.5vw,24px);color:var(--text-secondary)">/1K tok</span> &times; $0.05<span style="font-weight:400;font-size:clamp(16px,2.5vw,24px);color:var(--text-secondary)">/min</span> &times; $0.02<span style="font-weight:400;font-size:clamp(16px,2.5vw,24px);color:var(--text-secondary)">/clip</span></h1>
-      <p style="max-width:720px;margin:16px auto 0"><strong style="color:var(--white)">PodcastInc.ai</strong> processes <strong style="color:var(--white)">1M+ episodes</strong> through <strong style="color:var(--white)">5 AI models</strong> per episode.<br>The pricing says flat. The costs say otherwise.</p>
+    <div class="fade-in-up text-center" style="transition-delay:0.45s">
+      <p class="text-[10px] md:text-xs tracking-[3px] uppercase text-brand-lime mb-3">The New World</p>
+      <h1 class="text-2xl md:text-3xl lg:text-[48px] font-bold leading-tight tracking-tight">$0.006<span class="font-normal text-base md:text-lg text-white/60">/sec</span> &times; $0.03<span class="font-normal text-base md:text-lg text-white/60">/1K tok</span> &times; $0.05<span class="font-normal text-base md:text-lg text-white/60">/min</span> &times; $0.02<span class="font-normal text-base md:text-lg text-white/60">/clip</span></h1>
+      <p class="text-sm md:text-base text-white/60 max-w-[720px] mx-auto mt-4"><strong class="text-white">PodcastInc.ai</strong> processes <strong class="text-white">1M+ episodes</strong> through <strong class="text-white">5 AI models</strong> per episode.<br>The pricing says flat. The costs say otherwise.</p>
     </div>
   </div>
-</div>
+  <div class="absolute bottom-5 left-6 md:left-10 z-10 text-xs text-white/30 font-medium">01 / 07</div>
+  <div class="absolute bottom-5 right-6 md:right-10 z-10"><svg width="22" height="22" viewBox="0 0 134 133" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.1903 0.100433C44.6251 0.0545497 66.0706 0.0580749 87.516 0.0298388C95.2211 0.0651339 102.87 -0.0760479 110.546 0.0616031C116.981 0.460438 122.886 3.74289 127.336 8.34185C135.728 16.8762 133.746 29.3354 133.899 40.2239C133.644 63.2081 134.327 86.4005 133.538 109.371C132.947 120.249 125.019 130.149 114.222 132.302C107.461 133.52 100.439 132.697 93.5761 132.937C77.7945 132.944 61.9916 132.965 46.1959 132.98C38.7172 132.972 31.2845 133.029 23.8554 132.98C17.6114 132.803 11.477 129.634 7.25658 125.204C0.365174 117.916 -0.101801 110.08 0.290882 100.515C0.269655 90.9007 0.259029 81.2686 0.255492 71.6542C0.234266 57.7197 0.202429 43.7252 0.191816 29.7907C-1.48858 15.1503 8.01364 1.44518 23.1266 0.100433H23.1938H23.1903Z" fill="#A4EA49"/><path d="M121 80.1442C120.965 79.5113 120.901 78.896 120.813 78.3019C113.155 78.1215 105.246 78.6484 98.0392 78.118C98.0498 66.2892 98.0604 54.5595 98.0674 42.805C98.0145 30.7535 86.7405 20.4383 74.7962 21.0253H74.7609C65.8574 20.5479 57.1726 26.8919 53.9837 34.9652C46.2619 57.0137 59.7795 84.7449 83.5445 88.9849C79.2727 99.4698 64.711 103.982 54.474 99.2541C42.2511 94.0665 40.1557 81.1945 40.8648 69.2597C40.639 57.0915 41.1399 44.4282 40.5684 32.4933H29.3403C28.8253 35.5805 29.3226 39.3607 29.1533 42.6812C29.1498 51.7942 29.1427 60.8858 29.1357 70.0023C28.155 86.0392 32.3281 100.333 46.9674 108.745C64.3653 118.573 87.3119 110.666 95.256 92.3266C95.6123 91.5592 95.6158 90.6045 96.092 89.9397C104.477 89.7169 113.091 90.2897 121 89.7381C120.937 88.3377 120.965 86.8879 121 85.4451V80.1478V80.1442ZM86.5218 45.3829C86.5006 56.1296 86.4759 66.8727 86.4442 77.6194C85.9256 77.5663 85.4212 77.5133 84.9062 77.4567C84.3347 77.3824 83.8408 77.241 83.3082 77.0253C75.3747 74.1326 68.937 68.3403 65.7093 60.465C64.1078 56.5327 63.4869 52.2327 63.6386 48.0068C63.6351 46.6737 63.6315 45.1955 63.621 43.8553C63.6421 40.7399 64.9438 37.9639 67.0568 35.6972C71.5932 31.5527 77.4172 31.5845 82.3487 34.997C84.4899 36.6979 85.8868 39.1662 86.4406 41.8326C86.5324 43.0137 86.5253 44.1912 86.5182 45.3759L86.5218 45.3829Z" fill="#003024"/></svg></div>
 </section>
 
-<!-- ===================== SLIDE 2: PROBLEM — THE HIDDEN COST FUNNEL ===================== -->
-<section id="slide-2">
-<div class="slide-inner">
-  <div style="text-align:center;margin-bottom:40px">
-    <h1>5 AI models per episode. 1 flat price.<br><span class="red">Zero visibility.</span></h1>
-    <p style="max-width:700px;margin:0 auto">Every episode PodcastInc processes triggers transcription, content generation, video processing, clip extraction, and captioning. But your billing captures none of this.</p>
-  </div>
-
-  <!-- Cost Chips -->
-  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:32px">
-    <div class="card card-sm" style="display:flex;align-items:center;gap:10px"><span class="badge badge-blue">Transcription</span> Whisper <span style="color:var(--text-secondary)">$0.006/sec</span></div>
-    <div class="card card-sm" style="display:flex;align-items:center;gap:10px"><span class="badge badge-purple">Content Gen</span> GPT-4o <span style="color:var(--text-secondary)">$0.03/1K tok</span></div>
-    <div class="card card-sm" style="display:flex;align-items:center;gap:10px"><span class="badge badge-red">Video</span> Processing <span style="color:var(--text-secondary)">$0.05/min</span></div>
-    <div class="card card-sm" style="display:flex;align-items:center;gap:10px"><span class="badge badge-amber">Clips</span> Extraction <span style="color:var(--text-secondary)">$0.02/clip</span></div>
-    <div class="card card-sm" style="display:flex;align-items:center;gap:10px"><span class="badge badge-teal">Captions</span> Engine <span style="color:var(--text-secondary)">$0.01/min</span></div>
-    <div class="card card-sm" style="display:flex;align-items:center;gap:10px"><span class="badge badge-gray">Audio</span> Enhancement <span style="color:var(--text-secondary)">$0.008/min</span></div>
-  </div>
-
-  <!-- Funnel Arrow -->
-  <div style="text-align:center;margin-bottom:24px">
-    <div style="font-size:32px;color:var(--text-secondary);margin-bottom:16px">&darr;</div>
-    <div class="card" style="display:inline-block;padding:16px 40px;border-color:var(--red);border-width:2px">
-      <span style="font-size:14px;color:var(--text-secondary)">Your invoice says:</span><br>
-      <span style="font-size:24px;font-weight:700">$120.00 &mdash; Pro Plan &mdash; 4 episodes/month</span>
+<!-- ==================== SLIDE 02: PROBLEM ==================== -->
+<section class="slide grain gradient-teal flex flex-col items-center justify-center px-6 md:px-12" id="slide-02">
+  <div class="absolute inset-0" style="background:radial-gradient(ellipse at center top,rgba(255,59,59,0.08),transparent 60%)"></div>
+  <div class="relative z-10 max-w-5xl mx-auto w-full">
+    <div class="fade-in-up text-center mb-8" style="transition-delay:0s">
+      <h1 class="text-2xl md:text-3xl lg:text-[48px] font-bold leading-tight tracking-tight">5 AI models per episode. 1 flat price.<br><span class="text-brand-red">Zero visibility.</span></h1>
+      <p class="text-sm md:text-base text-white/60 max-w-[700px] mx-auto mt-4">Every episode PodcastInc processes triggers transcription, content generation, video processing, clip extraction, and captioning. But your billing captures none of this.</p>
+    </div>
+    <div class="fade-in-up flex flex-wrap justify-center gap-3 mb-8" style="transition-delay:0.15s">
+      <div class="rounded-2xl p-3 md:p-4 flex items-center gap-2.5 text-sm" style="background:#111;border:1px solid #1f1f1f"><span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide" style="background:rgba(121,192,255,0.15);color:#79c0ff">Transcription</span> Whisper <span class="text-white/50">$0.006/sec</span></div>
+      <div class="rounded-2xl p-3 md:p-4 flex items-center gap-2.5 text-sm" style="background:#111;border:1px solid #1f1f1f"><span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide" style="background:rgba(168,85,247,0.15);color:#a855f7">Content Gen</span> GPT-4o <span class="text-white/50">$0.03/1K tok</span></div>
+      <div class="rounded-2xl p-3 md:p-4 flex items-center gap-2.5 text-sm" style="background:#111;border:1px solid #1f1f1f"><span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide" style="background:rgba(255,59,59,0.15);color:#ff3b3b">Video</span> Processing <span class="text-white/50">$0.05/min</span></div>
+      <div class="rounded-2xl p-3 md:p-4 flex items-center gap-2.5 text-sm" style="background:#111;border:1px solid #1f1f1f"><span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide" style="background:rgba(245,158,11,0.15);color:#f59e0b">Clips</span> Extraction <span class="text-white/50">$0.02/clip</span></div>
+      <div class="rounded-2xl p-3 md:p-4 flex items-center gap-2.5 text-sm" style="background:#111;border:1px solid #1f1f1f"><span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide" style="background:rgba(0,48,36,0.4);color:#5eead4">Captions</span> Engine <span class="text-white/50">$0.01/min</span></div>
+      <div class="rounded-2xl p-3 md:p-4 flex items-center gap-2.5 text-sm" style="background:#111;border:1px solid #1f1f1f"><span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide" style="background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6)">Audio</span> Enhancement <span class="text-white/50">$0.008/min</span></div>
+    </div>
+    <div class="fade-in-up text-center mb-6" style="transition-delay:0.3s">
+      <svg class="mx-auto mb-4" width="24" height="32" viewBox="0 0 24 32" fill="none"><path d="M12 4 L12 24" stroke="rgba(255,255,255,0.3)" stroke-width="2"/><path d="M6 18 L12 26 L18 18" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none"/></svg>
+      <div class="inline-block rounded-2xl p-4 md:px-10 md:py-5" style="background:#111;border:2px solid #ff3b3b">
+        <span class="text-sm text-white/50">Your invoice says:</span><br>
+        <span class="text-lg md:text-2xl font-bold">$120.00 — Pro Plan — 4 episodes/month</span>
+      </div>
+    </div>
+    <div class="fade-in-up text-center mt-4" style="transition-delay:0.45s">
+      <p class="text-sm md:text-base"><span class="text-brand-red font-semibold">At 50K+ creators, even a 5% margin miscalculation = $360K/year in hidden losses.</span></p>
     </div>
   </div>
-
-  <p style="text-align:center;font-size:15px;margin-top:16px"><span class="red" style="font-weight:600">At 50K+ creators, even a 5% margin miscalculation = $360K/year in hidden losses.</span></p>
-</div>
+  <div class="absolute bottom-5 left-6 md:left-10 z-10 text-xs text-white/30 font-medium">02 / 07</div>
+  <div class="absolute bottom-5 right-6 md:right-10 z-10"><svg width="22" height="22" viewBox="0 0 134 133" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.1903 0.100433C44.6251 0.0545497 66.0706 0.0580749 87.516 0.0298388C95.2211 0.0651339 102.87 -0.0760479 110.546 0.0616031C116.981 0.460438 122.886 3.74289 127.336 8.34185C135.728 16.8762 133.746 29.3354 133.899 40.2239C133.644 63.2081 134.327 86.4005 133.538 109.371C132.947 120.249 125.019 130.149 114.222 132.302C107.461 133.52 100.439 132.697 93.5761 132.937C77.7945 132.944 61.9916 132.965 46.1959 132.98C38.7172 132.972 31.2845 133.029 23.8554 132.98C17.6114 132.803 11.477 129.634 7.25658 125.204C0.365174 117.916 -0.101801 110.08 0.290882 100.515C0.269655 90.9007 0.259029 81.2686 0.255492 71.6542C0.234266 57.7197 0.202429 43.7252 0.191816 29.7907C-1.48858 15.1503 8.01364 1.44518 23.1266 0.100433H23.1938H23.1903Z" fill="#A4EA49"/><path d="M121 80.1442C120.965 79.5113 120.901 78.896 120.813 78.3019C113.155 78.1215 105.246 78.6484 98.0392 78.118C98.0498 66.2892 98.0604 54.5595 98.0674 42.805C98.0145 30.7535 86.7405 20.4383 74.7962 21.0253H74.7609C65.8574 20.5479 57.1726 26.8919 53.9837 34.9652C46.2619 57.0137 59.7795 84.7449 83.5445 88.9849C79.2727 99.4698 64.711 103.982 54.474 99.2541C42.2511 94.0665 40.1557 81.1945 40.8648 69.2597C40.639 57.0915 41.1399 44.4282 40.5684 32.4933H29.3403C28.8253 35.5805 29.3226 39.3607 29.1533 42.6812C29.1498 51.7942 29.1427 60.8858 29.1357 70.0023C28.155 86.0392 32.3281 100.333 46.9674 108.745C64.3653 118.573 87.3119 110.666 95.256 92.3266C95.6123 91.5592 95.6158 90.6045 96.092 89.9397C104.477 89.7169 113.091 90.2897 121 89.7381C120.937 88.3377 120.965 86.8879 121 85.4451V80.1478V80.1442ZM86.5218 45.3829C86.5006 56.1296 86.4759 66.8727 86.4442 77.6194C85.9256 77.5663 85.4212 77.5133 84.9062 77.4567C84.3347 77.3824 83.8408 77.241 83.3082 77.0253C75.3747 74.1326 68.937 68.3403 65.7093 60.465C64.1078 56.5327 63.4869 52.2327 63.6386 48.0068C63.6351 46.6737 63.6315 45.1955 63.621 43.8553C63.6421 40.7399 64.9438 37.9639 67.0568 35.6972C71.5932 31.5527 77.4172 31.5845 82.3487 34.997C84.4899 36.6979 85.8868 39.1662 86.4406 41.8326C86.5324 43.0137 86.5253 44.1912 86.5182 45.3759L86.5218 45.3829Z" fill="#003024"/></svg></div>
 </section>
 
-<!-- ===================== SLIDE 3: REQUIREMENTS ===================== -->
-<section id="slide-3">
-<div class="slide-inner">
-  <div style="text-align:center;margin-bottom:40px">
-    <h1>Your billing tools were built for subscriptions.</h1>
-    <p>You're running an <span class="accent">AI podcast engine</span> with 5 variable-cost models.</p>
+<!-- ==================== SLIDE 03: REQUIREMENTS ==================== -->
+<section class="slide grain gradient-dark flex flex-col items-center justify-center px-6 md:px-12" id="slide-03">
+  <div class="absolute inset-0" style="background:radial-gradient(ellipse at center bottom,rgba(0,48,36,0.1),transparent 70%)"></div>
+  <div class="relative z-10 max-w-5xl mx-auto w-full">
+    <div class="fade-in-up text-center mb-10" style="transition-delay:0s">
+      <h1 class="text-2xl md:text-3xl lg:text-[48px] font-bold leading-tight tracking-tight">Your billing tools were built for subscriptions.</h1>
+      <p class="text-sm md:text-base text-white/60 mt-3">You're running an <span class="text-brand-lime">AI podcast engine</span> with 5 variable-cost models.</p>
+    </div>
+    <div class="fade-in-up rounded-2xl overflow-x-auto" style="transition-delay:0.15s;background:#111;border:1px solid #1f1f1f">
+      <table class="w-full text-sm">
+        <thead><tr>
+          <th class="text-left p-3 md:p-4 border-b border-white/10 text-[10px] md:text-xs uppercase tracking-wider text-white/50 font-semibold" style="width:55%">Requirement</th>
+          <th class="text-center p-3 md:p-4 border-b border-white/10 text-[10px] md:text-xs uppercase tracking-wider text-white/50 font-semibold">Legacy Tools</th>
+          <th class="text-center p-3 md:p-4 border-b border-white/10 text-[10px] md:text-xs uppercase tracking-wider text-brand-lime font-semibold">UnitPay</th>
+        </tr></thead>
+        <tbody>
+          <tr class="border-b border-white/5 hover:bg-white/[0.02]"><td class="p-3 md:p-4">Per-episode cost attribution</td><td class="text-center p-3 md:p-4"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3 md:p-4"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#a4ea49" stroke-width="1.5" fill="none"/></svg></td></tr>
+          <tr class="border-b border-white/5 hover:bg-white/[0.02]"><td class="p-3 md:p-4">Multi-model AI metering (5 models)</td><td class="text-center p-3 md:p-4"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3 md:p-4"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#a4ea49" stroke-width="1.5" fill="none"/></svg></td></tr>
+          <tr class="border-b border-white/5 hover:bg-white/[0.02]"><td class="p-3 md:p-4">Variable-length usage tracking</td><td class="text-center p-3 md:p-4"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3 md:p-4"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#a4ea49" stroke-width="1.5" fill="none"/></svg></td></tr>
+          <tr class="border-b border-white/5 hover:bg-white/[0.02]"><td class="p-3 md:p-4">Real-time margin per creator</td><td class="text-center p-3 md:p-4"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3 md:p-4"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#a4ea49" stroke-width="1.5" fill="none"/></svg></td></tr>
+          <tr class="border-b border-white/5 hover:bg-white/[0.02]"><td class="p-3 md:p-4">Hybrid pricing simulation</td><td class="text-center p-3 md:p-4"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3 md:p-4"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#a4ea49" stroke-width="1.5" fill="none"/></svg></td></tr>
+          <tr class="hover:bg-white/[0.02]"><td class="p-3 md:p-4">Token-level cost breakdown</td><td class="text-center p-3 md:p-4"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3 md:p-4"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#a4ea49" stroke-width="1.5" fill="none"/></svg></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="fade-in-up text-center mt-6" style="transition-delay:0.3s">
+      <p class="text-sm md:text-base text-white/60">PodcastInc runs on AI. Your finance stack should too.</p>
+    </div>
   </div>
-
-  <div class="card table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th style="width:55%">Requirement</th>
-          <th style="text-align:center">Legacy Tools</th>
-          <th style="text-align:center">UnitPay</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Per-episode cost attribution</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
-        <tr><td>Multi-model AI metering (5 models)</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
-        <tr><td>Variable-length usage tracking</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
-        <tr><td>Real-time margin per creator</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
-        <tr><td>Hybrid pricing simulation</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
-        <tr><td>Token-level cost breakdown</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <p style="text-align:center;margin-top:24px;font-size:15px;color:var(--text-secondary)">PodcastInc runs on AI. Your finance stack should too.</p>
-</div>
+  <div class="absolute bottom-5 left-6 md:left-10 z-10 text-xs text-white/30 font-medium">03 / 07</div>
+  <div class="absolute bottom-5 right-6 md:right-10 z-10"><svg width="22" height="22" viewBox="0 0 134 133" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.1903 0.100433C44.6251 0.0545497 66.0706 0.0580749 87.516 0.0298388C95.2211 0.0651339 102.87 -0.0760479 110.546 0.0616031C116.981 0.460438 122.886 3.74289 127.336 8.34185C135.728 16.8762 133.746 29.3354 133.899 40.2239C133.644 63.2081 134.327 86.4005 133.538 109.371C132.947 120.249 125.019 130.149 114.222 132.302C107.461 133.52 100.439 132.697 93.5761 132.937C77.7945 132.944 61.9916 132.965 46.1959 132.98C38.7172 132.972 31.2845 133.029 23.8554 132.98C17.6114 132.803 11.477 129.634 7.25658 125.204C0.365174 117.916 -0.101801 110.08 0.290882 100.515C0.269655 90.9007 0.259029 81.2686 0.255492 71.6542C0.234266 57.7197 0.202429 43.7252 0.191816 29.7907C-1.48858 15.1503 8.01364 1.44518 23.1266 0.100433H23.1938H23.1903Z" fill="#A4EA49"/><path d="M121 80.1442C120.965 79.5113 120.901 78.896 120.813 78.3019C113.155 78.1215 105.246 78.6484 98.0392 78.118C98.0498 66.2892 98.0604 54.5595 98.0674 42.805C98.0145 30.7535 86.7405 20.4383 74.7962 21.0253H74.7609C65.8574 20.5479 57.1726 26.8919 53.9837 34.9652C46.2619 57.0137 59.7795 84.7449 83.5445 88.9849C79.2727 99.4698 64.711 103.982 54.474 99.2541C42.2511 94.0665 40.1557 81.1945 40.8648 69.2597C40.639 57.0915 41.1399 44.4282 40.5684 32.4933H29.3403C28.8253 35.5805 29.3226 39.3607 29.1533 42.6812C29.1498 51.7942 29.1427 60.8858 29.1357 70.0023C28.155 86.0392 32.3281 100.333 46.9674 108.745C64.3653 118.573 87.3119 110.666 95.256 92.3266C95.6123 91.5592 95.6158 90.6045 96.092 89.9397C104.477 89.7169 113.091 90.2897 121 89.7381C120.937 88.3377 120.965 86.8879 121 85.4451V80.1478V80.1442ZM86.5218 45.3829C86.5006 56.1296 86.4759 66.8727 86.4442 77.6194C85.9256 77.5663 85.4212 77.5133 84.9062 77.4567C84.3347 77.3824 83.8408 77.241 83.3082 77.0253C75.3747 74.1326 68.937 68.3403 65.7093 60.465C64.1078 56.5327 63.4869 52.2327 63.6386 48.0068C63.6351 46.6737 63.6315 45.1955 63.621 43.8553C63.6421 40.7399 64.9438 37.9639 67.0568 35.6972C71.5932 31.5527 77.4172 31.5845 82.3487 34.997C84.4899 36.6979 85.8868 39.1662 86.4406 41.8326C86.5324 43.0137 86.5253 44.1912 86.5182 45.3759L86.5218 45.3829Z" fill="#003024"/></svg></div>
 </section>
 
-<!-- ===================== SLIDE 4: SOLUTION — TRACK / PRICE / PROTECT ===================== -->
-<section id="slide-4">
-<div class="slide-inner">
-  <div style="text-align:center;margin-bottom:48px">
-    <h1>One platform. Three pillars.</h1>
+<!-- ==================== SLIDE 04: SOLUTION ==================== -->
+<section class="slide grain gradient-teal flex flex-col items-center justify-center px-6 md:px-12" id="slide-04">
+  <div class="absolute inset-0" style="background:radial-gradient(ellipse at center bottom,rgba(164,234,73,0.06),transparent 70%)"></div>
+  <div class="relative z-10 max-w-5xl mx-auto w-full">
+    <div class="fade-in-up text-center mb-12" style="transition-delay:0s">
+      <h1 class="text-2xl md:text-3xl lg:text-[48px] font-bold leading-tight tracking-tight">One platform. Three pillars.</h1>
+    </div>
+    <div class="fade-in-up grid grid-cols-1 md:grid-cols-3 gap-5" style="transition-delay:0.15s">
+      <!-- TRACK -->
+      <div class="rounded-2xl p-5 md:p-8 text-center" style="background:#111;border:1px solid #1f1f1f">
+        <div class="w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4" style="background:rgba(164,234,73,0.08);border:1px solid rgba(164,234,73,0.2)">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10" stroke="#a4ea49" stroke-width="2" fill="none"/><circle cx="14" cy="14" r="3" fill="#a4ea49"/></svg>
+        </div>
+        <h3 class="text-brand-lime text-lg font-bold mb-2">TRACK</h3>
+        <p class="text-sm md:text-base font-semibold text-white mb-2">Every second. Every token.<br>Every clip. Every creator.</p>
+        <p class="text-sm text-white/60">Meter Whisper, GPT-4o, video processing, clip extraction &amp; captioning. Per-episode, per-creator, per-model. 15,000 events/sec.</p>
+      </div>
+      <!-- PRICE -->
+      <div class="rounded-2xl p-5 md:p-8 text-center" style="background:#111;border:1px solid #1f1f1f">
+        <div class="w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4" style="background:rgba(121,192,255,0.08);border:1px solid rgba(121,192,255,0.2)">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><polyline points="2,20 8,10 14,16 20,6 26,12" stroke="#79c0ff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+        </div>
+        <h3 class="text-lg font-bold mb-2" style="color:#79c0ff">PRICE</h3>
+        <p class="text-sm md:text-base font-semibold text-white mb-2">Simulate before you ship.</p>
+        <p class="text-sm text-white/60">What if Pro = $99/mo + $0.50/min over 60min? Run it in Price Lab. See the ARR impact before touching a single invoice.</p>
+      </div>
+      <!-- PROTECT -->
+      <div class="rounded-2xl p-5 md:p-8 text-center" style="background:#111;border:1px solid #1f1f1f">
+        <div class="w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4" style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2)">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 3 L24 10 L24 18 C24 22 20 26 14 27 C8 26 4 22 4 18 L4 10 Z" stroke="#f59e0b" stroke-width="2" fill="none"/></svg>
+        </div>
+        <h3 class="text-lg font-bold mb-2 text-brand-amber">PROTECT</h3>
+        <p class="text-sm md:text-base font-semibold text-white mb-2">Margins visible. Always.</p>
+        <p class="text-sm text-white/60">Auto-alerts when a creator's episode costs exceed revenue. Flag underwater accounts before they compound into six-figure losses.</p>
+      </div>
+    </div>
   </div>
-
-  <div class="grid-3">
-    <div class="card pillar">
-      <div class="pillar-icon" style="background:rgba(164,234,73,0.08);border-color:rgba(164,234,73,0.2)">
-        <span style="font-size:28px">&#9678;</span>
-      </div>
-      <h3 class="accent" style="margin-bottom:8px">TRACK</h3>
-      <p style="font-size:15px;font-weight:600;color:var(--white);margin-bottom:8px">Every second. Every token.<br>Every clip. Every creator.</p>
-      <p style="font-size:14px">Meter Whisper, GPT-4o, video processing, clip extraction &amp; captioning. Per-episode, per-creator, per-model. 15,000 events/sec.</p>
-    </div>
-    <div class="card pillar">
-      <div class="pillar-icon" style="background:rgba(121,192,255,0.08);border-color:rgba(121,192,255,0.2)">
-        <span style="font-size:28px">&#9733;</span>
-      </div>
-      <h3 style="color:var(--code);margin-bottom:8px">PRICE</h3>
-      <p style="font-size:15px;font-weight:600;color:var(--white);margin-bottom:8px">Simulate before you ship.</p>
-      <p style="font-size:14px">What if Pro = $99/mo + $0.50/min over 60min? Run it in Price Lab. See the ARR impact before touching a single invoice.</p>
-    </div>
-    <div class="card pillar">
-      <div class="pillar-icon" style="background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.2)">
-        <span style="font-size:28px">&#9872;</span>
-      </div>
-      <h3 style="color:var(--amber);margin-bottom:8px">PROTECT</h3>
-      <p style="font-size:15px;font-weight:600;color:var(--white);margin-bottom:8px">Margins visible. Always.</p>
-      <p style="font-size:14px">Auto-alerts when a creator's episode costs exceed revenue. Flag underwater accounts before they compound into six-figure losses.</p>
-    </div>
-  </div>
-</div>
+  <div class="absolute bottom-5 left-6 md:left-10 z-10 text-xs text-white/30 font-medium">04 / 07</div>
+  <div class="absolute bottom-5 right-6 md:right-10 z-10"><svg width="22" height="22" viewBox="0 0 134 133" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.1903 0.100433C44.6251 0.0545497 66.0706 0.0580749 87.516 0.0298388C95.2211 0.0651339 102.87 -0.0760479 110.546 0.0616031C116.981 0.460438 122.886 3.74289 127.336 8.34185C135.728 16.8762 133.746 29.3354 133.899 40.2239C133.644 63.2081 134.327 86.4005 133.538 109.371C132.947 120.249 125.019 130.149 114.222 132.302C107.461 133.52 100.439 132.697 93.5761 132.937C77.7945 132.944 61.9916 132.965 46.1959 132.98C38.7172 132.972 31.2845 133.029 23.8554 132.98C17.6114 132.803 11.477 129.634 7.25658 125.204C0.365174 117.916 -0.101801 110.08 0.290882 100.515C0.269655 90.9007 0.259029 81.2686 0.255492 71.6542C0.234266 57.7197 0.202429 43.7252 0.191816 29.7907C-1.48858 15.1503 8.01364 1.44518 23.1266 0.100433H23.1938H23.1903Z" fill="#A4EA49"/><path d="M121 80.1442C120.965 79.5113 120.901 78.896 120.813 78.3019C113.155 78.1215 105.246 78.6484 98.0392 78.118C98.0498 66.2892 98.0604 54.5595 98.0674 42.805C98.0145 30.7535 86.7405 20.4383 74.7962 21.0253H74.7609C65.8574 20.5479 57.1726 26.8919 53.9837 34.9652C46.2619 57.0137 59.7795 84.7449 83.5445 88.9849C79.2727 99.4698 64.711 103.982 54.474 99.2541C42.2511 94.0665 40.1557 81.1945 40.8648 69.2597C40.639 57.0915 41.1399 44.4282 40.5684 32.4933H29.3403C28.8253 35.5805 29.3226 39.3607 29.1533 42.6812C29.1498 51.7942 29.1427 60.8858 29.1357 70.0023C28.155 86.0392 32.3281 100.333 46.9674 108.745C64.3653 118.573 87.3119 110.666 95.256 92.3266C95.6123 91.5592 95.6158 90.6045 96.092 89.9397C104.477 89.7169 113.091 90.2897 121 89.7381C120.937 88.3377 120.965 86.8879 121 85.4451V80.1478V80.1442ZM86.5218 45.3829C86.5006 56.1296 86.4759 66.8727 86.4442 77.6194C85.9256 77.5663 85.4212 77.5133 84.9062 77.4567C84.3347 77.3824 83.8408 77.241 83.3082 77.0253C75.3747 74.1326 68.937 68.3403 65.7093 60.465C64.1078 56.5327 63.4869 52.2327 63.6386 48.0068C63.6351 46.6737 63.6315 45.1955 63.621 43.8553C63.6421 40.7399 64.9438 37.9639 67.0568 35.6972C71.5932 31.5527 77.4172 31.5845 82.3487 34.997C84.4899 36.6979 85.8868 39.1662 86.4406 41.8326C86.5324 43.0137 86.5253 44.1912 86.5182 45.3759L86.5218 45.3829Z" fill="#003024"/></svg></div>
 </section>
 
-<!-- ===================== SLIDE 5: PRODUCT — DATA LAYER ===================== -->
-<section id="slide-5">
-<div class="slide-inner">
-  <div style="text-align:center;margin-bottom:36px">
-    <h2>The PodcastInc.ai data layer</h2>
-    <p>What every episode processed looks like inside UnitPay.</p>
-  </div>
-
-  <div class="grid-3">
-    <!-- Card 1: Transaction Breakdown -->
-    <div class="card" style="padding:0;overflow:hidden">
-      <div style="padding:16px 20px;border-bottom:1px solid var(--card-border);display:flex;justify-content:space-between;align-items:center">
-        <span style="font-size:13px;font-weight:600">Transaction Breakdown</span>
-        <span class="badge badge-red" style="font-size:10px">ALERT</span>
-      </div>
-      <pre style="border:none;border-radius:0;margin:0;font-size:12px;line-height:1.8;padding:16px 20px">
-<span style="color:var(--text-secondary)">Episode:</span>  AI Weekly #247 (2h 14m)
-<span style="color:var(--text-secondary)">Creator:</span>  TechPulse Media (Pro)
-<span style="color:var(--text-secondary)">Revenue:</span>  $30.00/episode
-<span style="color:var(--text-secondary)">&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;</span>
-<span style="color:var(--code)">Whisper:</span>      8,040 sec   <span style="color:var(--red)">$48.24</span>
+<!-- ==================== SLIDE 05: PRODUCT ==================== -->
+<section class="slide grain gradient-dark flex flex-col items-center justify-center px-6 md:px-12" id="slide-05">
+  <div class="absolute inset-0" style="background:radial-gradient(ellipse at center bottom,rgba(0,48,36,0.12),transparent 70%)"></div>
+  <div class="relative z-10 max-w-5xl mx-auto w-full">
+    <div class="fade-in-up text-center mb-8" style="transition-delay:0s">
+      <h2 class="text-xl md:text-2xl lg:text-[36px] font-bold leading-tight tracking-tight">The PodcastInc.ai data layer</h2>
+      <p class="text-sm md:text-base text-white/60 mt-2">What every episode processed looks like inside UnitPay.</p>
+    </div>
+    <div class="fade-in-up grid grid-cols-1 md:grid-cols-3 gap-5" style="transition-delay:0.15s">
+      <!-- Transaction Breakdown -->
+      <div class="rounded-2xl overflow-hidden" style="background:#111;border:1px solid #1f1f1f;transform:perspective(800px) rotateY(-2deg)">
+        <div class="flex items-center justify-between p-3 md:p-4 border-b border-white/10">
+          <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-brand-lime live-pulse"></div><span class="text-xs font-semibold">Transaction Breakdown</span></div>
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase" style="background:rgba(255,59,59,0.15);color:#ff3b3b">ALERT</span>
+        </div>
+        <pre class="font-mono text-[11px] leading-relaxed p-4 m-0" style="background:transparent"><span class="text-white/50">Episode:</span>  AI Weekly #247 (2h 14m)
+<span class="text-white/50">Creator:</span>  TechPulse Media (Pro)
+<span class="text-white/50">Revenue:</span>  $30.00/episode
+<span class="text-white/30">─────────────────────────</span>
+<span style="color:#79c0ff">Whisper:</span>      8,040 sec   <span class="text-brand-red">$48.24</span>
 <span style="color:#a855f7">GPT-4o:</span>       12.4K tok   $0.37
-<span style="color:var(--red)">Video:</span>        134 min     $6.70
-<span style="color:var(--amber)">Clips:</span>        8 clips     $0.16
+<span class="text-brand-red">Video:</span>        134 min     $6.70
+<span class="text-brand-amber">Clips:</span>        8 clips     $0.16
 <span style="color:#5eead4">Captions:</span>     134 min     $1.34
-<span style="color:var(--text-secondary)">&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;</span>
-<span style="color:var(--text-secondary)">Total COGS:</span>               $56.81
-<span style="color:var(--white)">Revenue:</span>                  $30.00
-<span style="color:var(--red);font-weight:700">MARGIN:       -$26.81  &#x26A0;</span></pre>
-    </div>
-
-    <!-- Card 2: Event Trace -->
-    <div class="card" style="padding:0;overflow:hidden">
-      <div style="padding:16px 20px;border-bottom:1px solid var(--card-border);display:flex;justify-content:space-between;align-items:center">
-        <span style="font-size:13px;font-weight:600">Event Trace</span>
-        <span class="badge badge-blue" style="font-size:10px">JSON</span>
+<span class="text-white/30">─────────────────────────</span>
+<span class="text-white/50">Total COGS:</span>               $56.81
+<span class="text-white">Revenue:</span>                  $30.00
+<span class="text-brand-red font-bold">MARGIN:       -$26.81</span>  <svg class="inline" width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M10 2 L18 16 L2 16 Z" stroke="#ff3b3b" stroke-width="1.5" fill="none"/><line x1="10" y1="8" x2="10" y2="12" stroke="#ff3b3b" stroke-width="1.5"/><circle cx="10" cy="14" r="0.8" fill="#ff3b3b"/></svg></pre>
       </div>
-      <pre style="border:none;border-radius:0;margin:0;font-size:11px;line-height:1.7;padding:16px 20px">{
-  <span style="color:var(--code)">"event"</span>: <span style="color:var(--accent)">"episode_processed"</span>,
-  <span style="color:var(--code)">"creator"</span>: <span style="color:var(--accent)">"techpulse-media"</span>,
-  <span style="color:var(--code)">"plan"</span>: <span style="color:var(--accent)">"pro"</span>,
-  <span style="color:var(--code)">"duration_sec"</span>: <span style="color:var(--amber)">8040</span>,
-  <span style="color:var(--code)">"models"</span>: [
-    <span style="color:var(--accent)">"whisper-large-v3"</span>,
-    <span style="color:var(--accent)">"gpt-4o"</span>,
-    <span style="color:var(--accent)">"video-proc-v2"</span>,
-    <span style="color:var(--accent)">"clip-ai"</span>,
-    <span style="color:var(--accent)">"caption-engine"</span>
+      <!-- Event Trace -->
+      <div class="rounded-2xl overflow-hidden" style="background:#111;border:1px solid #1f1f1f;transform:perspective(800px) rotateY(0deg)">
+        <div class="flex items-center justify-between p-3 md:p-4 border-b border-white/10">
+          <span class="text-xs font-semibold">Event Trace</span>
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase" style="background:rgba(121,192,255,0.15);color:#79c0ff">JSON</span>
+        </div>
+        <pre class="font-mono text-[10px] md:text-[11px] leading-relaxed p-4 m-0" style="background:transparent">{
+  <span style="color:#79c0ff">"event"</span>: <span class="text-brand-lime">"episode_processed"</span>,
+  <span style="color:#79c0ff">"creator"</span>: <span class="text-brand-lime">"techpulse-media"</span>,
+  <span style="color:#79c0ff">"plan"</span>: <span class="text-brand-lime">"pro"</span>,
+  <span style="color:#79c0ff">"duration_sec"</span>: <span class="text-brand-amber">8040</span>,
+  <span style="color:#79c0ff">"models"</span>: [
+    <span class="text-brand-lime">"whisper-large-v3"</span>,
+    <span class="text-brand-lime">"gpt-4o"</span>,
+    <span class="text-brand-lime">"video-proc-v2"</span>,
+    <span class="text-brand-lime">"clip-ai"</span>,
+    <span class="text-brand-lime">"caption-engine"</span>
   ],
-  <span style="color:var(--code)">"total_cost"</span>: <span style="color:var(--red)">56.81</span>,
-  <span style="color:var(--code)">"revenue"</span>: <span style="color:var(--amber)">30.00</span>,
-  <span style="color:var(--code)">"margin"</span>: <span style="color:var(--red)">-0.894</span>
+  <span style="color:#79c0ff">"total_cost"</span>: <span class="text-brand-red">56.81</span>,
+  <span style="color:#79c0ff">"revenue"</span>: <span class="text-brand-amber">30.00</span>,
+  <span style="color:#79c0ff">"margin"</span>: <span class="text-brand-red">-0.894</span>
 }</pre>
-    </div>
-
-    <!-- Card 3: Margin Trend -->
-    <div class="card" style="padding:0;overflow:hidden">
-      <div style="padding:16px 20px;border-bottom:1px solid var(--card-border);display:flex;justify-content:space-between;align-items:center">
-        <span style="font-size:13px;font-weight:600">Margin Trend (Pro Tier)</span>
-        <span style="color:var(--red);font-size:13px;font-weight:600">&darr; -89%</span>
       </div>
-      <div style="padding:24px 20px;display:flex;flex-direction:column;gap:12px">
-        <div style="display:flex;align-items:center;gap:12px"><span style="font-size:12px;color:var(--text-secondary);width:32px">Sep</span><div class="margin-bar" style="flex:1"><div class="margin-fill" style="width:42%;background:var(--amber)"></div></div><span style="font-size:12px;width:40px;text-align:right">+12%</span></div>
-        <div style="display:flex;align-items:center;gap:12px"><span style="font-size:12px;color:var(--text-secondary);width:32px">Oct</span><div class="margin-bar" style="flex:1"><div class="margin-fill" style="width:35%;background:var(--amber)"></div></div><span style="font-size:12px;width:40px;text-align:right">+5%</span></div>
-        <div style="display:flex;align-items:center;gap:12px"><span style="font-size:12px;color:var(--text-secondary);width:32px">Nov</span><div class="margin-bar" style="flex:1"><div class="margin-fill" style="width:28%;background:var(--red)"></div></div><span style="font-size:12px;width:40px;text-align:right;color:var(--red)">-3%</span></div>
-        <div style="display:flex;align-items:center;gap:12px"><span style="font-size:12px;color:var(--text-secondary);width:32px">Dec</span><div class="margin-bar" style="flex:1"><div class="margin-fill" style="width:18%;background:var(--red)"></div></div><span style="font-size:12px;width:40px;text-align:right;color:var(--red)">-22%</span></div>
-        <div style="display:flex;align-items:center;gap:12px"><span style="font-size:12px;color:var(--text-secondary);width:32px">Jan</span><div class="margin-bar" style="flex:1"><div class="margin-fill" style="width:10%;background:var(--red)"></div></div><span style="font-size:12px;width:40px;text-align:right;color:var(--red)">-58%</span></div>
-        <div style="display:flex;align-items:center;gap:12px"><span style="font-size:12px;color:var(--text-secondary);width:32px">Feb</span><div class="margin-bar" style="flex:1"><div class="margin-fill" style="width:6%;background:var(--red)"></div></div><span style="font-size:12px;width:40px;text-align:right;color:var(--red);font-weight:700">-89%</span></div>
-      </div>
-      <div style="padding:0 20px 20px;font-size:13px;color:var(--red)">
-        As average episode length grows, margins collapse. You can't see it until it's too late.
+      <!-- Margin Trend -->
+      <div class="rounded-2xl overflow-hidden" style="background:#111;border:1px solid #1f1f1f;transform:perspective(800px) rotateY(2deg)">
+        <div class="flex items-center justify-between p-3 md:p-4 border-b border-white/10">
+          <span class="text-xs font-semibold">Margin Trend (Pro Tier)</span>
+          <span class="text-brand-red text-xs font-semibold flex items-center gap-1"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2 L5 8 M2 5 L5 8 L8 5" stroke="#ff3b3b" stroke-width="1.5" fill="none"/></svg> -89%</span>
+        </div>
+        <div class="p-4 flex flex-col gap-2.5">
+          <div class="flex items-center gap-3"><span class="text-[11px] text-white/50 w-8">Sep</span><div class="flex-1 h-2 rounded-full bg-white/[0.06]"><div class="h-full rounded-full bg-brand-amber" style="width:42%"></div></div><span class="text-[11px] w-10 text-right">+12%</span></div>
+          <div class="flex items-center gap-3"><span class="text-[11px] text-white/50 w-8">Oct</span><div class="flex-1 h-2 rounded-full bg-white/[0.06]"><div class="h-full rounded-full bg-brand-amber" style="width:35%"></div></div><span class="text-[11px] w-10 text-right">+5%</span></div>
+          <div class="flex items-center gap-3"><span class="text-[11px] text-white/50 w-8">Nov</span><div class="flex-1 h-2 rounded-full bg-white/[0.06]"><div class="h-full rounded-full bg-brand-red" style="width:28%"></div></div><span class="text-[11px] w-10 text-right text-brand-red">-3%</span></div>
+          <div class="flex items-center gap-3"><span class="text-[11px] text-white/50 w-8">Dec</span><div class="flex-1 h-2 rounded-full bg-white/[0.06]"><div class="h-full rounded-full bg-brand-red" style="width:18%"></div></div><span class="text-[11px] w-10 text-right text-brand-red">-22%</span></div>
+          <div class="flex items-center gap-3"><span class="text-[11px] text-white/50 w-8">Jan</span><div class="flex-1 h-2 rounded-full bg-white/[0.06]"><div class="h-full rounded-full bg-brand-red" style="width:10%"></div></div><span class="text-[11px] w-10 text-right text-brand-red">-58%</span></div>
+          <div class="flex items-center gap-3"><span class="text-[11px] text-white/50 w-8">Feb</span><div class="flex-1 h-2 rounded-full bg-white/[0.06]"><div class="h-full rounded-full bg-brand-red" style="width:6%"></div></div><span class="text-[11px] w-10 text-right text-brand-red font-bold">-89%</span></div>
+        </div>
+        <div class="px-4 pb-4 text-xs text-brand-red">As average episode length grows, margins collapse. You can't see it until it's too late.</div>
       </div>
     </div>
   </div>
-</div>
+  <div class="absolute bottom-5 left-6 md:left-10 z-10 text-xs text-white/30 font-medium">05 / 07</div>
+  <div class="absolute bottom-5 right-6 md:right-10 z-10"><svg width="22" height="22" viewBox="0 0 134 133" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.1903 0.100433C44.6251 0.0545497 66.0706 0.0580749 87.516 0.0298388C95.2211 0.0651339 102.87 -0.0760479 110.546 0.0616031C116.981 0.460438 122.886 3.74289 127.336 8.34185C135.728 16.8762 133.746 29.3354 133.899 40.2239C133.644 63.2081 134.327 86.4005 133.538 109.371C132.947 120.249 125.019 130.149 114.222 132.302C107.461 133.52 100.439 132.697 93.5761 132.937C77.7945 132.944 61.9916 132.965 46.1959 132.98C38.7172 132.972 31.2845 133.029 23.8554 132.98C17.6114 132.803 11.477 129.634 7.25658 125.204C0.365174 117.916 -0.101801 110.08 0.290882 100.515C0.269655 90.9007 0.259029 81.2686 0.255492 71.6542C0.234266 57.7197 0.202429 43.7252 0.191816 29.7907C-1.48858 15.1503 8.01364 1.44518 23.1266 0.100433H23.1938H23.1903Z" fill="#A4EA49"/><path d="M121 80.1442C120.965 79.5113 120.901 78.896 120.813 78.3019C113.155 78.1215 105.246 78.6484 98.0392 78.118C98.0498 66.2892 98.0604 54.5595 98.0674 42.805C98.0145 30.7535 86.7405 20.4383 74.7962 21.0253H74.7609C65.8574 20.5479 57.1726 26.8919 53.9837 34.9652C46.2619 57.0137 59.7795 84.7449 83.5445 88.9849C79.2727 99.4698 64.711 103.982 54.474 99.2541C42.2511 94.0665 40.1557 81.1945 40.8648 69.2597C40.639 57.0915 41.1399 44.4282 40.5684 32.4933H29.3403C28.8253 35.5805 29.3226 39.3607 29.1533 42.6812C29.1498 51.7942 29.1427 60.8858 29.1357 70.0023C28.155 86.0392 32.3281 100.333 46.9674 108.745C64.3653 118.573 87.3119 110.666 95.256 92.3266C95.6123 91.5592 95.6158 90.6045 96.092 89.9397C104.477 89.7169 113.091 90.2897 121 89.7381C120.937 88.3377 120.965 86.8879 121 85.4451V80.1478V80.1442ZM86.5218 45.3829C86.5006 56.1296 86.4759 66.8727 86.4442 77.6194C85.9256 77.5663 85.4212 77.5133 84.9062 77.4567C84.3347 77.3824 83.8408 77.241 83.3082 77.0253C75.3747 74.1326 68.937 68.3403 65.7093 60.465C64.1078 56.5327 63.4869 52.2327 63.6386 48.0068C63.6351 46.6737 63.6315 45.1955 63.621 43.8553C63.6421 40.7399 64.9438 37.9639 67.0568 35.6972C71.5932 31.5527 77.4172 31.5845 82.3487 34.997C84.4899 36.6979 85.8868 39.1662 86.4406 41.8326C86.5324 43.0137 86.5253 44.1912 86.5182 45.3759L86.5218 45.3829Z" fill="#003024"/></svg></div>
 </section>
 
-<!-- ===================== SLIDE 6: TRACTION ===================== -->
-<section id="slide-6">
-<div class="slide-inner">
-  <div style="text-align:center;margin-bottom:40px">
-    <h2>Built for this moment</h2>
+<!-- ==================== SLIDE 06: TRACTION ==================== -->
+<section class="slide grain gradient-teal flex flex-col items-center justify-center px-6 md:px-12" id="slide-06">
+  <div class="absolute inset-0" style="background:radial-gradient(ellipse at center bottom,rgba(164,234,73,0.05),transparent 70%)"></div>
+  <div class="relative z-10 max-w-5xl mx-auto w-full">
+    <div class="fade-in-up text-center mb-10" style="transition-delay:0s">
+      <h2 class="text-xl md:text-2xl lg:text-[36px] font-bold leading-tight tracking-tight">Built for this moment</h2>
+    </div>
+    <div class="fade-in-up grid grid-cols-2 gap-4 max-w-xl mx-auto mb-10" style="transition-delay:0.15s">
+      <div class="rounded-2xl p-5 md:p-6 text-center" style="background:#111;border:1px solid #1f1f1f"><div class="text-4xl md:text-5xl font-extrabold tracking-tighter">15K</div><div class="text-xs text-white/50 mt-2 uppercase tracking-wider">Events / second</div></div>
+      <div class="rounded-2xl p-5 md:p-6 text-center" style="background:#111;border:1px solid #1f1f1f"><div class="text-4xl md:text-5xl font-extrabold tracking-tighter">135</div><div class="text-xs text-white/50 mt-2 uppercase tracking-wider">Currencies</div></div>
+      <div class="rounded-2xl p-5 md:p-6 text-center" style="background:#111;border:1px solid #1f1f1f"><div class="text-4xl md:text-5xl font-extrabold tracking-tighter">$0</div><div class="text-xs text-white/50 mt-2 uppercase tracking-wider">Setup cost</div></div>
+      <div class="rounded-2xl p-5 md:p-6 text-center" style="background:#111;border:1px solid #1f1f1f"><div class="text-4xl md:text-5xl font-extrabold tracking-tighter">7d</div><div class="text-xs text-white/50 mt-2 uppercase tracking-wider">Time to live</div></div>
+    </div>
+    <div class="fade-in-up rounded-2xl overflow-x-auto" style="transition-delay:0.3s;background:#111;border:1px solid #1f1f1f">
+      <table class="w-full text-sm">
+        <thead><tr>
+          <th class="text-left p-3 md:p-4 border-b border-white/10 text-[10px] md:text-xs uppercase tracking-wider text-white/50 font-semibold">Feature</th>
+          <th class="text-center p-3 md:p-4 border-b border-white/10 text-[10px] md:text-xs uppercase tracking-wider text-white/50 font-semibold">Stripe</th>
+          <th class="text-center p-3 md:p-4 border-b border-white/10 text-[10px] md:text-xs uppercase tracking-wider text-white/50 font-semibold">Chargebee</th>
+          <th class="text-center p-3 md:p-4 border-b border-white/10 text-[10px] md:text-xs uppercase tracking-wider text-white/50 font-semibold">Orb</th>
+          <th class="text-center p-3 md:p-4 border-b border-white/10 text-[10px] md:text-xs uppercase tracking-wider text-brand-lime font-semibold">UnitPay</th>
+        </tr></thead>
+        <tbody>
+          <tr class="border-b border-white/5"><td class="p-3 md:p-4">Per-episode AI metering</td><td class="text-center p-3"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3 text-brand-amber text-xs">Basic</td><td class="text-center p-3 text-brand-lime text-xs font-semibold">Full <svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#a4ea49" stroke-width="1.5" fill="none"/></svg></td></tr>
+          <tr class="border-b border-white/5"><td class="p-3 md:p-4">Multi-model cost tracking</td><td class="text-center p-3"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#a4ea49" stroke-width="1.5" fill="none"/></svg></td></tr>
+          <tr class="border-b border-white/5"><td class="p-3 md:p-4">Pricing simulation</td><td class="text-center p-3"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#a4ea49" stroke-width="1.5" fill="none"/></svg></td></tr>
+          <tr class="border-b border-white/5"><td class="p-3 md:p-4">Per-creator margin tracking</td><td class="text-center p-3"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#a4ea49" stroke-width="1.5" fill="none"/></svg></td></tr>
+          <tr><td class="p-3 md:p-4">Real-time cost attribution</td><td class="text-center p-3"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#ff3b3b" stroke-width="1.5"/><line x1="10" y1="2" x2="2" y2="10" stroke="#ff3b3b" stroke-width="1.5"/></svg></td><td class="text-center p-3 text-brand-amber text-xs">Partial</td><td class="text-center p-3"><svg class="inline" width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#a4ea49" stroke-width="1.5" fill="none"/></svg></td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-
-  <div class="grid-4" style="max-width:600px;margin:0 auto 48px">
-    <div class="card" style="text-align:center;padding:24px">
-      <div class="stat-number">15K</div>
-      <div class="stat-label">Events / second</div>
-    </div>
-    <div class="card" style="text-align:center;padding:24px">
-      <div class="stat-number">135</div>
-      <div class="stat-label">Currencies</div>
-    </div>
-    <div class="card" style="text-align:center;padding:24px">
-      <div class="stat-number">$0</div>
-      <div class="stat-label">Setup cost</div>
-    </div>
-    <div class="card" style="text-align:center;padding:24px">
-      <div class="stat-number">7d</div>
-      <div class="stat-label">Time to live</div>
-    </div>
-  </div>
-
-  <div class="card table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Feature</th>
-          <th style="text-align:center">Stripe Billing</th>
-          <th style="text-align:center">Chargebee</th>
-          <th style="text-align:center">Orb</th>
-          <th style="text-align:center;color:var(--accent)">UnitPay</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Per-episode AI metering</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span style="color:var(--amber)">Basic</span></td><td style="text-align:center"><span class="check">Full &check;</span></td></tr>
-        <tr><td>Multi-model cost tracking</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
-        <tr><td>Pricing simulation</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
-        <tr><td>Per-creator margin tracking</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
-        <tr><td>Real-time cost attribution</td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span class="cross">&cross;</span></td><td style="text-align:center"><span style="color:var(--amber)">Partial</span></td><td style="text-align:center"><span class="check">&check;</span></td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+  <div class="absolute bottom-5 left-6 md:left-10 z-10 text-xs text-white/30 font-medium">06 / 07</div>
+  <div class="absolute bottom-5 right-6 md:right-10 z-10"><svg width="22" height="22" viewBox="0 0 134 133" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.1903 0.100433C44.6251 0.0545497 66.0706 0.0580749 87.516 0.0298388C95.2211 0.0651339 102.87 -0.0760479 110.546 0.0616031C116.981 0.460438 122.886 3.74289 127.336 8.34185C135.728 16.8762 133.746 29.3354 133.899 40.2239C133.644 63.2081 134.327 86.4005 133.538 109.371C132.947 120.249 125.019 130.149 114.222 132.302C107.461 133.52 100.439 132.697 93.5761 132.937C77.7945 132.944 61.9916 132.965 46.1959 132.98C38.7172 132.972 31.2845 133.029 23.8554 132.98C17.6114 132.803 11.477 129.634 7.25658 125.204C0.365174 117.916 -0.101801 110.08 0.290882 100.515C0.269655 90.9007 0.259029 81.2686 0.255492 71.6542C0.234266 57.7197 0.202429 43.7252 0.191816 29.7907C-1.48858 15.1503 8.01364 1.44518 23.1266 0.100433H23.1938H23.1903Z" fill="#A4EA49"/><path d="M121 80.1442C120.965 79.5113 120.901 78.896 120.813 78.3019C113.155 78.1215 105.246 78.6484 98.0392 78.118C98.0498 66.2892 98.0604 54.5595 98.0674 42.805C98.0145 30.7535 86.7405 20.4383 74.7962 21.0253H74.7609C65.8574 20.5479 57.1726 26.8919 53.9837 34.9652C46.2619 57.0137 59.7795 84.7449 83.5445 88.9849C79.2727 99.4698 64.711 103.982 54.474 99.2541C42.2511 94.0665 40.1557 81.1945 40.8648 69.2597C40.639 57.0915 41.1399 44.4282 40.5684 32.4933H29.3403C28.8253 35.5805 29.3226 39.3607 29.1533 42.6812C29.1498 51.7942 29.1427 60.8858 29.1357 70.0023C28.155 86.0392 32.3281 100.333 46.9674 108.745C64.3653 118.573 87.3119 110.666 95.256 92.3266C95.6123 91.5592 95.6158 90.6045 96.092 89.9397C104.477 89.7169 113.091 90.2897 121 89.7381C120.937 88.3377 120.965 86.8879 121 85.4451V80.1478V80.1442ZM86.5218 45.3829C86.5006 56.1296 86.4759 66.8727 86.4442 77.6194C85.9256 77.5663 85.4212 77.5133 84.9062 77.4567C84.3347 77.3824 83.8408 77.241 83.3082 77.0253C75.3747 74.1326 68.937 68.3403 65.7093 60.465C64.1078 56.5327 63.4869 52.2327 63.6386 48.0068C63.6351 46.6737 63.6315 45.1955 63.621 43.8553C63.6421 40.7399 64.9438 37.9639 67.0568 35.6972C71.5932 31.5527 77.4172 31.5845 82.3487 34.997C84.4899 36.6979 85.8868 39.1662 86.4406 41.8326C86.5324 43.0137 86.5253 44.1912 86.5182 45.3759L86.5218 45.3829Z" fill="#003024"/></svg></div>
 </section>
 
-<!-- ===================== SLIDE 7: CTA ===================== -->
-<section id="slide-7">
-<div class="slide-inner" style="text-align:center">
-  <!-- Era Divide Callback -->
-  <div style="width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin-bottom:48px"></div>
-
-  <p style="font-size:16px;color:var(--text-secondary);text-decoration:line-through;margin-bottom:8px">$120/mo flat. Same price for every creator. Every episode.</p>
-
-  <h1 style="margin-bottom:16px">Per-creator. Per-model. Per-second.<br><span class="accent">Real margins.</span></h1>
-  <p style="margin-bottom:40px;max-width:600px;margin-left:auto;margin-right:auto">Stop processing 1M+ episodes through 5 AI models without knowing your real cost per creator. See everything in real-time.</p>
-
-  <div style="margin-bottom:24px">
-    <a class="cta-btn" href="mailto:vijay@useunitpay.com?subject=PodcastInc.ai%20%E2%80%94%20Pilot%20Request">Book a Pilot with PodcastInc's Data &rarr;</a>
-  </div>
-  <p style="font-size:16px;color:var(--text-secondary);margin-bottom:48px">Manish, we'll have PodcastInc's margin dashboard ready before the call.</p>
-
-  <div style="display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap;margin-bottom:40px">
-    <div class="qr-box">SCAN</div>
-    <div style="text-align:left">
-      <p style="font-size:14px;color:var(--text-secondary);margin-bottom:8px">Your AI revenue engine is live.<br>Scan to walk through it.</p>
-      <p style="font-size:14px;color:var(--white);font-weight:500">vijay@useunitpay.com</p>
-      <p style="font-size:14px;color:var(--accent);font-weight:500">useunitpay.com</p>
+<!-- ==================== SLIDE 14: CTA ==================== -->
+<section class="slide grain gradient-dark flex flex-col items-center justify-center px-6 md:px-12" id="slide-07">
+  <div class="absolute inset-0" style="background:radial-gradient(ellipse at center bottom,rgba(164,234,73,0.1),transparent 60%)"></div>
+  <div class="relative z-10 max-w-5xl mx-auto w-full text-center">
+    <!-- Era divide callback -->
+    <div class="fade-in-up mb-10" style="transition-delay:0s">
+      <div class="h-[2px] w-full" style="background:linear-gradient(90deg,transparent,#a4ea49,transparent)"></div>
+    </div>
+    <div class="fade-in-up mb-2" style="transition-delay:0.15s">
+      <p class="text-sm md:text-base text-white/50 strike">$120/mo flat. Same price for every creator. Every episode.</p>
+    </div>
+    <div class="fade-in-up mb-4" style="transition-delay:0.3s">
+      <h1 class="text-2xl md:text-3xl lg:text-[48px] font-bold leading-tight tracking-tight">Per-creator. Per-model. Per-second.<br><span class="text-brand-lime">Real margins.</span></h1>
+    </div>
+    <div class="fade-in-up mb-8 max-w-xl mx-auto" style="transition-delay:0.45s">
+      <p class="text-sm md:text-base text-white/60">Stop processing 1M+ episodes through 5 AI models without knowing your real cost per creator. See everything in real-time.</p>
+    </div>
+    <!-- Value props -->
+    <div class="fade-in-up flex flex-col items-center gap-2 mb-8" style="transition-delay:0.6s">
+      <span class="flex items-center gap-2 text-sm"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#a4ea49" stroke-width="1.5" fill="none"/></svg> Real-time per-creator margin visibility</span>
+      <span class="flex items-center gap-2 text-sm"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#a4ea49" stroke-width="1.5" fill="none"/></svg> Multi-model AI cost attribution</span>
+      <span class="flex items-center gap-2 text-sm"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#a4ea49" stroke-width="1.5" fill="none"/></svg> Pricing simulation before you ship</span>
+    </div>
+    <!-- CTA Button -->
+    <div class="fade-in-up mb-6" style="transition-delay:0.75s">
+      <a class="inline-block px-8 md:px-10 py-4 md:py-5 rounded-xl text-lg md:text-xl font-bold text-brand-black bg-brand-lime pulse-glow no-underline" href="mailto:vijay@useunitpay.com?subject=PodcastInc.ai%20%E2%80%94%20Pilot%20Request">Book a Pilot with PodcastInc's Data &rarr;</a>
+    </div>
+    <div class="fade-in-up mb-10" style="transition-delay:0.9s">
+      <p class="text-sm md:text-base text-white/50">Manish, we'll have PodcastInc's margin dashboard ready before the call.</p>
+    </div>
+    <!-- QR + Contact -->
+    <div class="fade-in-up flex items-center justify-center gap-8 flex-wrap mb-10" style="transition-delay:1.05s">
+      <div class="w-28 h-28 rounded-xl flex items-center justify-center" style="background:#111;border:1px solid #1f1f1f">
+        <div class="grid grid-cols-5 gap-1 p-3">
+          <div class="w-3 h-3 bg-white rounded-sm"></div><div class="w-3 h-3 bg-white rounded-sm"></div><div class="w-3 h-3 bg-white rounded-sm"></div><div class="w-3 h-3 bg-transparent"></div><div class="w-3 h-3 bg-white rounded-sm"></div>
+          <div class="w-3 h-3 bg-white rounded-sm"></div><div class="w-3 h-3 bg-transparent"></div><div class="w-3 h-3 bg-white rounded-sm"></div><div class="w-3 h-3 bg-white rounded-sm"></div><div class="w-3 h-3 bg-white rounded-sm"></div>
+          <div class="w-3 h-3 bg-white rounded-sm"></div><div class="w-3 h-3 bg-white rounded-sm"></div><div class="w-3 h-3 bg-brand-lime rounded-sm"></div><div class="w-3 h-3 bg-white rounded-sm"></div><div class="w-3 h-3 bg-transparent"></div>
+          <div class="w-3 h-3 bg-transparent"></div><div class="w-3 h-3 bg-white rounded-sm"></div><div class="w-3 h-3 bg-white rounded-sm"></div><div class="w-3 h-3 bg-transparent"></div><div class="w-3 h-3 bg-white rounded-sm"></div>
+          <div class="w-3 h-3 bg-white rounded-sm"></div><div class="w-3 h-3 bg-white rounded-sm"></div><div class="w-3 h-3 bg-white rounded-sm"></div><div class="w-3 h-3 bg-white rounded-sm"></div><div class="w-3 h-3 bg-white rounded-sm"></div>
+        </div>
+      </div>
+      <div class="text-left">
+        <p class="text-sm text-white/50 mb-2">Your AI revenue engine is live.<br>Scan to walk through it.</p>
+        <p class="text-sm text-white font-medium">vijay@useunitpay.com</p>
+        <p class="text-sm text-brand-lime font-medium">useunitpay.com</p>
+      </div>
+    </div>
+    <div class="fade-in-up" style="transition-delay:1.2s">
+      <p class="text-[10px] md:text-xs tracking-[3px] uppercase text-brand-lime font-semibold">The AI Revenue Engine</p>
     </div>
   </div>
-
-  <p style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:600">The AI Revenue Engine</p>
-</div>
+  <div class="absolute bottom-5 left-6 md:left-10 z-10 text-xs text-white/30 font-medium">07 / 07</div>
+  <div class="absolute bottom-5 right-6 md:right-10 z-10"><svg width="22" height="22" viewBox="0 0 134 133" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.1903 0.100433C44.6251 0.0545497 66.0706 0.0580749 87.516 0.0298388C95.2211 0.0651339 102.87 -0.0760479 110.546 0.0616031C116.981 0.460438 122.886 3.74289 127.336 8.34185C135.728 16.8762 133.746 29.3354 133.899 40.2239C133.644 63.2081 134.327 86.4005 133.538 109.371C132.947 120.249 125.019 130.149 114.222 132.302C107.461 133.52 100.439 132.697 93.5761 132.937C77.7945 132.944 61.9916 132.965 46.1959 132.98C38.7172 132.972 31.2845 133.029 23.8554 132.98C17.6114 132.803 11.477 129.634 7.25658 125.204C0.365174 117.916 -0.101801 110.08 0.290882 100.515C0.269655 90.9007 0.259029 81.2686 0.255492 71.6542C0.234266 57.7197 0.202429 43.7252 0.191816 29.7907C-1.48858 15.1503 8.01364 1.44518 23.1266 0.100433H23.1938H23.1903Z" fill="#A4EA49"/><path d="M121 80.1442C120.965 79.5113 120.901 78.896 120.813 78.3019C113.155 78.1215 105.246 78.6484 98.0392 78.118C98.0498 66.2892 98.0604 54.5595 98.0674 42.805C98.0145 30.7535 86.7405 20.4383 74.7962 21.0253H74.7609C65.8574 20.5479 57.1726 26.8919 53.9837 34.9652C46.2619 57.0137 59.7795 84.7449 83.5445 88.9849C79.2727 99.4698 64.711 103.982 54.474 99.2541C42.2511 94.0665 40.1557 81.1945 40.8648 69.2597C40.639 57.0915 41.1399 44.4282 40.5684 32.4933H29.3403C28.8253 35.5805 29.3226 39.3607 29.1533 42.6812C29.1498 51.7942 29.1427 60.8858 29.1357 70.0023C28.155 86.0392 32.3281 100.333 46.9674 108.745C64.3653 118.573 87.3119 110.666 95.256 92.3266C95.6123 91.5592 95.6158 90.6045 96.092 89.9397C104.477 89.7169 113.091 90.2897 121 89.7381C120.937 88.3377 120.965 86.8879 121 85.4451V80.1478V80.1442ZM86.5218 45.3829C86.5006 56.1296 86.4759 66.8727 86.4442 77.6194C85.9256 77.5663 85.4212 77.5133 84.9062 77.4567C84.3347 77.3824 83.8408 77.241 83.3082 77.0253C75.3747 74.1326 68.937 68.3403 65.7093 60.465C64.1078 56.5327 63.4869 52.2327 63.6386 48.0068C63.6351 46.6737 63.6315 45.1955 63.621 43.8553C63.6421 40.7399 64.9438 37.9639 67.0568 35.6972C71.5932 31.5527 77.4172 31.5845 82.3487 34.997C84.4899 36.6979 85.8868 39.1662 86.4406 41.8326C86.5324 43.0137 86.5253 44.1912 86.5182 45.3759L86.5218 45.3829Z" fill="#003024"/></svg></div>
 </section>
 
 <script>
-const sections=document.querySelectorAll('section');
-const counter=document.getElementById('counter');
-const total=sections.length;
-function updateCounter(){
-  const scrollPos=window.scrollY+window.innerHeight/2;
-  let current=1;
-  sections.forEach((s,i)=>{if(scrollPos>s.offsetTop)current=i+1});
-  counter.textContent=current+' / '+total;
-}
-window.addEventListener('scroll',updateCounter);
-document.addEventListener('keydown',e=>{
-  const current=Math.round(window.scrollY/window.innerHeight);
-  if(e.key==='ArrowDown'||e.key===' '){e.preventDefault();const next=Math.min(current+1,total-1);sections[next].scrollIntoView({behavior:'smooth'})}
-  if(e.key==='ArrowUp'){e.preventDefault();const prev=Math.max(current-1,0);sections[prev].scrollIntoView({behavior:'smooth'})}
-});
-updateCounter();
+(function(){
+  var T=7;
+  var dc=document.getElementById('nav-dots');
+  for(var i=1;i<=T;i++){var d=document.createElement('div');d.className='nav-dot';d.dataset.slide=i;d.addEventListener('click',(function(n){return function(){document.getElementById('slide-'+String(n).padStart(2,'0')).scrollIntoView({behavior:'smooth'})}})(i));dc.appendChild(d)}
+  function up(){var st=document.documentElement.scrollTop||document.body.scrollTop;var sh=document.documentElement.scrollHeight-document.documentElement.clientHeight;var p=sh>0?(st/sh)*100:0;document.getElementById('progress-bar').style.width=p+'%';var sl=document.querySelectorAll('.slide');var c=1;sl.forEach(function(s,idx){var r=s.getBoundingClientRect();if(r.top<window.innerHeight*0.5)c=idx+1});document.querySelectorAll('.nav-dot').forEach(function(dot,idx){dot.classList.toggle('active',idx+1===c)})}
+  window.addEventListener('scroll',up,{passive:true});up();
+  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.fade-in-up').forEach(function(el){obs.observe(el)});
+  document.addEventListener('keydown',function(e){var slides=document.querySelectorAll('.slide');var cur=Math.round(window.scrollY/window.innerHeight);if(e.key==='ArrowDown'||e.key===' '){e.preventDefault();var n=Math.min(cur+1,slides.length-1);slides[n].scrollIntoView({behavior:'smooth'})}if(e.key==='ArrowUp'){e.preventDefault();var p=Math.max(cur-1,0);slides[p].scrollIntoView({behavior:'smooth'})}});
+})();
 </script>
 </body>
 </html>
